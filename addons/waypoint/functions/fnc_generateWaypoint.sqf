@@ -49,22 +49,33 @@ switch (_vehicleType) do {
 private _tries = 0;
 private _currentPos = getPos (leader _group);
 private _allowWater = false;
-private _forceRoads = false;
+private _forceRoads = true;
 private _targetPos = [0, 0, 0];
 while {_tries < 50} do {
     private _trialPos = [_marker] call FUNC(markerRandomPos);
     if (_trialPos distance2D _currentPos >= _minimumDistance) then {
+        private _found = false;
         if (_allowWater && {surfaceIsWater _trialPos}) then {
             _tries = 50;
             _targetPos = _trialPos;
+            _found = true;
         };
 
         if (_forceRoads) then {
-            private _roads = (_trialPos nearRoads 50);
-            if (_roads isEqualTo []) then {
-                _targetPos = getPosATL (_roads select 0);
+            private _roads = (_trialPos nearRoads 250);
+            if !(_roads isEqualTo []) then {
+                _targetPos = getpos (_roads select 0);
+                _found = true;
             };
         };
+
+        if (!_found) then {
+            _tries = _tries + 1;
+        };
+    } else {
+        _tries = _tries + 1;
     };
+
 };
 
+_targetPos
