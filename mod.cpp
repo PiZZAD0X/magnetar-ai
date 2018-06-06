@@ -1,0 +1,13 @@
+name = "Magnetar AI";
+picture = "logo_ust101_ca.paa";
+actionName = "GitHub";
+action = "https://github.com/TheMagnetar/us101-mission-framework";
+description = "MAI - Version 0.1.0";
+logo = "logo_ust101_ca.paa";
+logoOver = "logo_ust101_over_ca.paa";
+logoSmall = "logo_ust101_small_ca.paa";
+tooltip = "MAI";
+tooltipOwned = "UST101 Owned";
+overview = "UST101 Mission Framework is a collection of scripts used for the missions edited for UST101 gameplay sessions.";
+author = "TheMagnetar Team";
+overviewPicture = "logo_ust101_ca.paa";
