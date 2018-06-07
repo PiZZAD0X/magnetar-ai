@@ -6,8 +6,4 @@ ADDON = false;
 
 #include "initSettings.sqf"
 
-if (isServer) then {
-    DGVAR(groupRegisters) = 0
-};
-
 ADDON = true;

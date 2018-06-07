@@ -19,7 +19,27 @@ params [["_unit", objNull], ["_options", []]];
 
 if (!local _unit) exitWith {};
 
-_grp = group _unit;
-_grp = GVAR(groupId)
+private _group = group _unit;
 
-[_grp, _options] call FUNC(handleOptions);
+// Create default values for the group
+private _settings = [] call CBA_fnc_hashCreate;
+
+[_settings, "behaviour", [behaviour _group]] call CBA_fnc_hashSet;
+[_settings, "combatMode", [combatMode _group]] call CBA_fnc_hashSet;
+[_settings, "formation", [formation _group]] call CBA_fnc_hashSet;
+[_settings, "speed", [speedMode _group]] call CBA_fnc_hashSet;
+[_settings, "task", "patrol"] call CBA_fnc_hashSet;
+[_settings, "allowWater", false] call CBA_fnc_hashSet;
+[_settings, "forceRoads", false] call CBA_fnc_hashSet;
+[_settings, "randomBehaviour", true] call CBA_fnc_hashSet;
+
+_group setVariable [QGVAR(settings), _settings, true];
+
+[_group, _settings, _options] call FUNC(handleOptions);
+
+[QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;
+
+private _assignedTask = [_settings, "task"] call CBA_fnc_hashGet;
+
+private _function = missionNamespace getVariable (format [QEFUNC(task,%1), _assignedTask]);
+[_group] call _function;
