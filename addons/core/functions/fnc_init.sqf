@@ -38,8 +38,3 @@ _group setVariable [QGVAR(settings), _settings, true];
 [_group, _settings, _options] call FUNC(handleOptions);
 
 [QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;
-
-private _assignedTask = [_settings, "task"] call CBA_fnc_hashGet;
-
-private _function = missionNamespace getVariable (format [QEFUNC(task,%1), _assignedTask]);
-[_group] call _function;
