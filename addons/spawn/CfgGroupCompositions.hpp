@@ -11,28 +11,42 @@ class CfgGroupCompositions {
     };
     class rhs_usaf_marine : Common {
         type = "infantry";
+        side = "west";
         leader[] = [];
         units[] = [];
-        waypointRestrictions[] = {"noWater"};
+        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
     };
     class Wheeled : Common {
         type = "wheeled";
         leader[] =
         vehicles[] =
-        crew[] =
-        infantryLeader[] = [];
-        infantry[] = [];
-        waypointRestrictions[] = {"noWater"};
+        side = "west";
+        crew[] = [];
+        cargoLeader[] = [];
+        cargo[] = [];
+        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
     };
     class Armored : Wheeled {
         type = "armored";
+        leader[] = [];
+        vehicles[] = [];
+        crew[] = [];
+        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
     class Air : Wheeled {
         type = "air";
-        waypointRestrictions[] = {"noLandWater"};
+        leader[] = [];
+        vehicles[] = [];
+        crew[] = [];
+        waypointOptions = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
     class Boat : Wheeled {
         type =  "boat";
-        waypointRestrictions[] = {"noLand"};
+        leader[] = [];
+        vehicles[] = [];
+        crew[] = [];
+        cargoLeader[] = [];
+        cargo[] = [];
+        waypointOptions = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
 };

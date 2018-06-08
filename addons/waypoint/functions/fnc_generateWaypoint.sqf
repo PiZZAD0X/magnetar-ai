@@ -17,14 +17,14 @@
  */
 #include "script_component.hpp"
 
-params [["_group", objNull], ["_options", []]];
+params [["_group", objNull], "_marker" ["_options", []]];
 
-private _marker = _group getVariable [QGVAR(marker), ""];
+private _settings = _group getVariable [QEGVAR(core,settings), []];
+
+private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _sizeX = (markerSize _marker) # 0;
 private _sizeY = (markerSize _marker) # 1;
 private _minimumDistance = 2/3*sqrt(_sizeX^2 + _sizeY^2);
-
-private _settings = _group getVariable [QEGVAR(core,settings), []];
 
 if (_settings isEqualTo []) exitWith {
     WARNING_1("Group %1 defined without configuration",_settings);

@@ -50,35 +50,18 @@ params ["_group", "_settings", ["_options", []]];
             _group setSpeedMode ([_value] call _getValue);
         };
         case "skill": {
-            private _skillCategory = [];
-            if ((toLower (_value # 0)) isEqualTo "general") then {
-                _skillCategory = ["general"];
-            } else {
-                _skillCategory = ["aimingShake", "aimingSpeed", "endurance", "spotDistance", "spotTime", "courage", "reloadSpeed", "commanding"];
-            };
-
             [_settings, "skill", _value] call CBA_fnc_hashSet;
-            {
-                private _unit = _x;
-                {
-                    private _val = 0;
-                    if (isArray (_value # _forEachIndex)) then {
-                        (_value # _forEachIndex) params ["_min", "_max"];
-
-                        _val = _min + random [_max - _min];
-                    } else {
-                        _val = (_value # _forEachIndex);
-                    };
-                    _unit setSkill [_x, _val];
-                } forEach _skillCategory;
-            } forEach (units _group);
+            [_group, _value] call FUNC(setSkill);
         };
         case "patrol": { [_settings, "task", "patrol"] call CBA_fnc_hashSet; };
         case "defend": { [_settings, "task", "defend"] call CBA_fnc_hashSet; };
-        case "init": { _group call compile _value; };
+        case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; _group call compile _value; };
         case "allowwater": { [_settings, "allowWater", _value] call CBA_fnc_hashSet; };
         case "forcerloads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
         case "randombehaviour": { [_settings, "randomBehaviour", _value] call CBA_fnc_hashSet; };
+        case "waitAtWaypoint": { [_settings, "waitAtWaypoint", _value] call CBA_fnc_hashSet; };
+        case "allowVehicles": { [_settings, "allowVehicles", _value] call CBA_fnc_hashSet };
+        case "patrolBuildings": { [_settings, "patrolBuildings", _value] call CBA_fnc_hashSet; };
     };
 } forEach _options;
 
