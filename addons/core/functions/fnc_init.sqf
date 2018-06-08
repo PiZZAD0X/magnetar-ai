@@ -38,3 +38,7 @@ _group setVariable [QGVAR(settings), _settings, true];
 [_group, _settings, _options] call FUNC(handleOptions);
 
 [QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;
+
+if (GVAR(mainLoopPFH) == -1) then {
+    GVAR(mainLoopPFH) = [DFUNC(mainPFH), 0, [_group]] call CBA_fnc_addPerFrameHandler;
+};

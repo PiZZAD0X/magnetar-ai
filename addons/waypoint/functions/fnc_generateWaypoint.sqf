@@ -109,3 +109,5 @@ private _numWaypoints = count (waypoints _group);
         deleteWaypoint _x;
     };
 } forEach (waypoints _group);
+
+_targetPos

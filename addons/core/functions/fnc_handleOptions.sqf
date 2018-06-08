@@ -82,4 +82,6 @@ params ["_group", "_settings", ["_options", []]];
     };
 } forEach _options;
 
+[_settings, "taskState", "init"] call CBA_fnc_hashSet;
+
 _group setVariable [QGVAR(settings), _settings, true];

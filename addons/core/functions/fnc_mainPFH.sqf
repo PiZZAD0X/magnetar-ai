@@ -28,3 +28,9 @@ if (_taskChanged) then {
 
 private _taskFunction = missionNamespace getVariable (format [QEFUNC(task,%1), _assignedTask]);
 [_group] call _taskFunction;
+
+if (((units _group) select {alive _x}) isEqualTo []) then {
+    [GVAR(mainLoopPFH)] call CBA_fnc_removePerFrameHandler;
+    GVAR(mainLoopPFH) = -1;
+    deleteGroup _group;
+};

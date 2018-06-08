@@ -7,7 +7,8 @@ ADDON = false;
 #include "initSettings.sqf"
 
 if (isServer) then {
-    DGVAR(groupRegisters) = 0
+    DGVAR(groupRegisters) = 0;
+    DGVAR(mainLoopPFH) = -1;
 };
 
 ADDON = true;
