@@ -1,4 +1,4 @@
-PREP(aiPFH);
+PREP(mainPFH);
 PREP(handleOptions);
 PREP(init);
 PREP(setSkill);

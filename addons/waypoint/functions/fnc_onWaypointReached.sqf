@@ -19,7 +19,7 @@
 
 params ["_group"];
 
-private _settings = _group getVariable (QEGVAR(core,settings), []);
+private _settings = _group getVariable [QEGVAR(core,settings), []];
 
 if (_settings isEqualTo []) exitWith {
     WARNING_1("Group %1 defined without configuration",_settings);

@@ -16,7 +16,7 @@
 #include "script_component.hpp"
 
 params [["_marker", ""]];
-systemChat format ["test"];
+systemChat format ["marker %1", _marker];
 if (_marker isEqualTo "") exitWith {[0,0]};
 
 private _center = getMarkerPos _marker;
@@ -59,5 +59,5 @@ if (_markerDir != 0) then {
     _xCoord = _xRnd;
     _yCoord = _yRnd;
 };
-
+systemChat format ["%1 %2", _xCoord, _yCoord];
 [_xCoord, _yCoord];

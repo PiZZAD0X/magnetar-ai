@@ -31,7 +31,7 @@ params ["_group", "_settings", ["_options", []]];
         };
         _val
     };
-
+    systemChat format ["key %1 value %2", _key, _value];
     switch (toLower _key) do {
         case "behaviour": {
             [_settings, "behaviour", _value] call CBA_fnc_hashSet;
@@ -57,7 +57,7 @@ params ["_group", "_settings", ["_options", []]];
         case "defend": { [_settings, "task", "defend"] call CBA_fnc_hashSet; };
         case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; _group call compile _value; };
         case "allowwater": { [_settings, "allowWater", _value] call CBA_fnc_hashSet; };
-        case "forcerloads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
+        case "forceroads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
         case "randombehaviour": { [_settings, "randomBehaviour", _value] call CBA_fnc_hashSet; };
         case "waitAtWaypoint": { [_settings, "waitAtWaypoint", _value] call CBA_fnc_hashSet; };
         case "allowVehicles": { [_settings, "allowVehicles", _value] call CBA_fnc_hashSet };

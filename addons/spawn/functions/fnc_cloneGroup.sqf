@@ -21,7 +21,7 @@ params ["_modelGroup", ["_sleep", 0.05]];
 private _side = side _modelGroup;
 private _grp = createGroup _side;
 
-private _settings =+ _modelGroup getVariable [QEGVAR(core,settings), []], true];
+private _settings =+ _modelGroup getVariable [QEGVAR(core,settings), []];
 
 // Generate units
 
