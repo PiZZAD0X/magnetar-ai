@@ -5,48 +5,50 @@ class CfgGroupCompositions {
         formation[] = ["column", "stag column", "wedge", "ech left", "ech right", "vee", "line", "file", "diamond"];
         speed[] = ["limited", "normal", "full"];
         skill[] = [[0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8]];
-        skillLeader = [[0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8]];
+        skillLeader[] = [[0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8], [0.2, 0.8]];
         execInit = "";
         execWaypoint = "";
+        task[] = ["patrol"];
     };
     class rhs_usaf_marine : Common {
         type = "infantry";
         side = "west";
-        leader[] = [];
+        leaders[] = [];
         units[] = [];
-        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
+        options[] = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
     };
     class Wheeled : Common {
         type = "wheeled";
-        leader[] =
+        leaders[] =
         vehicles[] =
         side = "west";
         crew[] = [];
-        cargoLeader[] = [];
+        cargoLeaders[] = [];
         cargo[] = [];
-        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
+        options[] = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", true]];
     };
     class Armored : Wheeled {
         type = "armored";
-        leader[] = [];
+        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
-        waypointOptions = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
+        options[] = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
     class Air : Wheeled {
         type = "air";
-        leader[] = [];
+        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
-        waypointOptions = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
+        pilot[] = [];
+        options[] = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
     class Boat : Wheeled {
         type =  "boat";
-        leader[] = [];
+        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
-        cargoLeader[] = [];
+        cargoLeaders[] = [];
         cargo[] = [];
-        waypointOptions = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
+        options[] = [["allowWater", true], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
 };

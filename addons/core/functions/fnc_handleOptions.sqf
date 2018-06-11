@@ -57,6 +57,7 @@ params ["_group", "_settings", ["_options", []]];
         case "defend": { [_settings, "task", "defend"] call CBA_fnc_hashSet; };
         case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; _group call compile _value; };
         case "allowwater": { [_settings, "allowWater", _value] call CBA_fnc_hashSet; };
+        case "allowland": { [_settings, "allowLand", _value] call CBA_fnc_hashSet; };
         case "forceroads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
         case "randombehaviour": { [_settings, "randomBehaviour", _value] call CBA_fnc_hashSet; };
         case "waitAtWaypoint": { [_settings, "waitAtWaypoint", _value] call CBA_fnc_hashSet; };
@@ -64,7 +65,5 @@ params ["_group", "_settings", ["_options", []]];
         case "patrolBuildings": { [_settings, "patrolBuildings", _value] call CBA_fnc_hashSet; };
     };
 } forEach _options;
-
-[_settings, "taskState", "init"] call CBA_fnc_hashSet;
 
 _group setVariable [QGVAR(settings), _settings, true];

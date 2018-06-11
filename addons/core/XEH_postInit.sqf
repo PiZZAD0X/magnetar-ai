@@ -13,5 +13,6 @@
 [QGVAR(targetPFH), {
     params ["_group"];
 
-    [DFUNC(mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
+    private _pfh = [DFUNC(mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
+    _group setVariable [QGVAR(pfh), _pfh, true];
 }] call CBA_fnc_addEventHandler;

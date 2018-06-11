@@ -18,8 +18,9 @@
 params ["_group"];
 
 if (!local (leader _group)) then {
-    [GVAR(mainLoopPFH)] call CBA_fnc_removePerFrameHandler;
-    GVAR(mainLoopPFH) = -1;
+    private _pfh = _group getVariable [QGVAR(pfh), -1];
+    [_pfh] call CBA_fnc_removePerFrameHandler;
+
     [QGVAR(targetPFH), _group, leader _group] call CBA_fnc_targetEvent;
 };
 
@@ -39,8 +40,9 @@ private _taskFunction = missionNamespace getVariable (format [QEFUNC(tasks,%1), 
 _changed = [_group] call _taskFunction;
 
 if (((units _group) select {alive _x}) isEqualTo []) then {
-    [GVAR(mainLoopPFH)] call CBA_fnc_removePerFrameHandler;
-    GVAR(mainLoopPFH) = -1;
+    private _pfh = _group getVariable [QGVAR(pfh), -1];
+    [_pfh] call CBA_fnc_removePerFrameHandler;
+
     deleteGroup _group;
 };
 

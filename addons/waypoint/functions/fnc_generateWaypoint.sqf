@@ -54,35 +54,12 @@ private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 private _targetPos = _currentPos;
 
 while {_tries < 50} do {
-    private _trialPos = [_marker] call FUNC(markerRandomPos);
+    private _trialPos = [_marker, [_alllowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
     systemChat format ["trial %1 %2", _trialPos, _trialPos distance2D _currentPos >= _minimumDistance];
     diag_log format  ["trial %1 %2 %3", _trialPos, _trialPos distance2D _currentPos >= _minimumDistance, _minimumDistance];
     if (_trialPos distance2D _currentPos >= _minimumDistance) then {
-        private _found = false;
-
-        if (_allowWater && {surfaceIsWater _trialPos}) then {
-            _targetPos = _trialPos;
-            _found = true;
-        };
-
-        if (_forceRoads) then {
-            private _roads = (_trialPos nearRoads 250);
-            if !(_roads isEqualTo []) then {
-                _targetPos = getpos (_roads select 0);
-                _found = true;
-            };
-        };
-
-        if (!_allowWater && {!surfaceIsWater _trialPos} && {!_forceRoads}) then {
-            _found = true;
-            _targetPos = _trialPos;
-        };
-
-        if (!_found) then {
-            _tries = _tries + 1;
-        } else {
-            _tries = 50;
-        };
+        _targetPos = _trialPos;
+        _tries = 50;
     } else {
         _tries = _tries + 1;
     };

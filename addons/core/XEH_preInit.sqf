@@ -8,7 +8,6 @@ ADDON = false;
 
 if (isServer) then {
     DGVAR(groupRegisters) = 0;
-    DGVAR(mainLoopPFH) = -1;
 };
 
 ADDON = true;

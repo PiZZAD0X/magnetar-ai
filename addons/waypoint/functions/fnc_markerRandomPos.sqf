@@ -9,13 +9,13 @@
  * Random point <ARRAY> ([0,0] if invalid marker)
  *
  * Example:
- * [player] call mai_acre_fnc_markerRandomPos
+ * ["marker"] call mai_waypoint_fnc_markerRandomPos
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params [["_marker", ""]];
+params [["_marker", ""], ["_condition", [false, true, false]], ["_checkRadius", [0, 0, ""]]];
 systemChat format ["marker %1", _marker];
 if (_marker isEqualTo "") exitWith {[0,0]};
 
@@ -30,34 +30,60 @@ private _markerDir = markerDir _marker;
 private _xRnd = 0;
 private _yRnd = 0;
 
+private "_rndFunction";
 if (toLower (markerShape _marker) == "rectangle") then {
-    private _randX = random (_sizeX * 2) - _sizeX;
-    private _randY = random (_sizeY * 2) - _sizeY;
-
-    _xRnd = _centerX + _randX;
-    _yRnd = _centerY + _randY;
+    _rndFunction = missionNamespace getVariable [QGVAR(recMarkerRandomPos)];
 } else {
-    // Apply inverse CFG technique to get a random angle and radius
-    private _rnd = random 1;
-   // private _theta = atan2 (_sizeX);
-/*    private _theta = atan2 (_sizeY/_sizeX * tan(2*pi*_rnd));*/
-    private _maxRadius = _sizeX * _sizeY / sqrt( (_sizeY*cos(_theta))^2 + (_sizeX*sin(_theta))^2);
-    private _radius = _maxRadius*sqrt(random 1);
-
-    _xRnd = _centerX + _radius*cos(_theta);
-    _yRnd = _centerY + _radius*sin(_theta);
+    _rndFunction = missionNamespace getVariable [QGVAR(elipMarkerRandomPos)];
 };
 
+private _tries = 0;
+private _targetPos = [];
+_checkRadius params [["_minRadius", 0], ["_maxRadius", 0], ["_vehicleType", ""]];
+_condition params [["_allowWater", false], ["_allowLand", true], ["_forceRoads", false]];
 
-private ["_xCoord", "_yCoord"];
+while {_tries < 25} do {
+    _trialPos = [_sizeX, _sizeY, _centerX, _centerY, _markerDir] call _rndFunction;
+    _found = false;
 
-if (_markerDir != 0) then {
-    // Apply 2D rotation matrix
-    _xCoord = cos(_markerDir)*_xRnd - sin(_markerDir)*_yRnd;
-    _yCoord = sin(_markerDir)*_xRnd + cos(_markerDir)*_yRnd;
-} else {
-    _xCoord = _xRnd;
-    _yCoord = _yRnd;
+    if (_allowWater && {surfaceIsWater _trialPos}) then {
+        _found = true;
+        _tries = 50;
+    };
+
+    if (_allowLand && {!surfaceIsWater _trialPos}) then {
+        if (_forceRoads) then {
+            private _roads = (_trialPos nearRoads 250);
+            if !(_roads isEqualTo []) then {
+                _targetPos = getpos (_roads select 0);
+                _found = true
+            };
+        } else {
+            _found = true;
+        };
+    };
+
+    if (_allowWater && {_allowLand} && {!_forceRoads}) then {
+        _tries = 50;
+    }
+
+    if (_found) then {
+        private _checkedPos = [];
+        if (_vehicle isEqualTo "") then {
+            _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius];
+        } else {
+            _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius, ""];
+        };
+
+        if (_checkedPos isEqualTo [] || {!(_checkedPos inArea _marker)}) then {
+            _tries = _tries + 1;
+        } else {
+            _targetPos = _checkedPos;
+            _tries = 50;
+        }
+    } else {
+        _tries = _tries + 1;
+    };
 };
-systemChat format ["%1 %2", _xCoord, _yCoord];
-[_xCoord, _yCoord];
+
+_targetPos
