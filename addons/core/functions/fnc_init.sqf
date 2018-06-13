@@ -31,6 +31,7 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
 [_settings, "speed", [speedMode _group]] call CBA_fnc_hashSet;
 
 [_group, _settings, _options] call FUNC(handleOptions);
+[_group, _settings] call FUNC(applyOptions);
 
 // Register the group
 [QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;

@@ -35,4 +35,6 @@ if !(_options isEqualTo []) then {
     [_grp] call EFUNC(core,handleOptions);
 };
 
+[_group] call EFUNC(core,applyOptions);
+
 _grp

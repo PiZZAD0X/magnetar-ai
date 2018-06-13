@@ -1,3 +1,4 @@
+PREP(applyOptions);
 PREP(handleOptions);
 PREP(init);
 PREP(mainPFH);

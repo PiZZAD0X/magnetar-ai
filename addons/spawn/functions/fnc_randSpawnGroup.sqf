@@ -15,18 +15,11 @@
  */
 #include "script_component.hpp"
 
-params ["_unitPool", "_groupSize", "_marker", ["_sleep", 0.05]];
-
-private _leaderPool = getArray ("CfgGroupCompositions" >> _unitPool >> "leaders");
-private _unitPool = getArray ("CfgGroupCompositions" >> _unitPool >> "units");
-private _side = getText ("CfgGroupCompositions" >> _unitPool >> "side");
+params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05]];
 
 private _grp = createGroup _side;
-private _leaderUnit = selectRandon _leaderPool;
-private _position = [_marker, [false, true, false], [0, 50, typeOf _leaderUnit]] call EFUNC(waypoint,markerRandomPos);
-private _leader = _grp createUnit [, _position, [], 2, "FORM"];
-_grp setLeader _leader;
 
+// Determine group size
 private _size = 0;
 if (isArray _groupSize) then {
     _groupSize params ["_minSize", "_maxSize"];
@@ -35,30 +28,28 @@ if (isArray _groupSize) then {
     _size = _groupSize;
 };
 
-{
-    // Check if the maximum size of the group has been reached substracting the leader position
-    if (_forEachIndex + 1 > (_size -1 )) exitWith {};
-    private _unit = selectRandom _unitPool;
-
-    private _position = _targetPos findEmptyPosition [0, 60, typeOf _unit];
-    private _unit = _grp createUnit [_unit, _position, [], 2, "FORM"];
-    sleep _sleep;
-
-} forEach _unitPool;
-
+// Basic options should be always defined
 private _options = [];
 {
-    private _values = getArray ("CfgGroupCompositions" >> _unitPool >> _x);
+    private _values = getArray ("CfgGroupCompositions" >> _configEntry >> _x);
     _options pushBack [_x, _values];
 } forEach ["behaviour", "combatMode", "formation", "speed", "skill"];
 
-private _options += getArray ("CfgGroupCompositions" >> _unitPool >> "options");
+// Additional options defined in config
+private _options += getArray ("CfgGroupCompositions" >> _configEntry >> "options");
 
 private _settings = [] call CBA_fnc_hashCreate;
-private _type = getText ("CfgGroupCompositions" >> _unitPool >> "type");
-
 _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
+
+// Init all group options
 [_grp, _settings, _options] call EFUNC(core,handleOptions);
+
+// Gnerate units
+private _type = getText ("CfgGroupCompositions" >> _configEntry >> "type");
+[_grp, _configEntry, _size, _marker, _sleep] call (missionNamespace getVariable [QGVAR(helperSpawn%1), toLower _type]);
+
+// Apply basic options
+[_group, _settings] call EFUNC(core,applyOptions);
 
 [{CBA_missionTime > 0}, {
     params ["_group"];
