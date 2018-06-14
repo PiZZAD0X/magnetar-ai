@@ -19,7 +19,7 @@
  */
 #include "script_component.hpp"
 
-params [["_group", objNull], ["_units", []], "_position", "_type", "_side", ["_options", []], ["_sleep", 0.05]];
+params [["_group", objNull], ["_units", []], "_position", "_type", "_marker", "_side", ["_options", []], ["_sleep", 0.05]];
 
 private _groupCreated = false;
 private _settings = [];
@@ -29,14 +29,12 @@ if (isNull _group) then {
     _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
 
     // Init all group options
-    [_grp, _settings, _options] call EFUNC(core,handleOptions);
+    [_group, _settings, _options] call EFUNC(core,handleOptions);
     _groupCreated = true;
 } else {
     _settings = _group getVariable [QEVGAR(core,settings), []];
     _type = [_settings, "type"] call CBA_fnc_hashGet;
 };
-
-_units params [["_infUnits"], ["_vehicles", []], ["_leader", objNull] ["_crew", []], ["_pilots", []]];
 
 private _isInfantry = "infantry" isEqualTo (toLower _type);
 
@@ -52,6 +50,7 @@ private _isInfantry = "infantry" isEqualTo (toLower _type);
         private _unit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
         {
             private _unit = _group createUnit [_x, _unitPos, [], 2, "NONE"];
+            _unit moveInDriver _vehicle;
         } forEach _pilots;
 
         {
@@ -59,11 +58,9 @@ private _isInfantry = "infantry" isEqualTo (toLower _type);
         } forEach _crew;
 
         {
-            
-        } forEach _cargo;
-    }
 
-    
+        } forEach _cargo;
+    };
 } forEach _units;
 
 if (_isInfantry) then {
@@ -75,4 +72,4 @@ if (_groupCreated) then {
     [_group, _settings] call EFUNC(core,applyOptions);
 };
 
-_grp
+_group

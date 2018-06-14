@@ -15,12 +15,13 @@
  */
 #include "script_component.hpp"
 
-params ["_sizeX", "sizeY", "_centerX, _centerY", "_markerDir"];
+params ["_sizeX", "_sizeY", "_centerX", "_centerY", "_markerDir"];
+
 private _randX = random (_sizeX * 2) - _sizeX;
 private _randY = random (_sizeY * 2) - _sizeY;
 
-_xRnd = _centerX + _randX;
-_yRnd = _centerY + _randY;
+private _xRnd = _centerX + _randX;
+private _yRnd = _centerY + _randY;
 
 private ["_xCoord", "_yCoord"];
 

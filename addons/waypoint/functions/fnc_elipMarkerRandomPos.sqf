@@ -15,19 +15,20 @@
  */
 #include "script_component.hpp"
 
-params ["_sizeX", "sizeY", "_centerX, _centerY", "_markerDir"];
+params ["_sizeX", "_sizeY", "_centerX", "_centerY", "_markerDir"];
+
 private _randX = random (_sizeX * 2) - _sizeX;
 private _randY = random (_sizeY * 2) - _sizeY;
 
-_// Apply inverse CFG technique to get a random angle and radius
+// Apply inverse CFG technique to get a random angle and radius
 private _rnd = random 1;
 // private _theta = atan2 (_sizeX);
 /*    private _theta = atan2 (_sizeY/_sizeX * tan(2*pi*_rnd));*/
 private _maxRadius = _sizeX * _sizeY / sqrt( (_sizeY*cos(_theta))^2 + (_sizeX*sin(_theta))^2);
 private _radius = _maxRadius*sqrt(random 1);
 
-_xRnd = _centerX + _radius*cos(_theta);
-_yRnd = _centerY + _radius*sin(_theta);
+private _xRnd = _centerX + _radius*cos(_theta);
+private _yRnd = _centerY + _radius*sin(_theta);
 
 private ["_xCoord", "_yCoord"];
 

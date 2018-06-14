@@ -39,7 +39,7 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
 [{CBA_missionTime > 0}, {
     params ["_group"];
     private _pfh =  _group getVariable [QGVAR(pfh), -1];
-    
+
     if (_pfh != -1) then {
         _pfh = [DFUNC(mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
     };

@@ -43,8 +43,8 @@ _checkRadius params [["_minRadius", 0], ["_maxRadius", 0], ["_vehicleType", ""]]
 _condition params [["_allowWater", false], ["_allowLand", true], ["_forceRoads", false]];
 
 while {_tries < 25} do {
-    _trialPos = [_sizeX, _sizeY, _centerX, _centerY, _markerDir] call _rndFunction;
-    _found = false;
+    private _trialPos = [_sizeX, _sizeY, _centerX, _centerY, _markerDir] call _rndFunction;
+    private _found = false;
 
     if (_allowWater && {surfaceIsWater _trialPos}) then {
         _found = true;
@@ -65,11 +65,11 @@ while {_tries < 25} do {
 
     if (_allowWater && {_allowLand} && {!_forceRoads}) then {
         _tries = 50;
-    }
+    };
 
     if (_found) then {
         private _checkedPos = [];
-        if (_vehicle isEqualTo "") then {
+        if (_vehicleType isEqualTo "") then {
             _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius];
         } else {
             _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius, ""];
@@ -80,7 +80,7 @@ while {_tries < 25} do {
         } else {
             _targetPos = _checkedPos;
             _tries = 50;
-        }
+        };
     } else {
         _tries = _tries + 1;
     };

@@ -50,11 +50,12 @@ switch ([_settings, "type"] call CBA_fnc_hashGet) do {
 private _tries = 0;
 private _currentPos = getPos (leader _group);
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
+private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 private _targetPos = _currentPos;
 
 while {_tries < 50} do {
-    private _trialPos = [_marker, [_alllowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
+    private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
     systemChat format ["trial %1 %2", _trialPos, _trialPos distance2D _currentPos >= _minimumDistance];
     diag_log format  ["trial %1 %2 %3", _trialPos, _trialPos distance2D _currentPos >= _minimumDistance, _minimumDistance];
     if (_trialPos distance2D _currentPos >= _minimumDistance) then {
