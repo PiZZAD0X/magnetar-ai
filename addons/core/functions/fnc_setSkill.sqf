@@ -27,15 +27,17 @@ if ((toLower (_skill # 0)) isEqualTo "general") then {
 
 {
     private _unit = _x;
-    {
-        private _val = 0;
-        if (isArray (_skill # _forEachIndex)) then {
-            (_skill # _forEachIndex) params ["_min", "_max"];
+    if (_unit isKindOf "CAManBase") then {
+        {
+            private _val = 0;
+            if (isArray (_skill # _forEachIndex)) then {
+                (_skill # _forEachIndex) params ["_min", "_max"];
 
-            _val = _min + random [_max - _min];
-        } else {
-            _val = (_skill # _forEachIndex);
-        };
-        _unit setSkill [_x, _val];
-    } forEach _skillCategory;
+                _val = _min + random [_max - _min];
+            } else {
+                _val = (_skill # _forEachIndex);
+            };
+            _unit setSkill [_x, _val];
+        } forEach _skillCategory;
+    };
 } forEach (units _group);

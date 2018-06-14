@@ -31,9 +31,22 @@ private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf _leaderUnit]] call EFUNC(waypoint,markerRandomPos);
 
 private _leaderUnit = selectRandon _leaderPool;
-private _leader = _grp createUnit [, _position, [], 2, "FORM"];
-_group setLeader _leader;
+private _units = [_units, 10] call EFUNC(core,shuffleArray);
 
+if (count _leaderPool > 1) then {
+    _leaderPool = [_leaderPool, 10] call EFUNC(core,suffleArray);
+};
+
+private _spawnUnits pushBack (_leaderPool # 0);
+
+// Ignore leader
+for "_i" from 0 to (_size - 2) do {
+    _spawnUnits pushBack (_units # (_i - 1);
+};
+
+[_group, [_spawnUnits], _targetPos] call FUNC(spawnGroup);
+
+/*
 {
     // Check if the maximum size of the group has been reached substracting the leader position
     if (_forEachIndex + 1 > (_size -1 )) exitWith {};
@@ -44,3 +57,4 @@ _group setLeader _leader;
     sleep _sleep;
 
 } forEach _unitPool;
+*/

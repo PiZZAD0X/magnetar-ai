@@ -19,22 +19,60 @@
  */
 #include "script_component.hpp"
 
-params ["_units", "_position", "_side", ["_options", []], ["_sleep", 0.05]];
+params [["_group", objNull], ["_units", []], "_position", "_type", "_side", ["_options", []], ["_sleep", 0.05]];
 
-private _grp = createGroup _side;
+private _groupCreated = false;
+private _settings = [];
+if (isNull _group) then {
+    _group = createGroup _side;
+    _settings = [] call CBA_fnc_hashCreate;
+    _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
 
-{
-    private _unit = _grp createUnit [_x, _position, [], 2, "NONE"];
-    if (_forEachIndex == 0) then {
-        _grp setLeader _x;
-    };
-    sleep _sleep;
-} forEach _units;
-
-if !(_options isEqualTo []) then {
-    [_grp] call EFUNC(core,handleOptions);
+    // Init all group options
+    [_grp, _settings, _options] call EFUNC(core,handleOptions);
+    _groupCreated = true;
+} else {
+    _settings = _group getVariable [QEVGAR(core,settings), []];
+    _type = [_settings, "type"] call CBA_fnc_hashGet;
 };
 
-[_group] call EFUNC(core,applyOptions);
+_units params [["_infUnits"], ["_vehicles", []], ["_leader", objNull] ["_crew", []], ["_pilots", []]];
+
+private _isInfantry = "infantry" isEqualTo (toLower _type);
+
+{
+    if (_isInfantry) then {
+        private _unitPos = _position findEmptyPosition [0, 60, _x];
+        private _unit = _group createUnit [_x, _unitPos, [], 2, "FORM"];
+        sleep _sleep;
+    } else {
+        _x params ["_vehicle", ["_crew", []], ["_cargo", []], ["_pilots",[]]];
+
+        private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
+        private _unit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
+        {
+            private _unit = _group createUnit [_x, _unitPos, [], 2, "NONE"];
+        } forEach _pilots;
+
+        {
+
+        } forEach _crew;
+
+        {
+            
+        } forEach _cargo;
+    }
+
+    
+} forEach _units;
+
+if (_isInfantry) then {
+    (_units # 0) setLeader _group;
+};
+
+if (_groupCreated) then {
+    // Apply basic options
+    [_group, _settings] call EFUNC(core,applyOptions);
+};
 
 _grp

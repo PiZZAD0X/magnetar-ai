@@ -5,4 +5,5 @@ PREP(mainPFH);
 PREP(restart);
 PREP(setBasicSettings);
 PREP(setSkill);
+PREP(shuffleArray);
 PREP(suspend);

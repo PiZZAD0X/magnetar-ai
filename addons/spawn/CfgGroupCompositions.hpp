@@ -19,8 +19,8 @@ class CfgGroupCompositions {
     };
     class Wheeled : Common {
         type = "wheeled";
-        leaders[] =
-        vehicles[] =
+        leaders[] = [];
+        vehicles[] = [];
         side = "west";
         crew[] = [];
         cargoLeaders[] = [];
