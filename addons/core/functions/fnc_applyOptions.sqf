@@ -28,7 +28,8 @@ _group setFormation (selectRandom ([_settings, "formation"] call CBA_fnc_hashGet
 _group setSpeedMode (selectRandom ([_settings, "speed"] call CBA_fnc_hashGet));
 
 private _skill = [_settings, "skill"] call CBA_fnc_hashGet;
-[_group, _skill] call FUNC(setSkill);
+private _skillLeader = [_settings, "skillLeader"] call CBA_fnc_hashGet;
+[_group, [_skill, _skillLeader]] call FUNC(setSkill);
 
 // Init settings
 [_group] call compile ([_settings, "init"] call CBA_fnc_hashGet);

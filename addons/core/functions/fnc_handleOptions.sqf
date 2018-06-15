@@ -38,6 +38,7 @@ params ["_group", "_settings", ["_options", []]];
         case "formation": { [_settings, "formation", _value] call CBA_fnc_hashSet; };
         case "speed": { [_settings, "speed", _value] call CBA_fnc_hashSet; };
         case "skill": { [_settings, "skill", _value] call CBA_fnc_hashSet; };
+        case "skillLeader": { [_settings, "skillLeader", _value] call CBA_fnc_hashSet; };
         case "task": { [_settings, "task", _value] call CBA_fnc_hashSet; };
         case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; };
         case "allowwater": { [_settings, "allowWater", _value] call CBA_fnc_hashSet; };

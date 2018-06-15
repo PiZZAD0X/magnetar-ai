@@ -41,7 +41,7 @@ private _options = [];
 {
     private _values = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> _x);
     _options pushBack [_x, _values];
-} forEach ["behaviour", "combatMode", "formation", "speed", "skill"];
+} forEach ["behaviour", "combatMode", "formation", "speed", "skill", "skillLeader"];
 
 // Additional options defined in config
 private _options =+ getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "options");

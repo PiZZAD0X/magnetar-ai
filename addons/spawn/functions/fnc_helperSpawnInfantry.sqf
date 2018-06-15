@@ -37,8 +37,8 @@ if (count _leaderPool > 1) then {
 private _spawnUnits pushBack (_leaderPool # 0);
 
 // Ignore leader
-for "_i" from 0 to (_size - 2) do {
-    _spawnUnits pushBack (_units # (_i - 1));
+for "_i" from 1 to (_size - 1) do {
+    _spawnUnits pushBack (selectRandom _units);
 };
 
 private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_leaderPool # 0)]] call EFUNC(waypoint,markerRandomPos);

@@ -15,7 +15,11 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_skill"];
+params ["_group", "_skillArray"];
+
+_skillArray params ["_skill", "_skillLeader"];
+
+if (_skill isEqualTo [] || {_skillLeader isEqualTo []}) exitWith {};
 
 private _skillCategory = [];
 
@@ -28,14 +32,20 @@ if ((toLower (_skill # 0)) isEqualTo "general") then {
 {
     private _unit = _x;
     if (_unit isKindOf "CAManBase") then {
+        private _selectedSkill = _skill;
+
+        if (leader _group == _unit) then {
+            _selectedSkill = _skillLeader;
+        };
+
         {
             private _val = 0;
-            if (isArray (_skill # _forEachIndex)) then {
-                (_skill # _forEachIndex) params ["_min", "_max"];
+            if (isArray (_selectedSkill # _forEachIndex)) then {
+                (_selectedSkill # _forEachIndex) params ["_min", "_max"];
 
                 _val = _min + random [_max - _min];
             } else {
-                _val = (_skill # _forEachIndex);
+                _val = (_selectedSkill # _forEachIndex);
             };
             _unit setSkill [_x, _val];
         } forEach _skillCategory;

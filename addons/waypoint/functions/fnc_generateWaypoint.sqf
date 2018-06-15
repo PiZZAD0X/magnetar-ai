@@ -67,7 +67,7 @@ while {_tries < 50} do {
 };
 
 private _waypoint = _group addWaypoint [_targetPos, 0];
-_waypoint  setWaypointPosition [_targetPos, 0];
+_waypoint setWaypointPosition [_targetPos, 0];
 
 switch ([_settings, "task"] call CBA_fnc_hashGet) do {
     default { _waypoint  setWaypointType "MOVE"; };
@@ -79,11 +79,16 @@ if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
     _waypoint setwaypointBehaviour (selectRandom ([_settings, "behaviour"] call CBA_fnc_hashGet));
     _waypoint setwaypointCombatMode (selectRandom ([_settings, "combatMode"] call CBA_fnc_hashGet));
 } else {
-    _waypoint setWaypointFormation (waypointFormation _group);
-    _waypoint setWaypointSpeed (waypointSpeed _group);
-    _waypoint setwaypointbehaviour (waypointBehaviour _group);
-    _waypoint setwaypointCombatMode (waypointCombatMode _group);
+    _waypoint setWaypointFormation "NO CHANGE";
+    _waypoint setWaypointSpeed "UNCHANGED";
+    _waypoint setwaypointbehaviour "UNCHANGED";
+    _waypoint setwaypointCombatMode "NO CHANGE";
 };
+
+_waypoint setWaypointCompletionRadius [_settings, [_settings, "reachedDistance"] call CBA_fnc_hashGet];
+//_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
+_waypoint setWaypointStatements ["true", "hint 'completed'"];
+
 //_waypoint  setWaypointLoiterRadius _radius;
 _group setCurrentWaypoint _waypoint;
 
