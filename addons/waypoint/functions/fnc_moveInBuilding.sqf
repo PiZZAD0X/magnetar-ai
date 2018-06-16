@@ -36,7 +36,7 @@ private _units = (units _group) deleteAt ((units _group) find _leader);
         };
     };
 } foreach (units _group);
-
+systemChat format ["_units to move %1", _unitsToMove];
 if (_unitsToMove isEqualTo []) exitWith {};
 
 private _buildings = [leader _group] call FUNC(getNearBuildings);
@@ -48,12 +48,12 @@ private _inBuilding = false;
     private _building = _x;
 
     if !(_buildingPos isEqualTo []) then {
-        private _maxUnits = round (2 * (1 + count (_buildingPos/5)));
+        private _maxUnits = round (2 * (1 + count (_buildingPos)/5));
         private _assignedUnits = [];
         private _unitCount = 0;
         {
             if (_unitCount == _maxUnits) exitWith {};
-            _x setVariable [GVAR(inBuilding), [true, _building, _buildingPos]];
+            _x setVariable [QGVAR(inBuilding), [true, _building, _buildingPos]];
             _assignedUnits pushBack _x;
 
             _unitsToMove deleteAt (_unitsToMove find _x);

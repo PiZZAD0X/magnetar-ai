@@ -1,4 +1,4 @@
-PREP(elipMarkerRandomPos)
+PREP(elipMarkerRandomPos);
 PREP(generateWaypoint);
 PREP(getBuildingPos);
 PREP(getNearBuildings);

@@ -24,6 +24,7 @@ if (!local (leader _group)) exitWith {};
 // Create default values for the group
 private _settings = [] call CBA_fnc_hashCreate;
 _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
+systemChat format ["%1", _settings];
 
 [_settings, "behaviour", [behaviour (leader _group)]] call CBA_fnc_hashSet;
 [_settings, "combatMode", [combatMode _group]] call CBA_fnc_hashSet;
@@ -40,7 +41,7 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
     params ["_group"];
     private _pfh =  _group getVariable [QGVAR(pfh), -1];
 
-    if (_pfh != -1) then {
+    if (_pfh == -1) then {
         _pfh = [DFUNC(mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
     };
     _group setVariable [QGVAR(pfh), _pfh, true];

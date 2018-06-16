@@ -13,10 +13,11 @@
  *
  * Public: No
  */
+#include "script_component.hpp"
 
 params ["_settings", "_marker", "_type"];
 
-if ([_settings] call CBA_fnc_isHash) exitWith {
+if !([_settings] call CBA_fnc_isHash) exitWith {
     WARNING_1("Passed argument is not a valid CBA Hash: %1",_settings);
     _settings
 };

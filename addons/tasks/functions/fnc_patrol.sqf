@@ -75,7 +75,7 @@ switch (_taskState) do {
 
         //systemChat format ["Patrol Building %1 %2 %3 %4 %5 %6", _unitType in ["infantry", "wheeled"], _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet,!_inBuilding, random 100 < 70, unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}];
         if (_unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}) then {
-            systemChat format ["Patrol Building"];
+            //systemChat format ["Patrol Building"];
             private _inBuilding = [_group] call FUNC(moveInBuilding);
             if (_inBuilding) then {
                 [_settings, "taskState", "patrolBuildings"] call CBA_fnc_hashSet;

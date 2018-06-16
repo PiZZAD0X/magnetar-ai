@@ -32,7 +32,7 @@ if (isNull _group) then {
     [_group, _settings, _options] call EFUNC(core,handleOptions);
     _groupCreated = true;
 } else {
-    _settings = _group getVariable [QEVGAR(core,settings), []];
+    _settings = _group getVariable [QEGVAR(core,settings), []];
     _type = [_settings, "type"] call CBA_fnc_hashGet;
 };
 

@@ -85,7 +85,7 @@ if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
     _waypoint setwaypointCombatMode "NO CHANGE";
 };
 
-_waypoint setWaypointCompletionRadius [_settings, [_settings, "reachedDistance"] call CBA_fnc_hashGet];
+_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
 //_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
 _waypoint setWaypointStatements ["true", "hint 'completed'"];
 

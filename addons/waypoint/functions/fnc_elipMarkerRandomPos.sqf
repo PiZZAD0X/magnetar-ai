@@ -21,9 +21,15 @@ private _randX = random (_sizeX * 2) - _sizeX;
 private _randY = random (_sizeY * 2) - _sizeY;
 
 // Apply inverse CFG technique to get a random angle and radius
-private _rnd = random 1;
-// private _theta = atan2 (_sizeX);
-/*    private _theta = atan2 (_sizeY/_sizeX * tan(2*pi*_rnd));*/
+private _rnd = (random 1) / 4;
+private _theta = (_sizeY * tan (_rnd*360)) atan2 _sizeX;
+
+private _v = random 1;
+
+if (_v >= 0.25 && _v < 0.5) then {_theta = 180 - _theta};
+if (_v >= 0.5 && _v < 0.75) then {_theta = 180 + _theta};
+if (_v >=  0.75) then {_theta = -_theta};
+
 private _maxRadius = _sizeX * _sizeY / sqrt( (_sizeY*cos(_theta))^2 + (_sizeX*sin(_theta))^2);
 private _radius = _maxRadius*sqrt(random 1);
 
