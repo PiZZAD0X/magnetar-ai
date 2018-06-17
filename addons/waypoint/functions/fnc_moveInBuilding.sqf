@@ -36,32 +36,41 @@ private _units = (units _group) deleteAt ((units _group) find _leader);
         };
     };
 } foreach (units _group);
-systemChat format ["_units to move %1", _unitsToMove];
+
 if (_unitsToMove isEqualTo []) exitWith {};
 
 private _buildings = [leader _group] call FUNC(getNearBuildings);
 if (_buildings isEqualTo []) exitWith {};
 
-private _inBuilding = false;
+// Suffle array
+_buildings = [_buildings, 2] call EFUNC(core,suffleArray);
+
+private _enteredBuildings = [];
 {
+    private _buildingIsChecked = [_x] call FUNC(wasBuildingEntered);
     private _buildingPos = [_x] call FUNC(getBuildingPos);
     private _building = _x;
 
-    if !(_buildingPos isEqualTo []) then {
+    if !(_buildingPos isEqualTo [] && {!_buildingIsChecked}) then {
         private _maxUnits = round (2 * (1 + count (_buildingPos)/5));
         private _assignedUnits = [];
         private _unitCount = 0;
         {
             if (_unitCount == _maxUnits) exitWith {};
             _x setVariable [QGVAR(inBuilding), [true, _building, _buildingPos]];
+            _enteredBuildings pushBackUnique _building;
             _assignedUnits pushBack _x;
 
             _unitsToMove deleteAt (_unitsToMove find _x);
-            _inBuilding = true;
         } forEach _unitsToMove;
     };
 
     if (_unitsToMove isEqualTo []) exitWith {};
 } forEach _buildings;
 
-_inBuilding
+if (_enteredBuildings isEqualTo []) then {
+    [QGVAR(handleEnteredBuildings), _enteredBuildings] call CBA_fnc_serverEvent;
+    true
+} else {
+    false
+};

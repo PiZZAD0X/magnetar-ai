@@ -54,6 +54,9 @@ private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 private _targetPos = _currentPos;
 
+// Delete all waypoints
+[_group] call CBA_fnc_clearWaypoints;
+
 while {_tries < 50} do {
     private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
     systemChat format ["trial %1 %2", _trialPos, _trialPos distance2D _currentPos >= _minimumDistance];
@@ -97,13 +100,5 @@ private _marker = createMarker [_markerName, _targetPos];
 _markerName setMarkerShape "icon";
 _markerName setMarkerType "hd_dot";
 _markerName setMarkerColor "colorRed";
-
-// Delete the old waypoint
-private _numWaypoints = count (waypoints _group);
-{
-    if (_forEachIndex != _numWaypoints - 1) then {
-        deleteWaypoint _x;
-    };
-} forEach (waypoints _group);
 
 _targetPos

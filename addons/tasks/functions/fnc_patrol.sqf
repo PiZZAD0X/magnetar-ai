@@ -45,12 +45,14 @@ switch (_taskState) do {
     case "generateWaypoint": {
         private _targetPos = [_group, [_settings, "marker"] call CBA_fnc_hashGet] call EFUNC(waypoint,generateWaypoint);
         [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
+        _group setVariable [QGVAR(distance), (getPos (leader _group) distance2D _targetPos];
         _changed = true;
     };
     case "patrol": {
         private _targetPos = waypointPosition [_group, 0];
         private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
         private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
+        private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
         //private _taskTimeStart = [_settings, "taskTimeStart"] call CBA_fnc_hashGet;
 
         private _leader = leader _group;
@@ -69,17 +71,26 @@ switch (_taskState) do {
             if (CBA_missionTime > [_settings, "waitUntil"] call CBA_fnc_hashGet) then {
                 [_settings, "inBuilding", false] call CBA_fnc_hashSet;
                 _inBuilding = false;
-                (leader _group) enableAI "PATH";
             };
         };
 
         //systemChat format ["Patrol Building %1 %2 %3 %4 %5 %6", _unitType in ["infantry", "wheeled"], _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet,!_inBuilding, random 100 < 70, unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}];
-        if (_unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}) then {
+        private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos])*100) min 70;
+        if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
+            _group setVariable [QGVAR(buildingCheckTime), CBA_missionTime + 10];
             //systemChat format ["Patrol Building"];
             private _inBuilding = [_group] call FUNC(moveInBuilding);
             if (_inBuilding) then {
                 [_settings, "taskState", "patrolBuildings"] call CBA_fnc_hashSet;
                 [_settings, "inBuilding", _inBuilding] call CBA_fnc_hashSet;
+
+                // Lock the waypoint and add a new one
+                _group lockWP true;
+                _group addWaypoint [getPos _leader, 0, currentWaypoint _group];
+                private _comp = format ["this setFormation '%1'; this setBehaviour '%2'; deleteWaypoint [group this, currentWaypoint (group this)];", formation _group, behaviour _leader];
+                setWaypointStatements ["true", _comp];
+
+                _group setBehaviour "Combat";
             };
         };
 
@@ -94,7 +105,6 @@ switch (_taskState) do {
                 [_settings, "taskState", "generateWaypoint"] call CBA_fnc_hashSet;
                 systemChat format ["generating new waypoint"];
             };
-
             _changed = true;
         };
     };
@@ -104,12 +114,11 @@ switch (_taskState) do {
     };
 
     case "patrolBuildings": {
-        (leader _group) disableAI "PATH";
         private _allUnitsFinished = true;
         {
             private _inBuilding = (_x getVariable [QEGVAR(waypoint,building), [false]]) # 0;
 
-            if (_inBuilding) then {
+            if (_inBuilding && {_x getVariable [QEGVAR(waypoint,waitTime), CBA_missionTime] < CBA_missionTime) then {
                 if (vehicle _x == _x) then {
                     doGetOut _x;
                     _x setVariable [QEGVAR(waypoint,waitTime), CBA_missionTime + 3];
@@ -123,6 +132,7 @@ switch (_taskState) do {
         if (_allUnitsFinished) then {
             [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
             [_settings, "waitUntil", CBA_missionTime + 10] call CBA_fnc_hashGet;
+            _group lockWP false;
         };
     };
 
