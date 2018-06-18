@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [nearestBuilding player] call mai_waypoint_fnc_getBuildingPositions
+ * [nearestBuilding player] call mai_building_fnc_getBuildingPositions
  *
  * Public: No
  */

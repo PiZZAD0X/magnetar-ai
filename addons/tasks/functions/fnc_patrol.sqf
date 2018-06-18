@@ -79,7 +79,7 @@ switch (_taskState) do {
         if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
             _group setVariable [QGVAR(buildingCheckTime), CBA_missionTime + 10];
             //systemChat format ["Patrol Building"];
-            private _inBuilding = [_group] call FUNC(moveInBuilding);
+            private _inBuilding = [_group] call EFUNC(building,moveInBuilding);
             if (_inBuilding) then {
                 [_settings, "taskState", "patrolBuildings"] call CBA_fnc_hashSet;
                 [_settings, "inBuilding", _inBuilding] call CBA_fnc_hashSet;
@@ -116,14 +116,14 @@ switch (_taskState) do {
     case "patrolBuildings": {
         private _allUnitsFinished = true;
         {
-            private _inBuilding = (_x getVariable [QEGVAR(waypoint,building), [false]]) # 0;
+            private _inBuilding = (_x getVariable [QEGVAR(building,building), [false]]) # 0;
 
             if (_inBuilding && {_x getVariable [QEGVAR(waypoint,waitTime), CBA_missionTime] < CBA_missionTime) then {
                 if (vehicle _x == _x) then {
                     doGetOut _x;
                     _x setVariable [QEGVAR(waypoint,waitTime), CBA_missionTime + 3];
                 } else {
-                    _x call EFUNC(waypoint,patrolBuilding);
+                    _x call EFUNC(building,patrolBuilding);
                 };
                 _allUnitsFinished = false;
             };

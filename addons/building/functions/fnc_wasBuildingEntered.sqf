@@ -9,7 +9,7 @@
  * Random point <ARRAY> ([0,0] if invalid marker)
  *
  * Example:
- * ["marker"] call mai_waypoint_fnc_markerRandomPos
+ * ["marker"] call mai_building_fnc_markerRandomPos
  *
  * Public: No
  */

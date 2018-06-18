@@ -11,7 +11,7 @@
  * Array of buildings <ARRAY> or the nearest building <OBJECT>
  *
  * Example:
- * [nearestBuilding player] call mai_waypoint_fnc_getNearBuildings
+ * [nearestBuilding player] call mai_building_fnc_getNearBuildings
  *
  * Public: No
  */

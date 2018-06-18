@@ -8,7 +8,7 @@
  * Return Value:
  *
  * Example:
- * [group player] call mai_waypoint_fnc_patrolBuilding
+ * [group player] call mai_building_fnc_patrolBuilding
  *
  * Public: Yes
  */

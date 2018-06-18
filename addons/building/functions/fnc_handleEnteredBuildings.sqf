@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * [_building, true] call mai_waypoint_fnc_handleEnteredBuildings
+ * [_building, true] call mai_building_fnc_handleEnteredBuildings
  *
  * Public: No
  */
