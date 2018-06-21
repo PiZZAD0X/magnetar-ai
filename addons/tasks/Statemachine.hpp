@@ -8,33 +8,52 @@ class MAI_Tasks_StateMachine {
     
     class GenerateWaypoint {
         onStateEntered = QFUNC(onWaypointStateEntered);
-        class Patrol {
-            targetState = "Patrol";
-            events[] = {QGVAR(Patrol)};
+        class TaskAttack {
+            targetState = "TaskAttack";
+            events[] = {QGVAR(taskAttack)};
         };
+        class TaskDefend {
+            targetState = "TaskDefend";
+            events[] = {QGVAR(taskDefend)};
+        };
+        class TaskGarrisson {
+            targetState = "TaskGarrisson";
+            events[] = {QGVAR(taskGarrisson)};
+        };
+        class TaskPatrol {
+            targetState = "TaskPatrol";
+            events[] = {QGVAR(taskPatrol)};
+        };
+        class TaskTransport {
+            targetState = "TaskTransport";
+            events[] = {QGVAR(taskTransport)}:
+        }
     };
-    class Patrol {
-        onState = QFUNC(handlePatrolState);
-        onStateEntered = QUOTE([ARR_2(_this,(true))] call EFUNC(medical,setUnconsciousStatemachine));
 
+    class TaskPatrol {
+        onState = QFUNC(handlePatrolState);
+        class PatrolBuildings {
+            targetState = "PatrolBuildings";
+            events[] = {QGVAR(patrolBuildings)};
+        };
+        class PatrolZone {
+            targetState = "PatrolZone";
+            events[] = {QGVAR(patrolZone)};
+        };
         class SearchVehicles {
             targetState = "SearchVehciles";
-            events[] = {QGVAR(SearchVehicles)};
+            events[] = {QGVAR(searchVehicles)};
         };
+    };
+    
+    class PatrolBuildings {
 
-        class SearchBuildings {
-            targetState = "PatrolBuildings";
-            events[] = {QGVAR(PatrolBuildings)};
-        };
     };
     class SearchVehicles {
 
     };
-    class PatrolBuildings {
-        class Patrol {
-            targetState = "Patrol";
-            events[] = {QGVAR(Patrol)};
-        };
+    class SearchZone {
+
     };
     class Wait {
         onStateEntered = QUOTE(_this setVariable [ARR_2(QGVAR(waitUntil), CBA_missionTime + 30 + random 30)]); // killing a ; // killing a unit also exits the state machine for this unit

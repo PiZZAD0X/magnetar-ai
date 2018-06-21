@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Spawns randomly a group of units from a unit pool
+ * Selects random infantry units for spawning a group
  *
  * Arguments:
  * 0: Group  <OBJECT> (Default: [])
@@ -15,8 +15,9 @@
  * Example:
  * [player] call mai_spawn_fnc_helperSpawnInfantry
  *
- * Public: Yes
+ * Public: No
  */
+#include "script_component.hpp"
 
 params ["_group", "_configEntry", "_size", "_marker", "_sleep"];
 

@@ -1,3 +1,5 @@
 PREP(cloneGroup);
-PREP(spawnGroup);
+PREP(helperSpawnInfantry);
+PREP(helperSpawnWheeled);
 PREP(randSpawnGroup);
+PREP(spawnGroup);

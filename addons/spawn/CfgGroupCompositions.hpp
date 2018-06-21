@@ -19,7 +19,6 @@ class CfgGroupCompositions {
     };
     class Wheeled : Common {
         type = "wheeled";
-        leaders[] = [];
         vehicles[] = [];
         side = "west";
         crew[] = [];
@@ -29,14 +28,12 @@ class CfgGroupCompositions {
     };
     class Armored : Wheeled {
         type = "armored";
-        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
         options[] = [["allowWater", false], ["forceRoads", false], ["randomBehaviour", true], ["waitAtWaypoint", true], ["allowVehicles", false], ["patrolBuildings", false]];
     };
     class Air : Wheeled {
         type = "air";
-        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
         pilot[] = [];
@@ -44,7 +41,6 @@ class CfgGroupCompositions {
     };
     class Boat : Wheeled {
         type =  "boat";
-        leaders[] = [];
         vehicles[] = [];
         crew[] = [];
         cargoLeaders[] = [];
