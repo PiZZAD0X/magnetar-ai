@@ -35,15 +35,15 @@ if (count _leaderPool > 1) then {
     _leaderPool = [_leaderPool, 10] call EFUNC(core,suffleArray);
 };
 
-private _spawnUnits pushBack (_leaderPool # 0);
+private _spawnUnits pushBack (selectRandom _leaderPool);
 
 // Ignore leader
 for "_i" from 1 to (_size - 1) do {
     _spawnUnits pushBack (selectRandom _units);
 };
 
-private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_leaderPool # 0)]] call EFUNC(waypoint,markerRandomPos);
-[_group, [_spawnUnits], _targetPos] call FUNC(spawnGroup);
+private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnUnits # 0)]] call EFUNC(waypoint,markerRandomPos);
+[_group, _spawnUnits, _targetPos] call FUNC(spawnGroup);
 
 /*
 {

@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Selects random wheeled vehicles and their crew for spawning a group.
+ * Selects random armored vehicles and their crew for spawning a group.
  *
  * Arguments:
  * 0: Group  <OBJECT> (Default: [])
@@ -45,7 +45,7 @@ _size params ["_groupSize", "_cargoSize"];
 private _fillAllCargo = false;
 private _maxCargo = 3;
 private _cargoSize = 0;
-//if (isArray _cargoSize)
+
 for "_i" from 1 to _groupSize do {
     private _vehicle = selectRandom _vehiclePool;
     private _roles = _vehicle call BIS_fnc_vehicleRoles;
@@ -53,21 +53,12 @@ for "_i" from 1 to _groupSize do {
     private _crewUnits = [];
 
     {
-        if (_vehicle isKindOf "Wheeled_APC_F") then {
-            if (loLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
-                _cargoUnits pushBack (selectRandom _cargoPool);
-                _cargoSize = _cargoSize + 1;
-            } else {
-                _crewUnits pushBack (selectRandom _crewPool);
-            };
+        if (toLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
+            _cargoUnits pushBack (selectRandom _cargoPool);
+            _cargoSize = _cargoSize + 1;
         } else {
-            if (toLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
-                _cargoUnits pushBack (selectRandom _cargoPool);
-                _cargoSize = _cargoSize + 1;
-            } else {
-                _crewUnits pushBack (selectRandom _crewPool);
-            };
-        };        
+            _crewUnits pushBack (selectRandom _crewPool);
+        };
     } forEach _roles;
 
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits];

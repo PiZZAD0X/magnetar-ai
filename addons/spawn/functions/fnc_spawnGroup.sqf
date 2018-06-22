@@ -47,7 +47,31 @@ private _isInfantry = "infantry" isEqualTo (toLower _type);
         _x params ["_vehicle", ["_crew", []], ["_cargo", []], ["_pilots",[]]];
 
         private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
-        private _unit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
+        private _vehicleUnit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
+        private _vehicleRoles = _vehicleUnit call BIS_fnc_vehicleRoles;
+        {
+            private _role = toLower (_x # 0);
+
+            switch (_role) do {
+                case "driver": {
+                    if (_vehicle isKindOf "Air") then {
+
+                    }
+                };
+                case "gunner": {
+
+                };
+                case "turret": {
+
+                };
+                case "commander": {
+
+                };
+                case "cargo": {
+
+                };
+            };
+        } forEach _vehicleRoles;
         {
             private _unit = _group createUnit [_x, _unitPos, [], 2, "NONE"];
             _unit moveInDriver _vehicle;
