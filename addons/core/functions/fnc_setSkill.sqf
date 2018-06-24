@@ -40,7 +40,7 @@ if ((toLower (_skill # 0)) isEqualTo "general") then {
 
         {
             private _val = 0;
-            if (isArray (_selectedSkill # _forEachIndex)) then {
+            if ((_selectedSkill # _forEachIndex) isEqualType []) then {
                 (_selectedSkill # _forEachIndex) params ["_min", "_max"];
 
                 _val = _min + random [_max - _min];

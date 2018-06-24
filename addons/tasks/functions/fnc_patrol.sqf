@@ -45,7 +45,7 @@ switch (_taskState) do {
     case "generateWaypoint": {
         private _targetPos = [_group, [_settings, "marker"] call CBA_fnc_hashGet] call EFUNC(waypoint,generateWaypoint);
         [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
-        _group setVariable [QGVAR(distance), (getPos (leader _group) distance2D _targetPos];
+        _group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];
         _changed = true;
     };
     case "patrol": {
@@ -86,9 +86,9 @@ switch (_taskState) do {
 
                 // Lock the waypoint and add a new one
                 _group lockWP true;
-                _group addWaypoint [getPos _leader, 0, currentWaypoint _group];
+                private _wp = _group addWaypoint [getPos _leader, 0, currentWaypoint _group];
                 private _comp = format ["this setFormation '%1'; this setBehaviour '%2'; deleteWaypoint [group this, currentWaypoint (group this)];", formation _group, behaviour _leader];
-                setWaypointStatements ["true", _comp];
+                _wp setWaypointStatements ["true", _comp];
 
                 _group setBehaviour "Combat";
             };
@@ -118,7 +118,7 @@ switch (_taskState) do {
         {
             private _inBuilding = (_x getVariable [QEGVAR(building,building), [false]]) # 0;
 
-            if (_inBuilding && {_x getVariable [QEGVAR(waypoint,waitTime), CBA_missionTime] < CBA_missionTime) then {
+            if (_inBuilding && {_x getVariable [QEGVAR(waypoint,waitTime), CBA_missionTime] < CBA_missionTime}) then {
                 if (vehicle _x == _x) then {
                     doGetOut _x;
                     _x setVariable [QEGVAR(waypoint,waitTime), CBA_missionTime + 3];

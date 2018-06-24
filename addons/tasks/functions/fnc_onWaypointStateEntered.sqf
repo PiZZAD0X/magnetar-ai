@@ -19,5 +19,6 @@ params ["_group", "_state"];
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _targetPos = [_group, [_settings, "marker"] call CBA_fnc_hashGet] call EFUNC(waypoint,generateWaypoint);
+_group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];
 
-[QGVAR(patrol), _group] call CBA_fnc_localEvent;
+[[_settings, "task"] call CBA_fnc_hashGet, _group] call CBA_fnc_localEvent;

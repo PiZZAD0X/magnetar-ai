@@ -19,7 +19,7 @@ params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05]];
 
 private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 private _group = objNull;
-
+systemChat format ["side %1", _side];
 switch (toLower _side) do {
     case "west": {_group = createGroup west};
     case "east": {_group = createGroup east};
@@ -29,13 +29,13 @@ switch (toLower _side) do {
 
 // Determine group size
 private _size = 0;
-if (isArray _groupSize) then {
+if (_groupSize isEqualType []) then {
     _groupSize params ["_minSize", "_maxSize"];
     _size = _minSize + floor (random (_maxSize - _minSize));
 } else {
     _size = _groupSize;
 };
-
+systemChat format ["size %1", _size];
 // Basic options should be always defined
 private _options = [];
 {
@@ -49,12 +49,13 @@ private _options =+ getArray (configFile >> "CfgGroupCompositions" >> _configEnt
 private _settings = [] call CBA_fnc_hashCreate;
 private _type = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "type");
 _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
-
+systemChat format ["type %1", _type];
 // Init all group options
 [_group, _settings, _options] call EFUNC(core,handleOptions);
 
 // Gnerate units
-[_group, _configEntry, _size, _marker, _sleep] call (missionNamespace getVariable [QGVAR(helperSpawn%1), toLower _type]);
+systemChat format [QFUNC(helperSpawn%1), toLower _type];
+[_group, _configEntry, _size, _marker, _sleep] call (missionNamespace getVariable (format [QFUNC(helperSpawn%1), _type]));
 
 // Apply basic options
 [_group, _settings] call EFUNC(core,applyOptions);

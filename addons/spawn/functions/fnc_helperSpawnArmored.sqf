@@ -49,7 +49,8 @@ private _cargoSize = 0;
 for "_i" from 1 to _groupSize do {
     private _vehicle = selectRandom _vehiclePool;
     private _roles = _vehicle call BIS_fnc_vehicleRoles;
-    private _cargoUnits pushBack (selectRandom _cargoLeaders);
+    private _cargoUnits = [];
+    _cargoUnits pushBack (selectRandom _cargoLeaders);
     private _crewUnits = [];
 
     {

@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Selects random air vehicles and their crew for spawning a group.
+ * Selects random ships vehicles and their crew for spawning a group.
  *
  * Arguments:
  * 0: Group  <OBJECT> (Default: [])
@@ -13,7 +13,7 @@
  * Group <OBJECT>
  *
  * Example:
- * [player] call mai_spawn_fnc_helperSpawnInfantry
+ * [player] call mai_spawn_fnc_helperSpawnBoat
  *
  * Public: No
  */
@@ -25,7 +25,6 @@ private _vehiclePool = getArray (configFile >> "CfgGroupCompositions" >> _config
 private _crewPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "crew");
 private _cargoLeaders = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargoLeaders");
 private _cargoPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargo");
-private _pilotPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "pilot");
 
 private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 
@@ -38,7 +37,7 @@ private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
     if (count _x > 1) then {
        _x = [_x, 10] call EFUNC(core,suffleArray);
     };
-} forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPool];
+} forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool];
 
 private _spawnVehicles = [];
 
@@ -53,22 +52,17 @@ for "_i" from 1 to _groupSize do {
     private _cargoUnits = [];
     _cargoUnits pushBack (selectRandom _cargoLeaders);
     private _crewUnits = [];
-    private _pilots = [];
 
     {
         if (toLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
             _cargoUnits pushBack (selectRandom _cargoPool);
             _cargoSize = _cargoSize + 1;
         } else {
-            if ((toLower (_x # 0) in ["driver", "gunner"]) || {toLower (_x # 0) == "turret" && {getNumber ([_vehicle, _x # 1] call CBA_fnc_getTurret >> "isCopilot") == 1}}) then {
-                _pilots pushBack (selectRandom _pilotPool);
-            } else {
-                _crewUnits pushBack (selectRandom _crewPool);
-            };
+            _crewUnits pushBack (selectRandom _crewPool);
         };
     } forEach _roles;
 
-    _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
+    _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits];
 };
 
 private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);

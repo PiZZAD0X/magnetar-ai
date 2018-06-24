@@ -17,7 +17,7 @@
 
 params ["_group", "_state"];
 
-if (!_group getVariable[QGVAR(taskInit), false]) then {
+if (!(_group getVariable[QGVAR(taskInit), false])) then {
     _group getVariable[QGVAR(taskInit), true];
 };
 
@@ -27,9 +27,12 @@ private _settings = _group getVariable [QEGVAR(core,settings), []];
 [_settings, "reachedDistance", 10] call CBA_fnc_hashSet;
 [_settings, "checkingDistance", 150] call CBA_fnc_hashSet;
 
-if ([_settings, "task"] call CBA_fnc_hashGet == "Patrol") then {
+if ([_settings, "task"] call CBA_fnc_hashGet == QGVAR(taskPatrol)) then {
     [_settings, "behaviour", ["safe"]] call CBA_fnc_hashSet;
     [_settings, "speed", ["limited"]] call CBA_fnc_hashSet;
+
+    _group setBehaviour "safe";
+    _group setSpeedMode "limited";
 };
 
 if ([_settings, "forceRoads"] call CBA_fnc_hashGet) then {

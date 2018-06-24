@@ -24,7 +24,7 @@ params ["_group", "_settings", ["_options", []]];
         params ["_value"];
 
         private "_val";
-        if (isArray _value) then {
+        if (_value isEqualType []) then {
             _val = selectRandom _value;
         } else {
             _val = _value

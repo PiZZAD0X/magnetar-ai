@@ -49,12 +49,13 @@ private _cargoSize = 0;
 for "_i" from 1 to _groupSize do {
     private _vehicle = selectRandom _vehiclePool;
     private _roles = _vehicle call BIS_fnc_vehicleRoles;
-    private _cargoUnits pushBack (selectRandom _cargoLeaders);
+    private _cargoUnits = [];
+    _cargoUnits pushBack (selectRandom _cargoLeaders);
     private _crewUnits = [];
 
     {
         if (_vehicle isKindOf "Wheeled_APC_F") then {
-            if (loLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
+            if (toLower (_x # 0) == "cargo" && {(_cargoSize < (_maxCargo - 1)) || _fillAllCargo}) then {
                 _cargoUnits pushBack (selectRandom _cargoPool);
                 _cargoSize = _cargoSize + 1;
             } else {
@@ -67,7 +68,7 @@ for "_i" from 1 to _groupSize do {
             } else {
                 _crewUnits pushBack (selectRandom _crewPool);
             };
-        };        
+        };
     } forEach _roles;
 
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits];

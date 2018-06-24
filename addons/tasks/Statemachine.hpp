@@ -5,7 +5,7 @@ class MAI_Tasks_StateMachine {
     class Init {
         onStateEntered = QFUNC(onInitStateEntered);
     };
-    
+
     class GenerateWaypoint {
         onStateEntered = QFUNC(onWaypointStateEntered);
         class TaskAttack {
@@ -45,9 +45,10 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(searchVehicles)};
         };
     };
-    
-    class PatrolBuildings {
 
+    class PatrolBuildings {
+        onStateEntered = QEFUNC(building,onStateEntered);
+        onState = QEFUNC(building,onState);
     };
     class SearchVehicles {
 

@@ -1,11 +1,5 @@
 PREP(elipMarkerRandomPos);
 PREP(generateWaypoint);
-PREP(getBuildingPos);
-PREP(getNearBuildings);
-PREP(handleEnteredBuildings);
 PREP(markerRandomPos);
-PREP(moveInBuilding);
 PREP(onWaypointReached);
-PREP(patrolBuilding);
 PREP(recMarkerRandomPos);
-PREP(wasBuildingEntered);

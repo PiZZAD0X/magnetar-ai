@@ -35,13 +35,14 @@ if (count _leaderPool > 1) then {
     _leaderPool = [_leaderPool, 10] call EFUNC(core,suffleArray);
 };
 
-private _spawnUnits pushBack (selectRandom _leaderPool);
+private _spawnUnits = [];
+spawnUnits pushBack (selectRandom _leaderPool);
 
 // Ignore leader
 for "_i" from 1 to (_size - 1) do {
     _spawnUnits pushBack (selectRandom _units);
 };
-
+systemChat format ["water %1 land %2 roads %3", _allowWater, _allowLand, _forceRoads];
 private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnUnits # 0)]] call EFUNC(waypoint,markerRandomPos);
 [_group, _spawnUnits, _targetPos] call FUNC(spawnGroup);
 
