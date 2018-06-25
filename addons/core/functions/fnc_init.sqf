@@ -24,7 +24,6 @@ if (!local (leader _group)) exitWith {};
 // Create default values for the group
 private _settings = [] call CBA_fnc_hashCreate;
 _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
-systemChat format ["%1", _settings];
 
 [_settings, "behaviour", [behaviour (leader _group)]] call CBA_fnc_hashSet;
 [_settings, "combatMode", [combatMode _group]] call CBA_fnc_hashSet;

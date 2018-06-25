@@ -3,17 +3,16 @@ class MAI_Tasks_StateMachine {
     skipNull = 1;
 
     class Init {
-        onStateEntered = QFUNC(onInitStateEntered);
-
+        onStateEntered = QUOTE(DFUNC(onInitStateEntered));
         class GenerateWaypoint {
             targetState = "GenerateWaypoint";
-            condition = {CBA_missionTime > 0};
+            condition = QUOTE(systemchat format ['waypoint']; CBA_missionTime > 0);
             events[] = {QGVAR(generateWaypoint)};
         };
     };
 
     class GenerateWaypoint {
-        onStateEntered = QFUNC(onWaypointStateEntered);
+        onStateEntered = QUOTE(DFUNC(onWaypointStateEntered));
         class TaskAttack {
             targetState = "TaskAttack";
             events[] = {QGVAR(taskAttack)};
@@ -32,12 +31,13 @@ class MAI_Tasks_StateMachine {
         };
         class TaskTransport {
             targetState = "TaskTransport";
-            events[] = {QGVAR(taskTransport)}:
+            events[] = {QGVAR(taskTransport)};
         };
     };
 
     class TaskPatrol {
-        onState = QFUNC(handlePatrolState);
+        onState = QUOTE(DFUNC(handlePatrolState));
+        onStateEntered = "systemChat format ['entered patrol task'];";
         class PatrolBuildings {
             targetState = "PatrolBuildings";
             events[] = {QGVAR(patrolBuildings)};
@@ -52,13 +52,13 @@ class MAI_Tasks_StateMachine {
         };
         class Wait {
             targetState = "Wait";
-            events[] = {QGVAR()}
+            events[] = {QGVAR(wait)};
         };
     };
 
     class PatrolBuildings {
-        onStateEntered = QEFUNC(building,onStateEntered);
-        onState = QEFUNC(building,handlePatrolBuilding);
+        onStateEntered = QUOTE(DEFUNC(building,onStateEntered));
+        onState = QUOTE(DEFUNC(building,handlePatrolBuilding));
 
         class TaskAttack {
             targetState = "TaskAttack";
@@ -78,21 +78,23 @@ class MAI_Tasks_StateMachine {
         };
         class TaskTransport {
             targetState = "TaskTransport";
-            events[] = {QGVAR(taskTransport)}:
+            events[] = {QGVAR(taskTransport)};
         };
     };
+
     class SearchVehicles {
 
     };
     class SearchZone {
 
     };
+
     class Wait {
-        onStateEntered = QUOTE(_this setVariable [ARR_2(QGVAR(waitUntil), CBA_missionTime + 30 + random 30)]); // killing a ; // killing a unit also exits the state machine for this unit
+        onStateEntered = QUOTE(_this setVariable [ARR_2(QQGVAR(waitUntil), CBA_missionTime + 30 + random 30)]); // killing a ; // killing a unit also exits the state machine for this unit
 
         class GenerateWaypoint {
             targetState = "GenerateWaypoint";
-            condition = {CBA_missionTime >= _this getVariable [QGVAR(waitUntil), CBA_missionTime]};
+            condition = QUOTE(CBA_missionTime >= _this getVariable [ARR_2(QQGVAR(waitUntil), CBA_missionTime)]);
             events[] = {QGVAR(generateWaypoint)};
         };
     };

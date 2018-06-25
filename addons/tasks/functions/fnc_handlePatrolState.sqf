@@ -20,16 +20,18 @@ params ["_group", "_state"];
 if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
 
 private _leader = leader _group;
+private _targetPos = waypointPosition [_group, 0];
+
 if (!local (leader _group)) exitWith {
     _group setVariable [QGVAR(waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
-    _group setVariable [QGVAR(distance), _group getVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos], true];
+    _group setVariable [QGVAR(distance), _group getVariable [QGVAR(distance), (getPos _leader) distance2D _targetPos], true];
     _group setVariable [QGVAR(buildingCheckTime), _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime], true];
     _group setVariable [QGVAR(inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
 };
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 
-private _targetPos = waypointPosition [_group, 0];
+
 private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
 private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];

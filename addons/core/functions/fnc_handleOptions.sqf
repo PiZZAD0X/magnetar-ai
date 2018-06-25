@@ -31,7 +31,7 @@ params ["_group", "_settings", ["_options", []]];
         };
         _val
     };
-    systemChat format ["key %1 value %2", _key, _value];
+
     switch (toLower _key) do {
         case "behaviour": { [_settings, "behaviour", _value] call CBA_fnc_hashSet; };
         case "combatmode": { [_settings, "combatMode", _value] call CBA_fnc_hashSet; };
