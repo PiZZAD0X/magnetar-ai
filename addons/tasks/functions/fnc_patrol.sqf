@@ -18,13 +18,13 @@
 params ["_group"];
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
-private _taskState = [_settings, "taskState"] call CBA_fnc_hashGet;
+private _taskState = _group getVariable [QGVAR(taskState), "init"];
 private _changed = false;
 
 switch (_taskState) do {
     case "init" : {
         // TODO add support for custom waypoints
-        [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
+        _group setVariable [QGVAR(taskState), "taskPatrol"];
 
         // TODO make the reached distance depend on marker size?
         [_settings, "reachedDistance", 10] call CBA_fnc_hashSet;
@@ -44,11 +44,10 @@ switch (_taskState) do {
 
     case "generateWaypoint": {
         private _targetPos = [_group, [_settings, "marker"] call CBA_fnc_hashGet] call EFUNC(waypoint,generateWaypoint);
-        [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
+        _group setVariable [QGVAR(taskState), "taskPatrol"];
         _group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];
-        _changed = true;
     };
-    case "patrol": {
+    case "taskPatrol": {
         private _targetPos = waypointPosition [_group, 0];
         private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
         private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
@@ -81,7 +80,7 @@ switch (_taskState) do {
             //systemChat format ["Patrol Building"];
             private _inBuilding = [_group] call EFUNC(building,moveInBuilding);
             if (_inBuilding) then {
-                [_settings, "taskState", "patrolBuildings"] call CBA_fnc_hashSet;
+                _group setVariable [QGVAR(taskState), "patrolBuildings"];
                 [_settings, "inBuilding", _inBuilding] call CBA_fnc_hashSet;
 
                 // Lock the waypoint and add a new one
@@ -99,13 +98,12 @@ switch (_taskState) do {
 
             if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
                 [_settings, "waitUntil", CBA_missionTime + 30 + random 30] call CBA_fnc_hashSet;
-                [_settings, "taskState", "wait"] call CBA_fnc_hashSet;
+                _group setVariable [QGVAR(taskState), "wait"];
                 systemChat format ["task wait"];
             } else {
-                [_settings, "taskState", "generateWaypoint"] call CBA_fnc_hashSet;
+                _group setVariable [QGVAR(taskState), "generateWaypoint"];
                 systemChat format ["generating new waypoint"];
             };
-            _changed = true;
         };
     };
 
@@ -130,7 +128,7 @@ switch (_taskState) do {
         } forEach (units _group);
 
         if (_allUnitsFinished) then {
-            [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
+            _group setVariable [QGVAR(taskState), "taskPatrol"];
             [_settings, "waitUntil", CBA_missionTime + 10] call CBA_fnc_hashGet;
             _group lockWP false;
         };
@@ -138,7 +136,7 @@ switch (_taskState) do {
 
     case "wait": {
         if (CBA_missionTime > [_settings, "waitUntil"] call CBA_fnc_hashGet) then {
-            [_settings, "taskState", "generateWaypoint"] call CBA_fnc_hashSet;
+            _group setVariable [QGVAR(taskState), "generateWaypoint"];
             _changed = true;
         }
     };

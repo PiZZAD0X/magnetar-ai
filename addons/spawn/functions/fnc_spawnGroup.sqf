@@ -62,7 +62,6 @@ private _leader = objNull;
                     if (_vehicle isKindOf "Air") then {
                         _unit = _group createUnit [_pilots # 0, _unitPos, [], 2, "FORM"];
                         _pilots deleteAt 0;
-
                     } else {
                         _unit = _group createUnit [_crew # 0, _unitPos, [], 2, "FORM"];
                         _crew deleteAt 0;

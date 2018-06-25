@@ -39,4 +39,6 @@ if ([_settings, "forceRoads"] call CBA_fnc_hashGet) then {
     (leader _group) forceFollowRoad true;
 };
 
+_group setVariable [QEGVAR(core,settings), _settings, true];
+
 systemChat format ["task init %1", [_settings, "marker"] call CBA_fnc_hashGet];

@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [nearestBuilding player] call mai_building_fnc_moveInBuilding
+ * [nearestBuilding player] call mai_building_fnc_handlePatrolBuilding
  *
  * Public: No
  */
@@ -17,14 +17,23 @@
 
 params ["_group"];
 
+if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
+
+if (!local (leader _group)) exitWith {
+    _group setVariable [QGVAR(tasks,waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
+    _group setVariable [QGVAR(tasks,distance), _group getVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos], true];
+    _group setVariable [QGVAR(tasks,buildingCheckTime), _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime], true];
+    _group setVariable [QGVAR(tasks,inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
+};
+
 private _allUnitsFinished = true;
 {
     private _inBuilding = (_x getVariable [QGVAR(building), [false]]) # 0;
 
-    if (_inBuilding && {_x getVariable [QEGVAR(waypoint,waitTime), CBA_missionTime] < CBA_missionTime}) then {
+    if (_inBuilding && {_x getVariable [QGVAR(disembarkTime), CBA_missionTime] < CBA_missionTime}) then {
         if (vehicle _x == _x) then {
             doGetOut _x;
-            _x setVariable [QEGVAR(waypoint,waitTime), CBA_missionTime + 3];
+            _x setVariable [QGVAR(disembarkTime), CBA_missionTime + 3];
         } else {
             _x call FUNC(patrolBuilding);
         };
@@ -33,8 +42,9 @@ private _allUnitsFinished = true;
 } forEach (units _group);
 
 if (_allUnitsFinished) then {
-
-    [_settings, "taskState", "patrol"] call CBA_fnc_hashSet;
-    [_settings, "waitUntil", CBA_missionTime + 10] call CBA_fnc_hashGet;
+    _group setVariable [QEGVAR(tasks,finishedBuildingPatrol), CBA_missionTime + 10];
     _group lockWP false;
+
+    private _settings = _group getVariable [QEGVAR(core,settings), []];
+    [[_settings, "task"] call CBA_fnc_hashGet, _group] call CBA_fnc_localEvent;
 };

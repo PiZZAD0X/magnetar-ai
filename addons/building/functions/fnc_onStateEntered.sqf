@@ -21,7 +21,7 @@ _group setVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime + 10];
 
 private _inBuilding = [_group] call FUNC(moveInBuilding);
 if (_inBuilding) then {
-    _group setVariable [QGVAR(inBuilding), true];
+    _group setVariable [QEGVAR(tasks,inBuilding), true];
 
     // Lock the waypoint and add a new one
     _group lockWP true;

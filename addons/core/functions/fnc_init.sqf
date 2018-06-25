@@ -33,10 +33,12 @@ systemChat format ["%1", _settings];
 
 [_group, _settings, _options] call FUNC(handleOptions);
 [_group, _settings] call FUNC(applyOptions);
+_group setVariable [QGVAR(enabled), true];
 
 // Register the group
 [QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;
 
+/*
 [{CBA_missionTime > 0}, {
     params ["_group"];
     private _pfh =  _group getVariable [QGVAR(pfh), -1];
@@ -46,3 +48,4 @@ systemChat format ["%1", _settings];
     };
     _group setVariable [QGVAR(pfh), _pfh, true];
 }, _group] call CBA_fnc_waitUntilAndExecute;
+*/

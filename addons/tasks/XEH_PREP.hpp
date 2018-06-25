@@ -1,1 +1,4 @@
-PREP(patrol);
+PREP(handlePatrolState);
+PREP(onInitStateEntered);
+PREP(onWaypointStateEntered);
+PREP(taskPtrol);

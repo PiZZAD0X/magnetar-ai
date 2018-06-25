@@ -1,9 +1,15 @@
 class MAI_Tasks_StateMachine {
-    list = QUOTE(allGroups select {local _x && _x getVariable [ARR_2(QQEGVAR(core,maiEnabled), false)]});
+    list = QUOTE(allGroups select {local _x && _x getVariable [ARR_2(QQEGVAR(core,enabled), false)]});
     skipNull = 1;
 
     class Init {
         onStateEntered = QFUNC(onInitStateEntered);
+
+        class GenerateWaypoint {
+            targetState = "GenerateWaypoint";
+            condition = {CBA_missionTime > 0};
+            events[] = {QGVAR(generateWaypoint)};
+        };
     };
 
     class GenerateWaypoint {
@@ -27,7 +33,7 @@ class MAI_Tasks_StateMachine {
         class TaskTransport {
             targetState = "TaskTransport";
             events[] = {QGVAR(taskTransport)}:
-        }
+        };
     };
 
     class TaskPatrol {
@@ -44,11 +50,36 @@ class MAI_Tasks_StateMachine {
             targetState = "SearchVehciles";
             events[] = {QGVAR(searchVehicles)};
         };
+        class Wait {
+            targetState = "Wait";
+            events[] = {QGVAR()}
+        };
     };
 
     class PatrolBuildings {
         onStateEntered = QEFUNC(building,onStateEntered);
-        onState = QEFUNC(building,onState);
+        onState = QEFUNC(building,handlePatrolBuilding);
+
+        class TaskAttack {
+            targetState = "TaskAttack";
+            events[] = {QGVAR(taskAttack)};
+        };
+        class TaskDefend {
+            targetState = "TaskDefend";
+            events[] = {QGVAR(taskDefend)};
+        };
+        class TaskGarrisson {
+            targetState = "TaskGarrisson";
+            events[] = {QGVAR(taskGarrisson)};
+        };
+        class TaskPatrol {
+            targetState = "TaskPatrol";
+            events[] = {QGVAR(taskPatrol)};
+        };
+        class TaskTransport {
+            targetState = "TaskTransport";
+            events[] = {QGVAR(taskTransport)}:
+        };
     };
     class SearchVehicles {
 
@@ -62,7 +93,7 @@ class MAI_Tasks_StateMachine {
         class GenerateWaypoint {
             targetState = "GenerateWaypoint";
             condition = {CBA_missionTime >= _this getVariable [QGVAR(waitUntil), CBA_missionTime]};
-            events[] = {QGVAR(GenerateWaypoint)};
+            events[] = {QGVAR(generateWaypoint)};
         };
     };
 };

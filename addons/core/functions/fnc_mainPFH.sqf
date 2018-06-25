@@ -37,8 +37,8 @@ if (_taskChanged) then {
 //systemChat format [QEFUNC(task,%1), _assignedTask];
 private _taskFunction = missionNamespace getVariable (format [QEFUNC(tasks,%1), _assignedTask]);
 //systemChat format ["task: %1", _taskFunction];
-//_changed = [_group] call _taskFunction;
-//systemChat format ["changed %1", _changed];
+_changed = [_group] call _taskFunction;
+
 if (((units _group) select {alive _x}) isEqualTo []) then {
     private _pfh = _group getVariable [QGVAR(pfh), -1];
     [_pfh] call CBA_fnc_removePerFrameHandler;
