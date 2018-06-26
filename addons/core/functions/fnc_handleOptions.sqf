@@ -20,16 +20,12 @@ params ["_group", "_settings", ["_options", []]];
 {
     _x params ["_key", "_value"];
 
-    private _getValue = {
-        params ["_value"];
-
-        private "_val";
-        if (_value isEqualType []) then {
-            _val = selectRandom _value;
+    if (_value isEqualType "" && {_value == "true" || _value == "false"}) then {
+        if (_value == "true") then {
+            _value = true;
         } else {
-            _val = _value
+            _value = false;
         };
-        _val
     };
 
     switch (toLower _key) do {

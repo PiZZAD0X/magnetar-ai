@@ -16,7 +16,7 @@
 #include "script_component.hpp"
 
 params [["_marker", ""], ["_condition", [false, true, false]], ["_checkRadius", [0, 50, ""]]];
-systemChat format ["marker %1", _marker];
+
 if (_marker isEqualTo "") exitWith {[0,0]};
 
 private _center = getMarkerPos _marker;

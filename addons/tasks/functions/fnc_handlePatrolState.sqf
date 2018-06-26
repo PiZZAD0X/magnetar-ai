@@ -31,7 +31,6 @@ if (!local (leader _group)) exitWith {
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 
-
 private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
 private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
@@ -54,13 +53,13 @@ if (_inBuilding && {CBA_missionTime > (_group getVariable [QGVAR(finishedBuildin
 //systemChat format ["Patrol Building %1 %2 %3 %4 %5 %6", _unitType in ["infantry", "wheeled"], _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet,!_inBuilding, random 100 < 70, unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}];
 private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos])*100) min 70;
 if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
-    [QGVAR(patrolBuildings), _group] call CBA_fnc_localEvent;
+    //[QGVAR(patrolBuildings), _group] call CBA_fnc_localEvent;
 };
 
 // Waypoint completed
 if (_distance < _reachedDistance) then { // || {(CBA_missionTime - _taskTimeStart) > _taskTimeOut}) then {
     if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
-        [QGVAR(waitUntil), _group] call CBA_fnc_localEvent;
+        [QGVAR(wait), _group] call CBA_fnc_localEvent;
     } else {
         [QGVAR(generateWaypoint), _group] call CBA_fnc_localEvent;
     };

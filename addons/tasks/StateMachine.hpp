@@ -6,8 +6,7 @@ class MAI_Tasks_StateMachine {
         onStateEntered = QUOTE(DFUNC(onInitStateEntered));
         class GenerateWaypoint {
             targetState = "GenerateWaypoint";
-            condition = QUOTE(systemchat format ['waypoint']; CBA_missionTime > 0);
-            events[] = {QGVAR(generateWaypoint)};
+            condition = QUOTE(CBA_missionTime > 0);
         };
     };
 
@@ -95,7 +94,6 @@ class MAI_Tasks_StateMachine {
         class GenerateWaypoint {
             targetState = "GenerateWaypoint";
             condition = QUOTE(CBA_missionTime >= _this getVariable [ARR_2(QQGVAR(waitUntil), CBA_missionTime)]);
-            events[] = {QGVAR(generateWaypoint)};
         };
     };
 };

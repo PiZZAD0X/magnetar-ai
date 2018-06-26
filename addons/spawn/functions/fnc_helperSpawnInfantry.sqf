@@ -23,27 +23,27 @@ params ["_group", "_configEntry", "_size", "_marker", "_sleep"];
 
 private _leaderPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
 private _unitPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "units");
-private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
-private _units = [_units, 10] call EFUNC(core,shuffleArray);
+
+_unitPool = [_unitPool, 10] call EFUNC(core,shuffleArray);
 
 if (count _leaderPool > 1) then {
     _leaderPool = [_leaderPool, 10] call EFUNC(core,suffleArray);
 };
 
 private _spawnUnits = [];
-spawnUnits pushBack (selectRandom _leaderPool);
+_spawnUnits pushBack (selectRandom _leaderPool);
 
 // Ignore leader
 for "_i" from 1 to (_size - 1) do {
-    _spawnUnits pushBack (selectRandom _units);
+    _spawnUnits pushBack (selectRandom _unitPool);
 };
-systemChat format ["water %1 land %2 roads %3", _allowWater, _allowLand, _forceRoads];
-private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnUnits # 0)]] call EFUNC(waypoint,markerRandomPos);
+
+private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _spawnUnits # 0]] call EFUNC(waypoint,markerRandomPos);
 [_group, _spawnUnits, _targetPos] call FUNC(spawnGroup);
 
 /*

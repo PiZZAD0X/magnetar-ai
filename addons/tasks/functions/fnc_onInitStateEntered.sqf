@@ -40,5 +40,3 @@ if ([_settings, "forceRoads"] call CBA_fnc_hashGet) then {
 };
 
 _group setVariable [QEGVAR(core,settings), _settings, true];
-
-systemChat format ["task init %1", [_settings, "marker"] call CBA_fnc_hashGet];

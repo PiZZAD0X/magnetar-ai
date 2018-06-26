@@ -28,7 +28,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "skillLeader", []] call CBA_fnc_hashSet;
 [_settings, "skill", []] call CBA_fnc_hashSet;
 
-[_settings, "task", "patrol"] call CBA_fnc_hashSet;
+[_settings, "task", QEGVAR(tasks,patrol)] call CBA_fnc_hashSet;
 [_settings, "taskState", "init"] call CBA_fnc_hashSet;
 
 [_settings, "allowWater", false] call CBA_fnc_hashSet;
@@ -40,5 +40,6 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "allowVehicles", true] call CBA_fnc_hashSet;
 [_settings, "patrolBuildings", true] call CBA_fnc_hashSet;
 [_settings, "inBuilding", false] call CBA_fnc_hashSet;
+[_settings, "execWaypoint", ""] call CBA_fnc_hashSet;
 
 _settings

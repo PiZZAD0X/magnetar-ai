@@ -55,8 +55,8 @@ private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 private _targetPos = _currentPos;
 
 // Delete all waypoints
-[_group] call CBA_fnc_clearWaypoints;
-
+[_group] call FUNC(clearWaypoints);
+_targetPos = _currentPos;
 while {_tries < 50} do {
     private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
 
@@ -89,8 +89,8 @@ if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
     _waypoint setwaypointCombatMode "NO CHANGE";
 };
 
-_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
-_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
+//_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
+//_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
 
 _group setCurrentWaypoint _waypoint;
 

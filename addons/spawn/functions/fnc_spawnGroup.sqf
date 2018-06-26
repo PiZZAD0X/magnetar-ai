@@ -20,7 +20,7 @@
 #include "script_component.hpp"
 
 params [["_group", objNull], ["_units", []], "_position", "_type", "_marker", "_side", ["_options", []], ["_sleep", 0.05]];
-
+systemChat format ["position %1", _position];
 private _groupCreated = false;
 private _settings = [];
 if (isNull _group) then {
@@ -121,7 +121,7 @@ private _leader = objNull;
     };
 } forEach _units;
 
-_leader setLeader _group;
+_group selectLeader _leader;
 
 if (_groupCreated) then {
     // Apply basic options
