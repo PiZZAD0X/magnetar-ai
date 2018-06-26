@@ -15,29 +15,29 @@ class MAI_Tasks_StateMachine {
         onStateEntered = QUOTE(DFUNC(onWaypointStateEntered));
         class TaskAttack {
             targetState = "TaskAttack";
-            events[] = {QGVAR(taskAttack)};
+            events[] = {QGVAR(attack)};
         };
         class TaskDefend {
             targetState = "TaskDefend";
-            events[] = {QGVAR(taskDefend)};
+            events[] = {QGVAR(defend)};
         };
         class TaskGarrisson {
             targetState = "TaskGarrisson";
-            events[] = {QGVAR(taskGarrisson)};
+            events[] = {QGVAR(garrisson)};
         };
         class TaskPatrol {
             targetState = "TaskPatrol";
-            events[] = {QGVAR(taskPatrol)};
+            events[] = {QGVAR(patrol)};
         };
         class TaskTransport {
             targetState = "TaskTransport";
-            events[] = {QGVAR(taskTransport)};
+            events[] = {QGVAR(transport)};
         };
     };
 
     class TaskPatrol {
-        onState = QUOTE(DFUNC(handlePatrolState));
         onStateEntered = "systemChat format ['entered patrol task'];";
+        onState = QUOTE(DFUNC(handlePatrolState));
         class PatrolBuildings {
             targetState = "PatrolBuildings";
             events[] = {QGVAR(patrolBuildings)};
@@ -62,23 +62,23 @@ class MAI_Tasks_StateMachine {
 
         class TaskAttack {
             targetState = "TaskAttack";
-            events[] = {QGVAR(taskAttack)};
+            events[] = {QGVAR(attack)};
         };
         class TaskDefend {
             targetState = "TaskDefend";
-            events[] = {QGVAR(taskDefend)};
+            events[] = {QGVAR(defend)};
         };
         class TaskGarrisson {
             targetState = "TaskGarrisson";
-            events[] = {QGVAR(taskGarrisson)};
+            events[] = {QGVAR(garrisson)};
         };
         class TaskPatrol {
             targetState = "TaskPatrol";
-            events[] = {QGVAR(taskPatrol)};
+            events[] = {QGVAR(patrol)};
         };
         class TaskTransport {
             targetState = "TaskTransport";
-            events[] = {QGVAR(taskTransport)};
+            events[] = {QGVAR(transport)};
         };
     };
 

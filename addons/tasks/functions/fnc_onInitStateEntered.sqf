@@ -27,7 +27,7 @@ private _settings = _group getVariable [QEGVAR(core,settings), []];
 [_settings, "reachedDistance", 10] call CBA_fnc_hashSet;
 [_settings, "checkingDistance", 150] call CBA_fnc_hashSet;
 
-if ([_settings, "task"] call CBA_fnc_hashGet == QGVAR(taskPatrol)) then {
+if ([_settings, "task"] call CBA_fnc_hashGet == QGVAR(patrol)) then {
     [_settings, "behaviour", ["safe"]] call CBA_fnc_hashSet;
     [_settings, "speed", ["limited"]] call CBA_fnc_hashSet;
 
