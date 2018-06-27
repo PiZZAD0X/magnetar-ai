@@ -17,6 +17,6 @@
 
 params ["_unit"];
 
-_vest = vest _unit;
+private _vest = vest _unit;
 
 _vest isKindOf "V_RebreatherB"

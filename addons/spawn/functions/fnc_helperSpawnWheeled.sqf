@@ -19,23 +19,20 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_configEntry", "_size", "_marker", "_sleep"];
+params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep"];
 
 private _vehiclePool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "vehicles");
 private _crewPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "crew");
 private _cargoLeaders = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargoLeaders");
 private _cargoPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargo");
 
-private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
-
-private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 
 {
     if (count _x > 1) then {
-       _x = [_x, 10] call EFUNC(core,suffleArray);
+       _x = [_x, 10] call EFUNC(core,shuffleArray);
     };
 } forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool];
 
@@ -75,4 +72,4 @@ for "_i" from 1 to _groupSize do {
 };
 
 private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
-[_group, _spawnVehicles, _targetPos] call FUNC(spawnGroup);
+[_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);

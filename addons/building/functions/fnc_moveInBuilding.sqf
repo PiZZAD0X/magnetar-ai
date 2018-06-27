@@ -43,7 +43,7 @@ private _buildings = [leader _group] call FUNC(getNearBuildings);
 if (_buildings isEqualTo []) exitWith {};
 
 // Suffle array
-_buildings = [_buildings, 2] call EFUNC(core,suffleArray);
+_buildings = [_buildings, 2] call EFUNC(core,shuffleArray);
 
 private _enteredBuildings = [];
 {

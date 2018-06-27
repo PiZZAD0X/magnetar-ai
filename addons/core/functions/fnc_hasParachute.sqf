@@ -17,6 +17,6 @@
 
 params ["_unit"];
 
-_backpack = backpack _unit;
+private _backpack = backpack _unit;
 
 _backpack isKindOf "B_Parachute"

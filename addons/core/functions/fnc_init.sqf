@@ -21,6 +21,10 @@ private _group = group _unit;
 
 if (!local (leader _group)) exitWith {};
 
+if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
+    _marker setMarkerAlpha 0;
+};
+
 // Create default values for the group
 private _settings = [] call CBA_fnc_hashCreate;
 _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
@@ -30,9 +34,11 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
 [_settings, "formation", [formation _group]] call CBA_fnc_hashSet;
 [_settings, "speed", [speedMode _group]] call CBA_fnc_hashSet;
 
-[_group, _settings, _options] call FUNC(handleOptions);
-[_group, _settings] call FUNC(applyOptions);
+_settings = [_settings, _options] call FUNC(parseOptions);
+_group setVariable [QGVAR(settings), _settings];
 _group setVariable [QGVAR(enabled), true];
+
+[_group, _settings] call FUNC(applyOptions);
 
 // Register the group
 [QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;

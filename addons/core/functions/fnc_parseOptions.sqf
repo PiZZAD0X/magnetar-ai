@@ -9,13 +9,13 @@
  * None
  *
  * Example:
- * [player] call mai_core_fnc_handleOptions
+ * [player] call mai_core_fnc_parseOptions
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params ["_group", "_settings", ["_options", []]];
+params ["_settings", ["_options", []]];
 
 {
     _x params ["_key", "_value"];
@@ -47,4 +47,4 @@ params ["_group", "_settings", ["_options", []]];
     };
 } forEach _options;
 
-_group setVariable [QGVAR(settings), _settings, true];
+_settings

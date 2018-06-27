@@ -16,7 +16,7 @@
  */
 #include "script_component.hpp"
 
-params ["_modelGroup", ["_sleep", 0.05]];
+params ["_modelGroup", "_numClones", ["_overrideOptions", []], ["_sleep", 0.05]];
 
 private _side = side _modelGroup;
 private _group = createGroup _side;
@@ -28,42 +28,44 @@ private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
-private _groupPosition = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50]] call EFUNC(waypoint,markerRandomPos);
 
-// Generate units
-{
-    private _type = typeOf _x;
-    private _pos = _groupPosition findEmptyPosition [0, 50, _type];
-    private _unit = _group createUnit [_x, _pos, [], 2, "NONE"];
-    _unit setSkill (skill _x);
+if (_overrideOptions isEqualTo []) then {
+    [_settings, _overrideOptions] call EFUNC(core,parseOptions);
+};
 
-    if (leader _modelGroup == _x) then {
-        _group setLeader _unit;
-    };
-} forEach (units _modelGroup);
+// Determine group size
+private _num = 0;
+if (_numClones isEqualType []) then {
+    _numClones params ["_minSize", "_maxSize"];
+    _num = _minSize + floor (random (_maxSize - _minSize));
+} else {
+    _num = _numClones;
+};
 
-// Reset task states and assign behaviour, speed, ...
-_group setBehaviour (selectRandom ([_settings, "behaviour"] call CBA_fnc_hashGet));
-_group setCombatMode (selectRandom ([_settings, "combatMode"] call CBA_fnc_hashGet));
-_group setFormation (selectRandom ([_settings, "formation"] call CBA_fnc_hashGet));
-_group setSpeedMode (selectRandom ([_settings, "speed"] call CBA_fnc_hashGet));
+for "_i" from 1 to _num do {
+    private _groupPosition = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50]] call EFUNC(waypoint,markerRandomPos);
+    // Generate units
+    {
+        private _type = typeOf _x;
+        private _pos = _groupPosition findEmptyPosition [0, 50, _type];
+        private _unit = _group createUnit [_x, _pos, [], 2, "NONE"];
+        _unit setSkill (skill _x);
 
-// Init line
-_group call compile ([_settings, "init"] call CBA_fnc_hashGet);
+        if (leader _modelGroup == _x) then {
+            _group setLeader _unit;
+        };
+    } forEach (units _modelGroup);
 
-// Reset task
-[_settings, "taskState", "init"] call CBA_fnc_hashSet;
+    // Reset task states and assign behaviour, speed, ...
+    _group setBehaviour (selectRandom ([_settings, "behaviour"] call CBA_fnc_hashGet));
+    _group setCombatMode (selectRandom ([_settings, "combatMode"] call CBA_fnc_hashGet));
+    _group setFormation (selectRandom ([_settings, "formation"] call CBA_fnc_hashGet));
+    _group setSpeedMode (selectRandom ([_settings, "speed"] call CBA_fnc_hashGet));
 
-_group setVariable [QEGVAR(core,settings), _settings, true];
-
-[{CBA_missionTime > 0}, {
-    params ["_group"];
-    private _pfh =  _group getVariable [QEGVAR(core,pfh), -1];
-
-    if (_pfh != -1) then {
-        _pfh = [DEFUNC(core,mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
-    };
-    _group setVariable [QEGVAR(core,pfh), _pfh, true];
-}, _group] call CBA_fnc_waitUntilAndExecute;
+    // Init
+    [_group, _settings] call EFUNC(core,applyOptions);
+    _group setVariable [QEGVAR(core,settings), _settings];
+    _group setVariable [QEGVAR(core,enabled), true];
+};
 
 _group

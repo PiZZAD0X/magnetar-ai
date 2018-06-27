@@ -20,7 +20,6 @@ params ["_group", "_state"];
 if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
 
 if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
-if !(simulationEnabled _group) exitWith {};
 
 private _leader = leader _group;
 private _targetPos = waypointPosition [_group, 0];

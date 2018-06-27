@@ -1,8 +1,8 @@
 PREP(applyOptions);
-PREP(handleOptions);
 PREP(hasRebreather);
 PREP(hasParachute);
 PREP(init);
+PREP(parseOptions);
 PREP(restart);
 PREP(setBasicSettings);
 PREP(setSkill);

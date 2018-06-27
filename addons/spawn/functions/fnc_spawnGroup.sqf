@@ -19,20 +19,21 @@
  */
 #include "script_component.hpp"
 
-params [["_group", objNull], ["_units", []], "_position", "_type", "_marker", "_side", ["_options", []], ["_sleep", 0.05]];
-systemChat format ["position %1", _position];
-private _groupCreated = false;
-private _settings = [];
-if (isNull _group) then {
-    _group = createGroup _side;
+params [["_units", []], "_marker", "_type", "_side", ["_position", []], ["_settings", []], ["_options", []], ["_sleep", 0.05]];
+
+private _group = objNull;
+switch (_side) do {
+    case "civilian": {_group = createGroup civilian};
+    case "east": {_group = createGroup east};
+    case "resistance": {_group = createGroup resistance};
+    case "west": {_group = createGroup west};
+};
+
+if !(_settings isEqualTo []) then {
     _settings = [] call CBA_fnc_hashCreate;
     _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
-
-    // Init all group options
-    [_group, _settings, _options] call EFUNC(core,handleOptions);
-    _groupCreated = true;
+    [_settings, _options] call EFUNC(core,parseOptions);
 } else {
-    _settings = _group getVariable [QEGVAR(core,settings), []];
     _type = [_settings, "type"] call CBA_fnc_hashGet;
 };
 
@@ -40,6 +41,12 @@ private _isInfantry = "infantry" isEqualTo (toLower _type);
 private _leader = objNull;
 {
     if (_isInfantry) then {
+        if (_position isEqualTo []) then {
+            private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
+            private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
+            private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
+            _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _units # 0]] call EFUNC(waypoint,markerRandomPos);
+        };
         private _unitPos = _position findEmptyPosition [0, 60, _x];
         private _unit = _group createUnit [_x, _unitPos, [], 2, "FORM"];
         if (!isNull _leader) then {
@@ -49,6 +56,12 @@ private _leader = objNull;
     } else {
         _x params ["_vehicle", ["_crew", []], ["_cargo", []], ["_pilots",[]]];
 
+        if (_position isEqualTo []) then {
+            private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
+            private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
+            private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
+            _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _vehicle]] call EFUNC(waypoint,markerRandomPos);
+        };
         private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
         private _vehicleUnit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
         private _vehicleRoles = fullCrew [_vehicleUnit, "", true];
@@ -121,11 +134,10 @@ private _leader = objNull;
     };
 } forEach _units;
 
-_group selectLeader _leader;
+[_group, _settings] call EFUNC(core,applyOptions);
+_group setVariable [QEGVAR(core,settings), _settings];
+_group setVariable [QEGVAR(core,enabled), true];
 
-if (_groupCreated) then {
-    // Apply basic options
-    [_group, _settings] call EFUNC(core,applyOptions);
-};
+_group selectLeader _leader;
 
 _group

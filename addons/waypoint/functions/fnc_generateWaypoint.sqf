@@ -94,10 +94,12 @@ _waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fn
 
 _group setCurrentWaypoint _waypoint;
 
-private _markerName = format ["marker_%1", CBA_missionTime];
-private _marker = createMarker [_markerName, _targetPos];
-_markerName setMarkerShape "icon";
-_markerName setMarkerType "hd_dot";
-_markerName setMarkerColor "colorRed";
+if (GVAR(debugEnabled)) then {
+    private _markerName = format ["marker_%1", CBA_missionTime];
+    private _marker = createMarker [_markerName, _targetPos];
+    _markerName setMarkerShape "icon";
+    _markerName setMarkerType "hd_dot";
+    _markerName setMarkerColor "colorRed";
+};
 
 _targetPos

@@ -9,7 +9,7 @@
  * Suffled array
  *
  * Example:
- * [[0,1, 2, 3], 50] call mai_core_fnc_suffleArray
+ * [[0,1, 2, 3], 50] call mai_core_fnc_shuffleArray
  *
  * Public: No
  */
