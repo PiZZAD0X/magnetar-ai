@@ -9,10 +9,3 @@
 
     GVAR(groupRegisters) = GVAR(groupRegisters) + 1;
 }] call CBA_fnc_addEventHandler;
-
-[QGVAR(targetPFH), {
-    params ["_group"];
-
-    private _pfh = [DFUNC(mainPFH), 0, _group] call CBA_fnc_addPerFrameHandler;
-    _group setVariable [QGVAR(pfh), _pfh, true];
-}] call CBA_fnc_addEventHandler;

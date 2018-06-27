@@ -75,7 +75,7 @@ while {_tries < 50} do {
         if (_vehicleType isEqualTo "") then {
             _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius];
         } else {
-            _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius, ""];
+            _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius, _vehicleType];
         };
 
         if (_checkedPos isEqualTo [] || {!(_checkedPos inArea _marker)}) then {
@@ -95,5 +95,5 @@ private _markerName = format ["marker_%1", CBA_missionTime];
 private _marker = createMarker [_markerName, _targetPos];
 _markerName setMarkerShape "icon";
 _markerName setMarkerType "hd_dot";
-_markerName setMarkerColor "colorRed";*/
+_markerName setMarkerColor "colorGreen";*/
 _targetPos
