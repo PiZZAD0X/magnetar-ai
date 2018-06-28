@@ -41,4 +41,4 @@ _group setVariable [QGVAR(enabled), true];
 [_group, _settings] call FUNC(applyOptions);
 
 // Register the group
-[QGVAR(registerGroup), _group] call CBA_fnc_serverEvent;
+[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;

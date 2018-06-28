@@ -19,7 +19,7 @@
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep"];
+params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_targetPos", []]];
 
 private _leaderPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
 private _unitPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "units");
@@ -42,5 +42,8 @@ for "_i" from 1 to (_size - 1) do {
     _spawnUnits pushBack (selectRandom _unitPool);
 };
 
-private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _spawnUnits # 0]] call EFUNC(waypoint,markerRandomPos);
+if (_targetPos isEqualTo []) then {
+    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
+};
+
 [_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);

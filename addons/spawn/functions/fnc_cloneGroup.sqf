@@ -41,20 +41,18 @@ if (_numClones isEqualType []) then {
 } else {
     _num = _numClones;
 };
+private _type = toLower ([_settings, "type"] call CBA_fnc_hashGet);
+
+private _helperFunction = missionNamespace getVariable QFUNC(helperCloneInfantry);
+
+if !(_type isEqualTo "infantry") then {
+    _helperFunction = missionNamespace getVariable QFUNC(helperCloneVehicle);
+}
 
 for "_i" from 1 to _num do {
     private _groupPosition = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50]] call EFUNC(waypoint,markerRandomPos);
-    // Generate units
-    {
-        private _type = typeOf _x;
-        private _pos = _groupPosition findEmptyPosition [0, 50, _type];
-        private _unit = _group createUnit [_x, _pos, [], 2, "NONE"];
-        _unit setSkill (skill _x);
-
-        if (leader _modelGroup == _x) then {
-            _group setLeader _unit;
-        };
-    } forEach (units _modelGroup);
+    
+    [_modelGroup, _group, _groupPosition, _sleep] spawn _helperFunction;
 
     // Reset task states and assign behaviour, speed, ...
     _group setBehaviour (selectRandom ([_settings, "behaviour"] call CBA_fnc_hashGet));
@@ -66,6 +64,9 @@ for "_i" from 1 to _num do {
     [_group, _settings] call EFUNC(core,applyOptions);
     _group setVariable [QEGVAR(core,settings), _settings];
     _group setVariable [QEGVAR(core,enabled), true];
+
+    // Register the group
+    [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 };
 
 _group

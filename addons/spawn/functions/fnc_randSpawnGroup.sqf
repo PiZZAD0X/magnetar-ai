@@ -9,13 +9,13 @@
  * None
  *
  * Example:
- * [player] call mai_spawn_fnc_spawnInfantryGroup
+ * [player] call mai_spawn_fnc_randSpawnGroup
  *
  * Public: Yes
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05]];
+params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05], ["_position", []]];
 
 private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 
@@ -45,5 +45,5 @@ _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
 // Init all group options
 _settings = [_settings, _options] call EFUNC(core,parseOptions);
 
-// Gnerate units
-[_configEntry, _settings, _side, _size, _marker, _sleep] call (missionNamespace getVariable (format [QFUNC(helperSpawn%1), _type]));
+// Generate units
+[_configEntry, _settings, _side, _size, _marker, _sleep, _position] call (missionNamespace getVariable (format [QFUNC(helperSpawn%1), _type]));

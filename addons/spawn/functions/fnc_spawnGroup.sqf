@@ -111,7 +111,7 @@ private _leader = objNull;
                 case "cargo": {
                     private _unit = _group createUnit [_cargo # 0, _unitPos, [], 2, "FORM"];
                     _cargo deleteAt 0;
-                    _unit assignAsCargoIndex [_vehicleUnit, (_x # 2) # 0];
+                    _unit assignAsCargoIndex [_vehicleUnit, _x # 2];
                     _unit moveInCargo _vehicleUnit;
                 };
             };
@@ -137,6 +137,9 @@ private _leader = objNull;
 [_group, _settings] call EFUNC(core,applyOptions);
 _group setVariable [QEGVAR(core,settings), _settings];
 _group setVariable [QEGVAR(core,enabled), true];
+
+// Register the group
+[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 
 _group selectLeader _leader;
 

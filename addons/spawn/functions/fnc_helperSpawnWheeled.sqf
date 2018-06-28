@@ -19,7 +19,7 @@
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep"];
+params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_targetPos", []]];
 
 private _vehiclePool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "vehicles");
 private _crewPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "crew");
@@ -71,5 +71,8 @@ for "_i" from 1 to _groupSize do {
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits];
 };
 
-private _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
+if (_targetPos isEqualTo []) then {
+    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
+};
+
 [_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);

@@ -1,4 +1,6 @@
 PREP(cloneGroup);
+PREP(helperCloneInfantry);
+PREP(helperCloneVehicle);
 PREP(helperSpawnAir);
 PREP(helperSpawnArmored);
 PREP(helperSpawnInfantry);
