@@ -16,7 +16,7 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_vehicle", ["_forceAll", false]];
+params ["_vehicle", ["_forceAll", false]];
 
 private _units = [];
 
@@ -46,10 +46,12 @@ if (_vehicle iskindof "TANK" || _vehicle iskindof "Wheeled_APC_F" || _vehicle is
         };
     } forEach fullCrew [_vehicle, "cargo", false];
 } else {
-    // Only the driver stays in the vehicle
+    // Only the driver and gunner stay in the vehicle
     {
-        if (alive _x  && {_x != driver _vehicle}) then {
+        if (alive _x  && {_x != driver _vehicle && _x != gunner _vehicle}) then {
             _units pushBack _x;
         };
     } forEach crew _vehicle;
 };
+
+_units

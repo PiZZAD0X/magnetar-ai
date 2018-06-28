@@ -22,11 +22,11 @@ params ["_modelGroup", "_cloneGroup", "_position", "_sleep"];
 {
     private _type = typeOf _x;
     private _pos = _position findEmptyPosition [0, 50, _type];
-    private _unit = _group createUnit [_x, _pos, [], 2, "NONE"];
+    private _unit = _cloneGroup createUnit [typeOf _x, _position, [], 2, "NONE"];
     _unit setSkill (skill _x);
 
     if (leader _modelGroup == _x) then {
-        _group setLeader _unit;
+        _cloneGroup selectLeader _unit;
     };
 
     sleep _sleep;

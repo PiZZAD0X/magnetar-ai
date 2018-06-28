@@ -19,9 +19,7 @@
 params ["_modelGroup", "_numClones", ["_overrideOptions", []], ["_sleep", 0.05]];
 
 private _side = side _modelGroup;
-private _group = createGroup _side;
-
-private _settings =+ _modelGroup getVariable [QEGVAR(core,settings), []];
+private _settings =+ (_modelGroup getVariable [QEGVAR(core,settings), []]);
 
 // Define random position
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
@@ -47,11 +45,12 @@ private _helperFunction = missionNamespace getVariable QFUNC(helperCloneInfantry
 
 if !(_type isEqualTo "infantry") then {
     _helperFunction = missionNamespace getVariable QFUNC(helperCloneVehicle);
-}
+};
 
 for "_i" from 1 to _num do {
+    private _group = createGroup _side;
     private _groupPosition = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50]] call EFUNC(waypoint,markerRandomPos);
-    
+
     [_modelGroup, _group, _groupPosition, _sleep] spawn _helperFunction;
 
     // Reset task states and assign behaviour, speed, ...
@@ -69,4 +68,4 @@ for "_i" from 1 to _num do {
     [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 };
 
-_group
+_modelGroup

@@ -63,7 +63,7 @@ for "_i" from 1 to _groupSize do {
 };
 
 if (_targetPos isEqualTo []) then {
-    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
+    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
 };
 
 [_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);

@@ -29,7 +29,7 @@ switch (_side) do {
     case "west": {_group = createGroup west};
 };
 
-if !(_settings isEqualTo []) then {
+if (_settings isEqualTo []) then {
     _settings = [] call CBA_fnc_hashCreate;
     _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
     [_settings, _options] call EFUNC(core,parseOptions);
@@ -63,10 +63,11 @@ private _leader = objNull;
             _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _vehicle]] call EFUNC(waypoint,markerRandomPos);
         };
         private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
-        private _vehicleUnit = _group createUnit [_vehicle, _unitPos, [], 2, "FORM"];
+        private _vehicleUnit = createVehicle [_vehicle, _unitPos, [], 2, "FORM"];
         private _vehicleRoles = fullCrew [_vehicleUnit, "", true];
         private _hasCommander = false;
         private _hasGunner = false;
+
         {
             private _role = toLower (_x # 1);
             private _unit = objNull;
@@ -109,10 +110,12 @@ private _leader = objNull;
                     _unit moveInCommander _vehicleUnit;
                 };
                 case "cargo": {
-                    private _unit = _group createUnit [_cargo # 0, _unitPos, [], 2, "FORM"];
-                    _cargo deleteAt 0;
-                    _unit assignAsCargoIndex [_vehicleUnit, _x # 2];
-                    _unit moveInCargo _vehicleUnit;
+                    if !(_cargo isEqualTo []) then {
+                        private _unit = _group createUnit [_cargo # 0, _unitPos, [], 2, "FORM"];
+                        _cargo deleteAt 0;
+                        _unit assignAsCargoIndex [_vehicleUnit, _x # 2];
+                        _unit moveInCargo _vehicleUnit;
+                    };
                 };
             };
         } forEach _vehicleRoles;

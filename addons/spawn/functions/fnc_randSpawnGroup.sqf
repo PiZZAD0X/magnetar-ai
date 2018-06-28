@@ -19,15 +19,6 @@ params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05], ["_position",
 
 private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 
-// Determine group size
-private _size = 0;
-if (_groupSize isEqualType []) then {
-    _groupSize params ["_minSize", "_maxSize"];
-    _size = _minSize + floor (random (_maxSize - _minSize));
-} else {
-    _size = _groupSize;
-};
-
 // Basic options should be always defined
 private _options = [];
 {
@@ -44,6 +35,33 @@ _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
 
 // Init all group options
 _settings = [_settings, _options] call EFUNC(core,parseOptions);
+
+private _determineSize = {
+    params ["_grpSize"];
+
+    private _size = 0;
+    if (_grpSize isEqualTo []) then {
+        _grpSize params ["_minSize", "_maxSize"];
+        _size = _minSize + floor (random (_maxSize - _minSize));
+    } else {
+        _size = _grpSize;
+    };
+
+    _size
+};
+
+// Determine group size
+private _size = 0;
+if (_groupSize isEqualType []) then {
+    if (_type isEqualTo "infantry") then {
+        _size = [_groupSize] call _determineSize;
+    } else {
+        _groupSize params ["_gSize", "_cargoSize"];
+        _size = [[_gSize] call _determineSize, [_cargoSize] call _determineSize];
+    };
+} else {
+    _size = _groupSize;
+};
 
 // Generate units
 [_configEntry, _settings, _side, _size, _marker, _sleep, _position] call (missionNamespace getVariable (format [QFUNC(helperSpawn%1), _type]));

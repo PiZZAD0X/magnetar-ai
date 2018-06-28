@@ -94,7 +94,7 @@ _waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fn
 
 _group setCurrentWaypoint _waypoint;
 
-if (GVAR(debugEnabled)) then {
+if (EGVAR(core,debugEnabled)) then {
     private _markerName = format ["marker_%1", CBA_missionTime];
     private _marker = createMarker [_markerName, _targetPos];
     _markerName setMarkerShape "icon";
