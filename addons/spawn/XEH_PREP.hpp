@@ -5,5 +5,6 @@ PREP(helperSpawnAir);
 PREP(helperSpawnArmored);
 PREP(helperSpawnInfantry);
 PREP(helperSpawnWheeled);
+PREP(populateMarker);
 PREP(randSpawnGroup);
 PREP(spawnGroup);

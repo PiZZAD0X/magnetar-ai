@@ -17,6 +17,9 @@
 
 params [["_unit", objNull], "_marker", ["_type", "infantry"], ["_options", []]];
 
+// Only execute on the server
+if (!isServer) exitWith {};
+
 private _group = group _unit;
 
 if (!local (leader _group)) exitWith {};
@@ -41,4 +44,4 @@ _group setVariable [QGVAR(enabled), true];
 [_group, _settings] call FUNC(applyOptions);
 
 // Register the group
-[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
+[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_localEvent;

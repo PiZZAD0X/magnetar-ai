@@ -21,4 +21,18 @@
 
 params ["_markerInfo", "_groupsToSpawn"];
 
+if (!isServer) exitWith {};
+
 _markerInfo params ["_marker"];
+
+if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
+    _marker setMarkerAlpha 0;
+};
+
+{
+    private _numGroups = _x # 0;
+    (_x # 1) params ["_configEntry", "_groupSize", "_marker", ["_position", []]];
+
+    [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
+
+} forEach _groupsToSpawn;

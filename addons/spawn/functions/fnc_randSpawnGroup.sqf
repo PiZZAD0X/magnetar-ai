@@ -17,8 +17,6 @@
 
 params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05], ["_position", []]];
 
-private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
-
 // Basic options should be always defined
 private _options = [];
 {
@@ -29,11 +27,10 @@ private _options = [];
 // Additional options defined in config
 private _options =+ getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "options");
 
+// Init settings for the group
 private _settings = [] call CBA_fnc_hashCreate;
-private _type = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "type");
+private _type = toLower (getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "type"));
 _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
-
-// Init all group options
 _settings = [_settings, _options] call EFUNC(core,parseOptions);
 
 private _determineSize = {
@@ -63,5 +60,12 @@ if (_groupSize isEqualType []) then {
     _size = _groupSize;
 };
 
+// Determine group side
+private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
+
 // Generate units
-[_configEntry, _settings, _side, _size, _marker, _sleep, _position] call (missionNamespace getVariable (format [QFUNC(helperSpawn%1), _type]));
+if (_type isEqualTo "infantry") then {
+    [_configEntry, _settings, _side, _size, _marker, _sleep, _position] call FUNC(helperSpawnInfantry);
+} else {
+    [_configEntry, _settings, _side, _size, _marker, _sleep, _position] call FUNC(helperSpawnVehicle);
+};
