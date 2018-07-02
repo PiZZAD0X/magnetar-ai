@@ -31,24 +31,6 @@ if (_settings isEqualTo []) exitWith {
     WARNING_1("Group %1 defined without configuration",_settings);
 };
 
-switch ([_settings, "type"] call CBA_fnc_hashGet) do {
-    case "infantry": {
-
-    };
-    case "wheeled": {
-
-    };
-    case "armored": {
-
-    };
-    case "air": {
-
-    };
-    case "boat": {
-
-    };
-};
-
 private _tries = 0;
 private _currentPos = getPos (leader _group);
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
@@ -72,27 +54,7 @@ while {_tries < 50} do {
     };
 };
 
-private _waypoint = _group addWaypoint [_targetPos, 0];
-_waypoint setWaypointPosition [_targetPos, 0];
-
-switch ([_settings, "task"] call CBA_fnc_hashGet) do {
-    default { _waypoint  setWaypointType "MOVE"; };
-};
-
-if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
-    _waypoint setWaypointFormation (selectRandom ([_settings, "formation"] call CBA_fnc_hashGet));
-    _waypoint setWaypointSpeed (selectRandom ([_settings, "speed"] call CBA_fnc_hashGet));
-    _waypoint setwaypointBehaviour (selectRandom ([_settings, "behaviour"] call CBA_fnc_hashGet));
-    _waypoint setwaypointCombatMode (selectRandom ([_settings, "combatMode"] call CBA_fnc_hashGet));
-} else {
-    _waypoint setWaypointFormation "NO CHANGE";
-    _waypoint setWaypointSpeed "UNCHANGED";
-    _waypoint setwaypointbehaviour "UNCHANGED";
-    _waypoint setwaypointCombatMode "NO CHANGE";
-};
-
-//_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
-_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
+private _waypoint = [_group, _targetPos] call FUNC(addWaypoint);
 
 _group setCurrentWaypoint _waypoint;
 

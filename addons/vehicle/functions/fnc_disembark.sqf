@@ -19,6 +19,8 @@
 params ["_group", ["_unassign", false], ["_doPerimeter", true], ["_forceAll", false]];
 
 private _vehicle = vehicle (leader _group);
+_group setVariable [QGVAR(assignedVehicle), _vehicle];
+
 // Stop the vehicle
 doStop _vehicle;
 

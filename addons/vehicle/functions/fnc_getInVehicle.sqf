@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Disembark units from a vehicle.
+ * Embark units to a vehicle.
  *
  * Arguments:
  * 0: Unit <OBJECT>

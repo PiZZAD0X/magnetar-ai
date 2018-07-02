@@ -1,3 +1,5 @@
 PREP(handlePatrolState);
+PREP(onEmbarkStateEntered);
 PREP(onInitStateEntered);
-PREP(onWaypointStateEntered);
+PREP(OnPatrolPerimeterEntered);
+PREP(onPatrolStateEntered);

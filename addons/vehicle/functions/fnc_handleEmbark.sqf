@@ -16,23 +16,22 @@
  */
 #include "script_component.hpp"
 
-params ["_group"];
+params ["_group", "_state"];
 
 if (!local _group) exitWith {};
 
-private _vehicle = _group getVariable [QGVAR(assignedVehicle), objNull];
-
+private _vehicle = _group getVariable [QEGVAR(vehicle,assignedVehicle), objNull];
 if (isNull _vehicle) exitWith {
     [QEGVAR(tasks,generateWaypoint), _group] call CBA_fnc_localEvent;
 };
 
 private _allUnitsEmbarked = true;
 {
-    if (((vehicle _x == _x) && {alive _x}) || {!((vehicle _x) isEqualTo _vehicle)}) exitWith {
+    if ((vehicle _x == _x) && {alive _x}) exitWith {
         _allUnitsEmbarked = false;
     };
 } forEach (units _group);
 
 if (_allUnitsEmbarked) then {
-    [QGVAR(tasks,wait), _group] call CBA_fnc_localEvent;
+    [QEGVAR(tasks,generateWaypoint), _group] call CBA_fnc_localEvent;
 };

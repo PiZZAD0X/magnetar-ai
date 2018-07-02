@@ -70,7 +70,7 @@ if (_distance < _reachedDistance) then { // || {(CBA_missionTime - _taskTimeStar
             };
         };
     } else {
-        [QGVAR(generateWaypoint), _group] call CBA_fnc_localEvent;
+        [QGVAR(doTask), _group] call CBA_fnc_localEvent;
     };
 };
 

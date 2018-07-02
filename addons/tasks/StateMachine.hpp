@@ -4,13 +4,13 @@ class MAI_Tasks_StateMachine {
 
     class Init {
         onStateEntered = QUOTE(DFUNC(onInitStateEntered));
-        class GenerateWaypoint {
-            targetState = "GenerateWaypoint";
+        class DoTask {
+            targetState = "DoTask";
             condition = QUOTE(CBA_missionTime > 0);
         };
     };
 
-    class GenerateWaypoint {
+    class DoTask {
         onStateEntered = QUOTE(DFUNC(onWaypointStateEntered));
         class TaskAttack {
             targetState = "TaskAttack";
@@ -35,15 +35,12 @@ class MAI_Tasks_StateMachine {
     };
 
     class TaskPatrol {
-        onStateEntered = "systemChat format ['entered patrol task'];";
+        onStateEntered = QUOTE(DFUNC(onPatrolStateEntered));
         onState = QUOTE(DFUNC(handlePatrolState));
+
         class PatrolBuildings {
             targetState = "PatrolBuildings";
             events[] = {QGVAR(patrolBuildings)};
-        };
-        class SearchZone {
-            targetState = "SearchZone";
-            events[] = {QGVAR(searchZone)};
         };
         class SearchVehicles {
             targetState = "SearchVehciles";
@@ -88,8 +85,14 @@ class MAI_Tasks_StateMachine {
     class SearchVehicles {
 
     };
-    class SearchZone {
 
+    class PatrolPerimeter {
+        onStateEntered = QUOTE(DFUNC(onPatrolPerimeterEntered));
+
+        class PatrolBuildings {
+            targetState = "PatrolBuildings";
+            events[] = {QGVAR(patrolBuildings)};
+        };
     };
 
     class Disembark {
@@ -101,14 +104,14 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(patrolBuildings)};
         };
 
-        class SearchZone {
-            targetState = "SearchZone";
-            events[] = {QGVAR(searchZone)};
+        class PatrolPerimeter {
+            targetState = "PatrolPerimeter";
+            events[] = {QGVAR(PatrolPerimeter)};
         };
 
-        class Emark {
+        class Embark {
             targetState = "Embark";
-            events[] = {QEGVAR(vehicle,embark)}
+            events[] = {QGVAR(embark)}
         }
 
         class Wait {
@@ -118,19 +121,19 @@ class MAI_Tasks_StateMachine {
     };
 
     class Embark {
-        onStateEntered = QUOTE(DEFUNC(vehicle,getInVehicle));
-
-        class class GenerateWaypoint {
-            targetState = "GenerateWaypoint";
-            events[] = {QGVAR(generateWaypoint)};
+        onStateEntered = QUOTE(DFUNC(onEmbarkStateEntered));
+        onState = QUOTE(DFUNC(handleEmbark));
+        class DoTask {
+            targetState = "DoTask";
+            events[] = {QGVAR(DoTask)};
         };
     };
 
     class Wait {
         onStateEntered = QUOTE(_this setVariable [ARR_2(QQGVAR(waitUntil), CBA_missionTime + 30 + random 30)]); // killing a ; // killing a unit also exits the state machine for this unit
 
-        class GenerateWaypoint {
-            targetState = "GenerateWaypoint";
+        class DoTask {
+            targetState = "DoTask";
             condition = QUOTE(CBA_missionTime >= _this getVariable [ARR_2(QQGVAR(waitUntil), CBA_missionTime)]);
         };
     };
