@@ -48,7 +48,6 @@ while {_tries < 50} do {
 
     if (_allowWater && {surfaceIsWater _trialPos}) then {
         _found = true;
-        _tries = 50;
     };
 
     if (_allowLand && {!surfaceIsWater _trialPos}) then {
@@ -66,7 +65,6 @@ while {_tries < 50} do {
     };
 
     if (_allowWater && {_allowLand} && {!_forceRoads}) then {
-        _tries = 50;
         _found = true;
     };
 

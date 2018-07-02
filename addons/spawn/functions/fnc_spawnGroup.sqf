@@ -65,6 +65,7 @@ private _leader = objNull;
         private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
         private _vehicleUnit = createVehicle [_vehicle, _unitPos, [], 2, "FORM"];
         private _vehicleRoles = fullCrew [_vehicleUnit, "", true];
+        private _turrets = allTurrets [_vehicleUnit, false];
         private _hasCommander = false;
         private _hasGunner = false;
 
@@ -98,8 +99,13 @@ private _leader = objNull;
                         private _unit = _group createUnit [_pilots # 0, _unitPos, [], 2, "FORM"];
                         _pilots deleteAt 0;
                     } else {
-                        private _unit = _group createUnit [_crew # 0, _unitPos, [], 2, "FORM"];
-                        _crew deleteAt 0;
+                        if (_x # 3 in _turrets) then {
+                            private _unit = _group createUnit [_crew # 0, _unitPos, [], 2, "FORM"];
+                            _crew deleteAt 0;
+                        } else {
+                            private _unit = _group createUnit [_cargo # 0, _unitPos, [], 2, "FORM"];
+                            _cargo deleteAt 0;
+                        };
                     };
                     _unit moveInTurret [_vehicleUnit, _x # 3];
                 };

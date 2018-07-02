@@ -9,6 +9,7 @@ class CfgGroupCompositions {
         execInit = "";
         execWaypoint = "";
         task[] = {"patrol"};
+        random = 1;
     };
     class rhs_usaf_marine : Common {
         type = "infantry";

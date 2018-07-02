@@ -19,6 +19,8 @@
 
 params [["_group", objNull], "_marker", ["_options", []]];
 
+if (!local _group) exitWith {};
+
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 //systemChat format ["marker %1", _marker];
 private _sizeX = (markerSize _marker) # 0;

@@ -41,13 +41,17 @@ class MAI_Tasks_StateMachine {
             targetState = "PatrolBuildings";
             events[] = {QGVAR(patrolBuildings)};
         };
-        class PatrolZone {
-            targetState = "PatrolZone";
-            events[] = {QGVAR(patrolZone)};
+        class SearchZone {
+            targetState = "SearchZone";
+            events[] = {QGVAR(searchZone)};
         };
         class SearchVehicles {
             targetState = "SearchVehciles";
             events[] = {QGVAR(searchVehicles)};
+        };
+        class Disembark {
+            targetState = "Disembark";
+            events[] = {QGVAR(disembark)};
         };
         class Wait {
             targetState = "Wait";
@@ -86,6 +90,40 @@ class MAI_Tasks_StateMachine {
     };
     class SearchZone {
 
+    };
+
+    class Disembark {
+        onStateEntered = QUOTE(DEFUNC(vehicle,disembark));
+        onState = QUOTE(DEFUNC(vehicle,handleDisembark));
+
+        class PatrolBuildings {
+            targetState = "PatrolBuildings";
+            events[] = {QGVAR(patrolBuildings)};
+        };
+
+        class SearchZone {
+            targetState = "SearchZone";
+            events[] = {QGVAR(searchZone)};
+        };
+
+        class Emark {
+            targetState = "Embark";
+            events[] = {QEGVAR(vehicle,embark)}
+        }
+
+        class Wait {
+            targetState = "Wait";
+            events[] = {QGVAR(wait)};
+        };
+    };
+
+    class Embark {
+        onStateEntered = QUOTE(DEFUNC(vehicle,getInVehicle));
+
+        class class GenerateWaypoint {
+            targetState = "GenerateWaypoint";
+            events[] = {QGVAR(generateWaypoint)};
+        };
     };
 
     class Wait {

@@ -31,7 +31,7 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 
 {
     private _numGroups = _x # 0;
-    (_x # 1) params ["_configEntry", "_groupSize", "_marker", ["_position", []]];
+    (_x # 1) params ["_configEntry", "_groupSize", ["_position", []]];
 
     [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
 

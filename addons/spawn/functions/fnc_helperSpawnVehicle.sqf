@@ -35,7 +35,7 @@ private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
     if (count _x > 1) then {
        _x = [_x, 10] call EFUNC(core,shuffleArray);
     };
-} forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPoo];
+} forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPool];
 
 private _spawnVehicles = [];
 
@@ -44,9 +44,11 @@ _size params ["_groupSize", "_cargoSize"];
 for "_i" from 1 to _groupSize do {
     private _vehicle = selectRandom _vehiclePool;
     private _roles = _vehicle call BIS_fnc_vehicleRoles;
+    private _turrets = [_vehicle, false] call BIS_fnc_allTurrets;
     private _cargoUnits = [];
     _cargoUnits pushBack (selectRandom _cargoLeaders);
     private _crewUnits = [];
+    private _pilots = [];
     private _numCargo = 0;
 
     {
@@ -79,13 +81,20 @@ for "_i" from 1 to _groupSize do {
                 if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 1] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
                     _pilots pushBack (selectRandom _pilotPool);
                 } else {
-                    _crewUnits pushBack (selectRandom _crewPool);
+                    if (_x # 1 in _turrets) then {
+                        _crewUnits pushBack (selectRandom _crewPool);
+                    } else {
+                        if (_numCargo < (_cargoSize - 1)) then {
+                            _cargoUnits pushBack (selectRandom _cargoPool);
+                            _numCargo = _numCargo + 1;
+                        };
+                    };
                 };
             };
         };
     } forEach _roles;
 
-    _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits];
+    _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
 };
 
 if (_targetPos isEqualTo []) then {
