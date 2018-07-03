@@ -11,7 +11,7 @@ class MAI_Tasks_StateMachine {
     };
 
     class DoTask {
-        onStateEntered = QUOTE(DFUNC(onWaypointStateEntered));
+        onStateEntered = QUOTE(DFUNC(onDoTaskStateEntered));
         class TaskAttack {
             targetState = "TaskAttack";
             events[] = {QGVAR(attack)};
