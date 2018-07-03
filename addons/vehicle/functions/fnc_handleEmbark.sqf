@@ -33,5 +33,5 @@ private _allUnitsEmbarked = true;
 } forEach (units _group);
 
 if (_allUnitsEmbarked) then {
-    [QEGVAR(tasks,generateWaypoint), _group] call CBA_fnc_localEvent;
+    [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
 };

@@ -60,25 +60,9 @@ class MAI_Tasks_StateMachine {
         onStateEntered = QUOTE(DEFUNC(building,onStateEntered));
         onState = QUOTE(DEFUNC(building,handlePatrolBuilding));
 
-        class TaskAttack {
-            targetState = "TaskAttack";
-            events[] = {QGVAR(attack)};
-        };
-        class TaskDefend {
-            targetState = "TaskDefend";
-            events[] = {QGVAR(defend)};
-        };
-        class TaskGarrisson {
-            targetState = "TaskGarrisson";
-            events[] = {QGVAR(garrisson)};
-        };
-        class TaskPatrol {
-            targetState = "TaskPatrol";
-            events[] = {QGVAR(patrol)};
-        };
-        class TaskTransport {
-            targetState = "TaskTransport";
-            events[] = {QGVAR(transport)};
+        class DoTask {
+            targetState = "DoTask";
+            events[] = {QGVAR(doTask)};
         };
     };
 
@@ -92,6 +76,16 @@ class MAI_Tasks_StateMachine {
         class PatrolBuildings {
             targetState = "PatrolBuildings";
             events[] = {QGVAR(patrolBuildings)};
+        };
+
+        class Embark {
+            targetState = "Embark";
+            events[] = {QGVAR(embark)}
+        };
+
+        class Wait {
+            targetState = "Wait";
+            events[] = {QGVAR(wait)};
         };
     };
 
@@ -112,7 +106,7 @@ class MAI_Tasks_StateMachine {
         class Embark {
             targetState = "Embark";
             events[] = {QGVAR(embark)}
-        }
+        };
 
         class Wait {
             targetState = "Wait";
@@ -125,7 +119,7 @@ class MAI_Tasks_StateMachine {
         onState = QUOTE(DFUNC(handleEmbark));
         class DoTask {
             targetState = "DoTask";
-            events[] = {QGVAR(DoTask)};
+            events[] = {QGVAR(doTask)};
         };
     };
 

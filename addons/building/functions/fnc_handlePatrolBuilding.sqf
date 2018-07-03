@@ -45,6 +45,5 @@ if (_allUnitsFinished) then {
     _group setVariable [QEGVAR(tasks,finishedBuildingPatrol), CBA_missionTime + 10];
     _group lockWP false;
 
-    private _settings = _group getVariable [QEGVAR(core,settings), []];
-    [[_settings, "task"] call CBA_fnc_hashGet, _group] call CBA_fnc_localEvent;
+    [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
 };
