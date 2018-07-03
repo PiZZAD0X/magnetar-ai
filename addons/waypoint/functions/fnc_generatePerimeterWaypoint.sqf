@@ -20,7 +20,7 @@
 params [["_group", objNull], "_center", "_radius"];
 
 // Taken from CBA_fnc_taskPatrol.sqf
-private _count = 3;
+private _count = floor (4 + _radius/25);
 private _step = 360 / _count;
 private _offset = random _step;
 for "_i" from 1 to _count do {
