@@ -54,7 +54,7 @@ if (_groupSize isEqualType []) then {
         _size = [_groupSize] call _determineSize;
     } else {
         _groupSize params ["_gSize", "_cargoSize"];
-        _size = [[_gSize] call _determineSize, [_cargoSize] call _determineSize];
+        _size = [_gSize call _determineSize, _cargoSize call _determineSize];
     };
 } else {
     _size = _groupSize;

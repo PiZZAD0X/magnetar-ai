@@ -80,7 +80,7 @@ class MAI_Tasks_StateMachine {
 
         class Embark {
             targetState = "Embark";
-            events[] = {QGVAR(embark)}
+            events[] = {QGVAR(embark)};
         };
 
         class Wait {
@@ -105,7 +105,7 @@ class MAI_Tasks_StateMachine {
 
         class Embark {
             targetState = "Embark";
-            events[] = {QGVAR(embark)}
+            events[] = {QGVAR(embark)};
         };
 
         class Wait {
