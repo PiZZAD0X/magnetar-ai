@@ -26,4 +26,4 @@ _unitsToEmbark doFollow (leader _group);
 
 private _vehicle = _group getVariable [QEGVAR(vehicle,assignedVehicle), objNull];
 
-[_vehicle, _units] call EFUNC(vehicle,getInVehicle);
+[_vehicle, _unitsToEmbark] call EFUNC(vehicle,getInVehicle);
