@@ -28,7 +28,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "skillLeader", []] call CBA_fnc_hashSet;
 [_settings, "skill", []] call CBA_fnc_hashSet;
 
-[_settings, "task", QEGVAR(tasks,patrol)] call CBA_fnc_hashSet;
+[_settings, "task", QEGVAR(tasks,patrolRandom)] call CBA_fnc_hashSet;
 [_settings, "taskState", "init"] call CBA_fnc_hashSet;
 
 [_settings, "allowWater", false] call CBA_fnc_hashSet;

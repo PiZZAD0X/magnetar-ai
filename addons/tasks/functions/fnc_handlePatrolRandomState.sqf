@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [group player] call mai_tasks_fnc_handlePatrolState
+ * [group player] call mai_tasks_fnc_handlePatrolRandomState
  *
  * Public: No
  */

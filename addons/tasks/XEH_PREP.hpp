@@ -1,6 +1,6 @@
-PREP(handlePatrolState);
+PREP(handlePatrolRandomState);
 PREP(onDoTaskStateEntered);
 PREP(onEmbarkStateEntered);
 PREP(onInitStateEntered);
-PREP(OnPatrolPerimeterEntered);
-PREP(onPatrolStateEntered);
+PREP(onPatrolEntered);
+PREP(onPatrolRandomStateEntered);

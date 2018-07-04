@@ -23,6 +23,8 @@ params [["_group", objNull], "_center", "_radius"];
 private _count = floor (4 + _radius/25);
 private _step = 360 / _count;
 private _offset = random _step;
+private _execStatement = "";
+
 for "_i" from 1 to _count do {
     // Gaussian distribution avoids all waypoints ending up in the center
     private _rad = _radius * random [0.4, 0.75, 1];
@@ -30,5 +32,8 @@ for "_i" from 1 to _count do {
     // Alternate sides of circle & modulate offset
     private _theta = (_i % 2) * 180 + sin (deg (_step * _i)) * _offset + _step * _i;
 
-    [_group, _center getPos [_rad, _theta]] call FUNC(addWaypoint);
+    if (_i == _count) then {
+        _execStatement = QUOTE(_group setVariable [ARR_2(QQEGVAR(tasks,patrolFinished), true)]);
+    };
+    [_group, _center getPos [_rad, _theta], "MOVE", _execStatement] call FUNC(addWaypoint);
 };

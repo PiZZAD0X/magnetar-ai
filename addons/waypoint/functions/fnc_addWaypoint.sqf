@@ -17,7 +17,7 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_targetPos", ["_waypointType", ""]];
+params ["_group", "_targetPos", ["_waypointType", ""], ["_execStatements", ""]];
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _waypoint = _group addWaypoint [_targetPos, 0];
@@ -45,6 +45,7 @@ if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
 };
 
 //_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
-_waypoint setWaypointStatements ["true", [_settings, "execWaypoint"] call CBA_fnc_hashGet];
+private _statements = [_execStatements, [_settings, "execWaypoint"] call CBA_fnc_hashGet];
+_waypoint setWaypointStatements ["true", _statements joinString ";"];
 
 _waypoint
