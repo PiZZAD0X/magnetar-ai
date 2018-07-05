@@ -73,6 +73,11 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(embark)};
         };
 
+        class Disembark {
+            targetState = "Disembark";
+            events[] = {QGVAR(disembark)};
+        };
+
         class Wait {
             targetState = "Wait";
             events[] = {QGVAR(wait)};
@@ -102,9 +107,9 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(patrolBuildings)};
         };
 
-        class PatrolPerimeter {
-            targetState = "PatrolPerimeter";
-            events[] = {QGVAR(PatrolPerimeter)};
+        class TaskPatrol {
+            targetState = "TaskPatrol";
+            events[] = {QGVAR(patrol)};
         };
 
         class Embark {
@@ -119,8 +124,9 @@ class MAI_Tasks_StateMachine {
     };
 
     class Embark {
-        onStateEntered = QFUNC(onEmbarkStateEntered));
-        onState = QFUNC(handleEmbark));
+        onStateEntered = QFUNC(onEmbarkStateEntered);
+        onState = QEFUNC(vehicle,handleEmbark);
+
         class DoTask {
             targetState = "DoTask";
             events[] = {QGVAR(doTask)};
