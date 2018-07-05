@@ -66,6 +66,7 @@ if (_distance < _reachedDistance) then { // || {(CBA_missionTime - _taskTimeStar
         } else {
             private _vehicle = vehicle _leader;
             if (speed _vehicle == 0) then {
+                systemChat format ["disembark"];
                 [QGVAR(disembark), _group] call CBA_fnc_localEvent;
             };
         };

@@ -8,7 +8,7 @@ class CfgGroupCompositions {
         skillLeader[] = {{0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}};
         execInit = "";
         execWaypoint = "";
-        task[] = {"patrol"};
+        task[] = {"patrolRandom"};
         random = 1;
     };
     class rhs_usaf_marine : Common {

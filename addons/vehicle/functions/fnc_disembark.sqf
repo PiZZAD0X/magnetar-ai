@@ -20,11 +20,11 @@ params ["_group", ["_unassign", false], ["_doPerimeter", true], ["_forceAll", fa
 
 private _vehicle = vehicle (leader _group);
 _group setVariable [QGVAR(assignedVehicle), _vehicle];
-
 // Stop the vehicle
-doStop _vehicle;
+doStop (driver _vehicle);
 
 private _units = [_vehicle, _forceAll] call FUNC(selectUnitsDisembark);
+systemChat format ["Units %1", _units];
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
