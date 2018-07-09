@@ -17,7 +17,7 @@
 
 params ["_group", "_state"];
 
-if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
+//if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
 
 if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
 
@@ -76,4 +76,4 @@ if (_distance < _reachedDistance) then { // || {(CBA_missionTime - _taskTimeStar
 };
 
 // Perform the next check in 10 seconds
-_group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 10];
+//_group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 10];
