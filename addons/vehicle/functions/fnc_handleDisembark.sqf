@@ -23,9 +23,15 @@ if (!local _group) exitWith {};
 private _disembarkUnits = (units _group) select {alive _x && {_x getVariable [QGVAR(markedForDisembark), false]}};
 if (_disembarkUnits isEqualTo []) exitWith {};
 
+// Units that have just disembarked
+private _markAsDisembarked = _disembarkUnits select {vehicle _x == _x && {!(_x getVariable [QGVAR(disembarked), false])}};
+{
+    _x setVariable [QGVAR(disembarked), true];
+    _x doMove _x getVariable [QGVAR(_checkedPos), [0,0,0]];
+} forEach _markAsDisembarked;
+
 // Select units that are ready
 private _unitsToStop = _disembarkUnits select {(_x distance2D (_x getVariable [QGVAR(_checkedPos), [0,0,0]]) < 1) && {!(_x getVariable [QGVAR(ready), false])}};
-
 {
     _x setUnitPos "MIDDLE";
     doStop _x;

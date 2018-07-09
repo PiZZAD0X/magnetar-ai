@@ -68,10 +68,8 @@ private _dirOffset = 0;
             if (_checkedPos isEqualTo []) then {
                 _tries = _tries + 1;
             } else {
-                _x doMove _checkedPos;
                 _x setVariable [QGVAR(_checkedPos), _checkedPos];
                 if (EGVAR(core,debugEnabled)) then {
-                    systemChat format ["position %1", _checkedPos];
                     private _markerName = format ["marker_%1", CBA_missionTime + random 1];
                     private _marker = createMarker [_markerName, _checkedPos];
                     _markerName setMarkerShape "icon";
