@@ -3,9 +3,11 @@
  * Generates a waypoint.
  *
  * Arguments:
- * 0: Group <OBJECT> (default: [])
- * 1: Vehicle type <NUMBER> (default: 0)
- * 1: List of options <ARRAY> (default: [])
+ * 0: Group <OBJECT> (default: objNull)
+ * 1: Marker <STRING>
+ * 2: Waypoint options <ARRAY> (default: [])
+ *  0: Waypoint type <STRING> (default: "MOVE")
+ *  1: Statements execution upon waypoint completion <STRING> (default: "")
  *
  * Return Value:
  * Waypoint successful <BOOL>
@@ -13,7 +15,7 @@
  * Example:
  * [group player] call mai_waypoint_fnc_generateWaypoint
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 
@@ -54,7 +56,8 @@ while {_tries < 50} do {
     };
 };
 
-private _waypoint = [_group, _targetPos] call FUNC(addWaypoint);
+_options params [["_waypointType", "MOVE"], ["_execStatemets", ""]];
+private _waypoint = [_group, _targetPos, _waypointType, _execStatemets] call FUNC(addWaypoint);
 
 _group setCurrentWaypoint _waypoint;
 

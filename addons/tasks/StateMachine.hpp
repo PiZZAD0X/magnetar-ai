@@ -36,6 +36,11 @@ class MAI_Tasks_StateMachine {
             targetState = "TaskTransport";
             events[] = {QGVAR(transport)};
         };
+
+        class DoNothing {
+            targetState = {"DoNothing"};
+            events = {QGVAR(doNothing)};
+        };
     };
 
     class TaskPatrolRandom {
@@ -81,6 +86,14 @@ class MAI_Tasks_StateMachine {
         class Wait {
             targetState = "Wait";
             events[] = {QGVAR(wait)};
+        };
+    };
+
+    class DoNothing {
+        onStateEntered = "";
+        class DoTask {
+            targetState = "DoTask";
+            condition = QFUNC(checkDoTask);
         };
     };
 

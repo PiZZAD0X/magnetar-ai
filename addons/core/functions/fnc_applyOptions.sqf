@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * [group player] call mai_core_fnc_applyOptions
+ * [group player call mai_core_fnc_applyOptions
  *
  * Public: No
  */

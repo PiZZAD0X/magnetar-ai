@@ -3,13 +3,16 @@
  * Handles assigning the additional options to the group.
  *
  * Arguments:
- * 0: Unit <OBJECT> (Default: objNull)
+ * 0: Group <OBJECT>
+ * 1: Skill <ARRAY>
+ *  0: Skill for units <ARRAY>
+ *  1: Skill for leader units <ARRAY>
  *
  * Return Value:
  * None
  *
  * Example:
- * [player] call mai_core_fnc_setSkill
+ * [group player, [[0.2], [0.8]]] call mai_core_fnc_setSkill
  *
  * Public: No
  */

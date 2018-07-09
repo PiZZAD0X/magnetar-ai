@@ -3,7 +3,7 @@
  * Removes a group from the AI management addon
  *
  * Arguments:
- * 0: Group <OBJECT> (Default: objNull)
+ * 0: Group <OBJECT> (default: objNull)
  *
  * Return Value:
  * None

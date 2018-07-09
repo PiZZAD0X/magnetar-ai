@@ -1,9 +1,17 @@
 /*
  * Author: TheMagnetar
- * Spawns a random group of units.
+ * Returns a random position in a marker.
  *
  * Arguments:
- * 0: Marker <STRING> (Default: "")
+ * 0: Marker <STRING> (default: "")
+ * 1: Condition <ARRAY> (default: [false, true, false])
+ *  0: Allow waypoint on water <BOOL>
+ *  1: Allow waypoint on land <BOOL>
+ *  2: Force waypoint on roads <BOOL>
+ * 2: Check radius for a valid unit position <ARRAY> (default: [0, 50, ""])
+ *  0: Min radius <NUMBER>
+ *  1: MAx radius <NUBMER>
+ *  2: Object classname <STRING>
  *
  * Return Value:
  * Random point <ARRAY> ([0,0] if invalid marker)
@@ -87,11 +95,5 @@ while {_tries < 50} do {
         _tries = _tries + 1;
     };
 };
-/*
-systemChat format ["%1", _targetPos];
-private _markerName = format ["marker_%1", CBA_missionTime];
-private _marker = createMarker [_markerName, _targetPos];
-_markerName setMarkerShape "icon";
-_markerName setMarkerType "hd_dot";
-_markerName setMarkerColor "colorGreen";*/
+
 _targetPos

@@ -4,12 +4,14 @@
  *
  * Arguments:
  * 0: Settings <HASH>
+ * 1: Marker <STRING>
+ * 2: Group type <STRING>
  *
  * Return Value:
  * Hash with basic settings <HASH>
  *
  * Example:
- * [[]] call mai_core_fnc_init
+ * [[], "marker", "infantry"] call mai_core_fnc_init
  *
  * Public: No
  */

@@ -3,13 +3,14 @@
  * Handles assigning the additional options to the group.
  *
  * Arguments:
- * 0: Unit <OBJECT> (Default: objNull)
+ * 0: Settings <HASH>
+ * 1: Additional options <ARRAY> (default: [])
  *
  * Return Value:
- * None
+ * Settings expanded with the parsed options <HASH>
  *
  * Example:
- * [player] call mai_core_fnc_parseOptions
+ * [player, [["task", "patrol"]]] call mai_core_fnc_parseOptions
  *
  * Public: No
  */

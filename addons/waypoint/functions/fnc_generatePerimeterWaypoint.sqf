@@ -13,7 +13,7 @@
  * Example:
  * [group player] call mai_waypoint_fnc_generatePerimeterWaypoint
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 

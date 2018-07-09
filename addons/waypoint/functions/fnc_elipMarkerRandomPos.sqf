@@ -1,15 +1,19 @@
 /*
  * Author: TheMagnetar
- * Random position on a rectangular marker.
+ * Random position on an elliptical marker.
  *
  * Arguments:
- * 0: Marker <STRING> (Default: "")
+ * 0: Length X <NUMBER>
+ * 1: Length Y <NUMBER>
+ * 2: X coordinate of the marker's center <NUMBER>
+ * 3: Y coordinate of the marker's center <NUMBER>
+ * 4: Marker direction in degrees <NUMBER>
  *
  * Return Value:
  * Random point <ARRAY> ([0,0] if invalid marker)
  *
  * Example:
- * ["marker"] call mai_waypoint_fnc_markerRandomPos
+ * [2, 3, 0.5, 0,5, 60] call mai_waypoint_fnc_elipMarkerRandomPos
  *
  * Public: No
  */

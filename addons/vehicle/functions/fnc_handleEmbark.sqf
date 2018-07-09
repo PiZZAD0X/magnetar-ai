@@ -22,7 +22,7 @@ if (!local _group) exitWith {};
 
 private _vehicle = _group getVariable [QEGVAR(vehicle,assignedVehicle), objNull];
 if (isNull _vehicle) exitWith {
-    [QEGVAR(tasks,generateWaypoint), _group] call CBA_fnc_localEvent;
+    [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
 };
 
 private _allUnitsEmbarked = true;

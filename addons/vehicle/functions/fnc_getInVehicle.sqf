@@ -10,7 +10,7 @@
  * Nearest vehicles suitable for the group
  *
  * Example:
- * [leader group player] call mai_vehicle_fnc_getNearVehicles
+ * [vehicle player, [player]] call mai_vehicle_fnc_getInVehicle
  *
  * Public: No
  */

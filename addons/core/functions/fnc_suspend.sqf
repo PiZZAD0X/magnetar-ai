@@ -3,7 +3,7 @@
  * Suspend all AI management.
  *
  * Arguments:
- * 0: Group <OBJECT> (Default: objNull)
+ * 0: Group <OBJECT> (default: objNull)
  *
  * Return Value:
  * None

@@ -1,19 +1,17 @@
 /*
  * Author: TheMagnetar
- * Generates a waypoint.
+ * Clears all waypoints of a group
  *
  * Arguments:
- * 0: Group <OBJECT> (default: [])
- * 1: Vehicle type <NUMBER> (default: 0)
- * 1: List of options <ARRAY> (default: [])
+ * 0: Group <OBJECT>
  *
  * Return Value:
- * Waypoint successful <BOOL>
+ * None
  *
  * Example:
- * [group player] call mai_waypoint_fnc_generateWaypoint
+ * [group player] call mai_waypoint_fnc_clearWaypoints
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 

@@ -1,16 +1,15 @@
 /*
  * Author: TheMagnetar
- * Disembark units from a vehicle.
+ * Returns all empty positions of a vehicle
  *
  * Arguments:
- * 0: Unit <OBJECT>
- * 1: Distance <NUMBER> (default )
+ * 0: Vehicle <OBJECT>
  *
  * Return Value:
- * Nearest vehicles suitable for the group
+ * Empty positions <ARRAY>
  *
  * Example:
- * [leader group player] call mai_vehicle_fnc_getNearVehicles
+ * [group player] call mai_vehicle_fnc_emptyPositions
  *
  * Public: No
  */

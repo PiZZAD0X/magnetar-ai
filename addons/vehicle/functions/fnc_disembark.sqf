@@ -4,24 +4,23 @@
  *
  * Arguments:
  * 0: Unit <OBJECT>
- * 1: Distance <NUMBER> (default )
+ * 1: Unassign vehicle <BOOL> (default: true)
+ * 2: Do perimeter <BOOL> (default: true)
+ * 3: Force disembark all units <BOOL> (default: false)
  *
  * Return Value:
- * Nearest vehicles suitable for the group
+ * None
  *
  * Example:
- * [leader group player] call mai_vehicle_fnc_getNearVehicles
+ * [group player] call mai_vehicle_fnc_disembark
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params ["_group", "_state"];// ["_unassign", false], ["_doPerimeter", true], ["_forceAll", false]];
+params ["_group", ["_unassign", true], ["_doPerimeter", true], ["_forceAll", false]];
 
 systemChat format ["Arguments %1", _this];
-private _unassign = true;
-private _doPerimeter = true;
-private _forceAll = false;
 
 private _vehicle = vehicle (leader _group);
 _group setVariable [QGVAR(assignedVehicle), _vehicle];
@@ -58,7 +57,7 @@ private _dirOffset = 0;
         // Start by checking the back of the vehicle
         private _dir = (getDir _vehicle) + 180 + (_dirOffset + random 20 - 10);
         _dirOffset = _dirOffset + _dirIncrease;
-        systemChat format ["dirOffset %1", _dirOffset];
+        
         private _trialPos = _vehicle getPos [25 + random 10 -5, _dir];
 
         if ((_allowWater && {surfaceIsWater _trialPos}) || {_allowLand && {!surfaceIsWater _trialPos}}) then {

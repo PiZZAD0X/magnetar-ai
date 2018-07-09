@@ -1,19 +1,20 @@
 /*
  * Author: TheMagnetar
- * Generates a waypoint.
+ * Adds a waypoint to the specified group.
  *
  * Arguments:
  * 0: Group <OBJECT> (default: [])
  * 1: Target Position <ARRAY>
  * 2: Waypoint type <STRING> (default: "")
+ * 3: Statemets execution at waypoint completion <STRING> (default: "")
  *
  * Return Value:
  * Waypoint <WAYPOINT>
  *
  * Example:
- * [group player, ] call mai_waypoint_fnc_generateWaypoint
+ * [group player, getPos _target, "MOVE", "hint 'moving'"] call mai_waypoint_fnc_generateWaypoint
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 

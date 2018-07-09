@@ -33,7 +33,6 @@ if (!local (leader _group)) exitWith {
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 
-private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
 private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
 
@@ -59,21 +58,7 @@ if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTim
 };
 
 // Waypoint completed
-if (_distance < _reachedDistance) then { // || {(CBA_missionTime - _taskTimeStart) > _taskTimeOut}) then {
-    if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
-        if (_unitType isEqualTo "infantry") then {
-            [QGVAR(wait), _group] call CBA_fnc_localEvent;
-        } else {
-            private _vehicle = vehicle _leader;
-            if (speed _vehicle == 0) then {
-                systemChat format ["disembark"];
-                [QGVAR(disembark), _group] call CBA_fnc_localEvent;
-            };
-        };
-    } else {
-        [QGVAR(doTask), _group] call CBA_fnc_localEvent;
-    };
-};
+
 
 // Perform the next check in 10 seconds
 //_group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 10];

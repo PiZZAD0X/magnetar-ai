@@ -3,13 +3,16 @@
  * Initialises a group.
  *
  * Arguments:
- * 0: Unit <OBJECT> (Default: objNull)
+ * 0: Unit <OBJECT> (default: objNull)
+ * 1: Marker <STRING> (default: "")
+ * 2: Unit type <STRING> (default: "infantry")
+ * 3: Options <ARRAY> (default: [])
  *
  * Return Value:
  * None
  *
  * Example:
- * [player] call mai_core_fnc_init
+ * [group player, "marker", "wheeled"] call mai_core_fnc_init
  *
  * Public: Yes
  */
