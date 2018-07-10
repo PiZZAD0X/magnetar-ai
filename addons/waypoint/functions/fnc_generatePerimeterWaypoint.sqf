@@ -17,13 +17,16 @@
  */
 #include "script_component.hpp"
 
-params [["_group", objNull], "_center", "_radius"];
+params [["_group", objNull], "_center", "_radius", ["_options", []]];
 
 // Taken from CBA_fnc_taskPatrol.sqf
 private _count = floor (4 + _radius/25);
 private _step = 360 / _count;
 private _offset = random _step;
-private _execStatement = "";
+private _statements = [];
+
+_options params [["_waypointType", "MOVE"], ["_execStatements", ""], ["_condition", "true"]];
+_statements pushBack _execStatements;
 
 for "_i" from 1 to _count do {
     // Gaussian distribution avoids all waypoints ending up in the center
@@ -33,7 +36,8 @@ for "_i" from 1 to _count do {
     private _theta = (_i % 2) * 180 + sin (deg (_step * _i)) * _offset + _step * _i;
 
     if (_i == _count) then {
-        _execStatement = QUOTE(_group setVariable [ARR_2(QQEGVAR(tasks,patrolFinished), true)]);
+        _statements pushBack QUOTE(_group setVariable [ARR_2(QQEGVAR(tasks,patrolFinished), true)]);
     };
-    [_group, _center getPos [_rad, _theta], "MOVE", _execStatement] call FUNC(addWaypoint);
+
+    [_group, _center getPos [_rad, _theta], ["MOVE", _statements joinString ";", _condition]] call FUNC(addWaypoint);
 };

@@ -38,8 +38,8 @@ class MAI_Tasks_StateMachine {
         };
 
         class DoNothing {
-            targetState = {"DoNothing"};
-            events = {QGVAR(doNothing)};
+            targetState = "DoNothing";
+            events[] = {QGVAR(doNothing)};
         };
     };
 

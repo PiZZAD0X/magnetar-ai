@@ -24,6 +24,7 @@ systemChat format ["Arguments %1", _this];
 
 private _vehicle = vehicle (leader _group);
 _group setVariable [QGVAR(assignedVehicle), _vehicle];
+systemChat format ["disembark"];
 // Stop the vehicle
 _vehicle disableAI "MOVE";
 
@@ -57,7 +58,7 @@ private _dirOffset = 0;
         // Start by checking the back of the vehicle
         private _dir = (getDir _vehicle) + 180 + (_dirOffset + random 20 - 10);
         _dirOffset = _dirOffset + _dirIncrease;
-        
+
         private _trialPos = _vehicle getPos [25 + random 10 -5, _dir];
 
         if ((_allowWater && {surfaceIsWater _trialPos}) || {_allowLand && {!surfaceIsWater _trialPos}}) then {
@@ -67,7 +68,7 @@ private _dirOffset = 0;
             if (_checkedPos isEqualTo []) then {
                 _tries = _tries + 1;
             } else {
-                _x setVariable [QGVAR(_checkedPos), _checkedPos];
+                _x setVariable [QGVAR(checkedPos), _checkedPos];
                 if (EGVAR(core,debugEnabled)) then {
                     private _markerName = format ["marker_%1", CBA_missionTime + random 1];
                     private _marker = createMarker [_markerName, _checkedPos];

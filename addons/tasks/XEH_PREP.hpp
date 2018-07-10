@@ -1,4 +1,4 @@
-PREP(checkDoNothing);
+PREP(checkDoTask);
 PREP(handlePatrolRandomState);
 PREP(onDisembarkStateEntered);
 PREP(onDoTaskStateEntered);

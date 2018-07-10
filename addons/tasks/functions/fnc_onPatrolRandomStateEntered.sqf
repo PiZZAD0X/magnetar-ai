@@ -20,22 +20,23 @@ params ["_group", "_state"];
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _execStatements = "";
+private _condition = "true";
 
 if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
     private _unitType = [_settings, "type"] call CBA_fnc_hashGet;
 
     if (_unitType isEqualTo "infantry") then {
-        _execStatements = QUOTE([ARR_2(QQGVAR(wait), _group)] call CBA_fnc_localEvent);
+        _execStatements = QUOTE([ARR_2(QQGVAR(wait), group this)] call CBA_fnc_localEvent);
     } else {
         private _vehicle = vehicle (leader _group);
-        if (speed _vehicle == 0) then {
-            _execStatements = QUOTE([ARR_2(QQGVAR(disembark), [ARR_4(_group, true, true, false)])] call CBA_fnc_localEvent);
-        };
+        _execStatements = QUOTE([ARR_2(QQGVAR(disembark), [ARR_4(group this, true, true, false)])] call CBA_fnc_localEvent);
+        _condition = QUOTE(speed (vehicle (leader this)) == 0);
     };
 } else {
-    _execStatements = QUOTE([ARR_2(QQGVAR(doTask), _group)] call CBA_fnc_localEvent);
+    _execStatements = QUOTE([ARR_2(QQGVAR(doTask), group this)] call CBA_fnc_localEvent);
 };
 
+systemChat format ["_execStatements", _execStatements];
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
-private _targetPos = [_group, _marker, ["MOVE", _execStatements]] call EFUNC(waypoint,generateWaypoint);
+private _targetPos = [_group, _marker, ["MOVE", _execStatements, _condition]] call EFUNC(waypoint,generateWaypoint);
 _group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];

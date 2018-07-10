@@ -38,6 +38,7 @@ private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_m
 
 // Search for a vehicle
 private _distance = _leader distance _targetPos;
+private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 if (_distance > _reachedDistance && {vehicle _leader == _leader} && {[_settings, "allowVehicles"] call CBA_fnc_hashGet}) then {
 
 };
