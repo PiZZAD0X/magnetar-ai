@@ -1,15 +1,20 @@
 /*
  * Author: TheMagnetar
- * Spawns a random group of units.
+ * Spawns a group with randomised unit composition.
  *
  * Arguments:
- * 0: Unit <OBJECT> (Default: objNull)
+ * 0: Config entry <STRING>
+ * 1: Group size either in [min, max] format or a defined number <ARRAY><NUMBER>
+ * 2: Marker <STRING>
+ * 4: Speel time between unit creation <NUMBER> (default: 0.05)
+ * 3: Position <ARRAY> (default: [])
  *
  * Return Value:
  * None
  *
  * Example:
- * [player] call mai_spawn_fnc_randSpawnGroup
+ * ["infantryUSMC", [2, 5], "marker"] call mai_spawn_fnc_randSpawnGroup
+ ^ ["infantryUSMC", 4, "marker", getPos player] call mai_spawn_fnc_randSpawnGroup
  *
  * Public: Yes
  */

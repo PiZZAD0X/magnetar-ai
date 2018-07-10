@@ -1,19 +1,21 @@
 /*
  * Author: TheMagnetar
- * Selects random infantry units for spawning a group
+ * Helper routine for spawning a random group of infantry units.
  *
  * Arguments:
- * 0: Group  <OBJECT> (Default: [])
- * 1: Configuration entry <STRING>
+ * 0: Config entry <STRING>
+ * 1: Settings <HASH>
  * 2: Side <STRING>
- * 3: Marker <STRING>
- * 4: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 3: Size <NUMBER>
+ * 4: Marker <STRING>
+ * 5: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 6: Position <ARRAY> (default: [])
  *
  * Return Value:
- * Group <OBJECT>
+ * None
  *
  * Example:
- * [player] call mai_spawn_fnc_helperSpawnInfantry
+ * ["usmcInfantry", [], "west", 5, "marker", 0.05] call mai_spawn_fnc_helperSpawnInfantry
  *
  * Public: No
  */

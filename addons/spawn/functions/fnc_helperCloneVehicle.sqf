@@ -1,23 +1,25 @@
 /*
  * Author: TheMagnetar
- * Spawns a random group of units.
+ * Helper function for cloning a group of units with vehicles.
  *
  * Arguments:
  * 0: Group to clone <OBJECT>
- * 1: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 1: Cloned group <OBJECT>
+ * 2: Position <ARRAY>
+ * 3: Sleep time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
- * Group <OBJECT>
+ * None
  *
  * Example:
- * [player] call mai_spawn_fnc_cloneGroup
+ * [gropu player1, group2, getPos player, 0.05] call mai_spawn_fnc_helperCloneVehicle
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 
 params ["_modelGroup", "_cloneGroup", "_position", "_sleep"];
-systemChat format ["_vehicle"];
+
 private _units = units _modelGroup;
 private _vehicleUnits = [];
 {
@@ -25,7 +27,7 @@ private _vehicleUnits = [];
         _vehicleUnits pushBackUnique (vehicle _x);
     }
 } forEach _units;
-systemChat format ["vehicle %1 units %2", _vehicleUnits, _units];
+
 {
     private _modelVehicle = _x;
     private _vehiclePos = _position findEmptyPosition [0, 50, typeOf _modelVehicle];

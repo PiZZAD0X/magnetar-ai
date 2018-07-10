@@ -3,17 +3,19 @@
  * Spawns a random group of units.
  *
  * Arguments:
- * 0: Unit array. First position is always the leader <ARRAY> (Default: [])
- * 1: Position <ARRAY>
- * 2: Side <STRING>
- * 3: List of options <STRING> (default [])
- * 4: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 0: Marker information <ARRAY>
+ *  0: Marker <STRING>
+ * 1: Groups to Spawn <ARRAY>
+ *  0: Group count <NUMBER>
+ *  1: Config entry <STRING>
+ *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER>
+ *  3: Position <ARRAY> (default: [])
  *
  * Return Value:
- * Group <OBJECT>
+ * None
  *
  * Example:
- * [player] call mai_spawn_fnc_populateMarker
+ * [["marker"], [[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]] call mai_spawn_fnc_populateMarker
  *
  * Public: Yes
  */
@@ -31,8 +33,9 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 
 {
     private _numGroups = _x # 0;
-    (_x # 1) params ["_configEntry", "_groupSize", ["_position", []]];
+    (_x # 1) params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
 
-    [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
-
+    for "_i" from 1 to _groupCount do {
+        [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
+    };
 } forEach _groupsToSpawn;

@@ -1,16 +1,18 @@
 /*
  * Author: TheMagnetar
- * Spawns a random group of units.
+ * Clones the units of a group.
  *
  * Arguments:
  * 0: Group to clone <OBJECT>
- * 1: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 1: Number of clones <NUMBER>
+ * 2: Additional options for the group <ARRAY>
+ * 3: Sleep time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
- * Group <OBJECT>
+ * Cloned groups <ARRAY>
  *
  * Example:
- * [player] call mai_spawn_fnc_cloneGroup
+ * [group1, 3, [["task", "attack"], ["forceRoads", true]], 0.1] call mai_spawn_fnc_cloneGroup
  *
  * Public: Yes
  */
@@ -47,6 +49,7 @@ if !(_type isEqualTo "infantry") then {
     _helperFunction = missionNamespace getVariable QFUNC(helperCloneVehicle);
 };
 
+private _groupsCreated = [];
 for "_i" from 1 to _num do {
     private _group = createGroup _side;
     private _groupPosition = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50]] call EFUNC(waypoint,markerRandomPos);
@@ -66,6 +69,8 @@ for "_i" from 1 to _num do {
 
     // Register the group
     [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
+
+    _groupsCreated pushBack _group;
 };
 
-_modelGroup
+_group

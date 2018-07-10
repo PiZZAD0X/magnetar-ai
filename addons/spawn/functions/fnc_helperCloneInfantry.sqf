@@ -1,18 +1,20 @@
 /*
  * Author: TheMagnetar
- * Spawns a random group of units.
+ * Helper function for cloning a group of infantry units.
  *
  * Arguments:
  * 0: Group to clone <OBJECT>
- * 1: Sleep time between unit creation <NUMBER> (default: 0.05)
+ * 1: Cloned group <OBJECT>
+ * 2: Position <ARRAY>
+ * 3: Sleep time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
- * Group <OBJECT>
+ * None
  *
  * Example:
- * [player] call mai_spawn_fnc_cloneGroup
+ * [gropu player1, group2, getPos player, 0.05] call mai_spawn_fnc_helperCloneVehicle
  *
- * Public: Yes
+ * Public: No
  */
 #include "script_component.hpp"
 
