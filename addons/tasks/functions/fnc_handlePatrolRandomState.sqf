@@ -32,13 +32,12 @@ if (!local (leader _group)) exitWith {
 };
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
-
 private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;
-private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
+private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 
 // Search for a vehicle
 private _distance = _leader distance _targetPos;
-private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
+
 if (_distance > _reachedDistance && {vehicle _leader == _leader} && {[_settings, "allowVehicles"] call CBA_fnc_hashGet}) then {
 
 };
@@ -50,12 +49,18 @@ private _inBuilding = _group getVariable [QGVAR(inBuilding), false];
 if (_inBuilding && {CBA_missionTime > (_group getVariable [QGVAR(finishedBuildingPatrol), CBA_missionTime])}) then {
     _group setVariable [QGVAR(inBuilding), true];
     _inBuilding = false;
+    _group setVariable [QGVAR(buildingCheckTime), CBA_missionTime + 10];
 };
 
-//systemChat format ["Patrol Building %1 %2 %3 %4 %5 %6", _unitType in ["infantry", "wheeled"], _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet,!_inBuilding, random 100 < 70, unitType in ["infantry", "wheeled"] && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < 70}];
+private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
 private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos])*100) min 70;
 if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
-    //[QGVAR(patrolBuildings), _group] call CBA_fnc_localEvent;
+    if (_unitTYpe isEqualTo "wheeled") then {
+        _group setVariable [QGVAR(checkBuildings), true];
+        [QGVAR(disembark), _group] call CBA_fnc_localEvent;
+    } else {
+        [QGVAR(patrolBuildings), _group] call CBA_fnc_localEvent;
+    };
 };
 
 // Waypoint completed

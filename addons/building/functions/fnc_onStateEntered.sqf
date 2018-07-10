@@ -17,8 +17,6 @@
 
 params ["_group", "_state"];
 
-_group setVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime + 10];
-
 private _inBuilding = [_group] call FUNC(moveInBuilding);
 if (_inBuilding) then {
     _group setVariable [QEGVAR(tasks,inBuilding), true];

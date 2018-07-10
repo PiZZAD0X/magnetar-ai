@@ -47,7 +47,6 @@ if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
 
 //_waypoint setWaypointCompletionRadius ([_settings, [_settings, "reachedDistance"]] call CBA_fnc_hashGet);
 private _statements = [_execStatements, [_settings, "execWaypoint"] call CBA_fnc_hashGet];
-systemChat format ["Add Waypoint %1", _statements];
 _waypoint setWaypointStatements [_condition, _statements joinString ";"];
 
 _waypoint

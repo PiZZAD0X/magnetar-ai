@@ -30,13 +30,8 @@ private _allUnitsFinished = true;
 {
     private _inBuilding = (_x getVariable [QGVAR(building), [false]]) # 0;
 
-    if (_inBuilding && {_x getVariable [QGVAR(disembarkTime), CBA_missionTime] < CBA_missionTime}) then {
-        if (vehicle _x == _x) then {
-            doGetOut _x;
-            _x setVariable [QGVAR(disembarkTime), CBA_missionTime + 3];
-        } else {
-            _x call FUNC(patrolBuilding);
-        };
+    if (_inBuilding) then {
+        _x call FUNC(patrolBuilding);
         _allUnitsFinished = false;
     };
 } forEach (units _group);

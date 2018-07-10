@@ -51,6 +51,12 @@ if (count _readyUnits != count _disembarkUnits) exitWith {};
 
 systemChat format ["embark embark embark embark embark"];
 [QEGVAR(tasks,embark), _group] call CBA_fnc_localEvent;
+
 /*
-_group setVariable [QEGVAR(tasks,perimeterSettings), getPos (_group getVariable QGVAR(assignedVehicle)), 75];
-*/
+if (_group getVariable [QEGVAR(tasks,checkBuildings), false]) then {
+    [QEGVAR(tasks,patrolBuildings), _group] call CBA_fnc_localEvent;
+    _group setVariable [QEGVAR(tasks,checkBuildings), false];
+} else {
+    [QEGVAR(tasks,patrol), _group] call CBA_fnc_localEvent;
+};*/
+
