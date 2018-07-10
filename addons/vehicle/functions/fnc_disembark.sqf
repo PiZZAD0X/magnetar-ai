@@ -25,8 +25,6 @@ systemChat format ["Arguments %1", _this];
 private _vehicle = vehicle (leader _group);
 _group setVariable [QGVAR(assignedVehicle), _vehicle];
 systemChat format ["disembark"];
-// Stop the vehicle
-_vehicle disableAI "MOVE";
 
 private _units = [_vehicle, _forceAll] call FUNC(selectUnitsDisembark);
 
@@ -59,7 +57,7 @@ private _dirOffset = 0;
         private _dir = (getDir _vehicle) + 180 + (_dirOffset + random 20 - 10);
         _dirOffset = _dirOffset + _dirIncrease;
 
-        private _trialPos = _vehicle getPos [25 + random 10 -5, _dir];
+        private _trialPos = _vehicle getPos [20 + random 10 -5, _dir];
 
         if ((_allowWater && {surfaceIsWater _trialPos}) || {_allowLand && {!surfaceIsWater _trialPos}}) then {
             private _checkedPos = [];

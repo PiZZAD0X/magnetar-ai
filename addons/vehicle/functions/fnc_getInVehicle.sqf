@@ -20,7 +20,7 @@ params ["_vehicle", "_units"];
 
 private _emptyPositions = [_vehicle] call FUNC(emptyPositions);
 
-private _leader = leader (_unit # 0);
+private _leader = leader (_units # 0);
 
 if (((vehicle _leader) isEqualTo _leader) && {"commander" in _emptyPositions}) then {
     _leader assignAsCommander _vehicle;
@@ -29,28 +29,29 @@ if (((vehicle _leader) isEqualTo _leader) && {"commander" in _emptyPositions}) t
 
 // Prioritise driver, gunner and commander seats
 {
+    private _unit = _x;
     private _assigned = false;
     if ("driver" in _emptyPositions) then {
-        _x assignAsDriver _vehicle;
+        _unit assignAsDriver _vehicle;
         _emptyPositions deleteAt (_emptyPositions find "driver");
         _assigned = true;
     };
 
     if ("gunner" in _emptyPositions && {!_assigned}) then {
-        _x assignAsGunner _vehicle;
+        _unit assignAsGunner _vehicle;
         _emptyPositions deleteAt (_emptyPositions find "gunner");
         _assigned = true;
     };
 
     if ("commander" in _emptyPositions && {!_assigned}) then {
-        _x assignAsCommander _vehicle;
+        _unit assignAsCommander _vehicle;
         _emptyPositions deleteAt (_emptyPositions find "commander");
         _assigned = true;
     };
 
     {
-        if (["turret", _x] in _emptyPositions && {!_assigned}) exitWith {
-            _x assignAsTurret [_vehicle, _x];
+        if (["turret", _unit] in _emptyPositions && {!_assigned}) exitWith {
+            _unit assignAsTurret [_vehicle, _x];
             _assigned = true;
         };
     } forEach (allTurrets [_vehicle, false]);
@@ -58,13 +59,13 @@ if (((vehicle _leader) isEqualTo _leader) && {"commander" in _emptyPositions}) t
     // After filling in crew positions, try to fill in cargo ones
     {
         if (_x # 0 isEqualTo "turret" && {!_assigned}) exitWith {
-            _x assignAsTurret [_vehicle, _x # 1];
+            _unit assignAsTurret [_vehicle, _x # 1];
         };
 
         if (_x # 0 isEqualTo "cargo" && {!_assigned}) exitWith {
-            _x assignAsCargoIndex [_vehicle, _x # 1];
+            _unit assignAsCargoIndex [_vehicle, _x # 1];
         };
     } forEach _emptyPositions;
 } forEach _units;
 
-_units orderGetIn _vehicle;
+_units orderGetIn true;
