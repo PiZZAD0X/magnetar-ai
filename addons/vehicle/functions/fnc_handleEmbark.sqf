@@ -33,5 +33,6 @@ private _allUnitsEmbarked = true;
 } forEach (units _group);
 
 if (_allUnitsEmbarked) then {
+    _group setSpeedMode "LIMITED";
     [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
 };

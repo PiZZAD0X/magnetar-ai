@@ -36,7 +36,6 @@ if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
     _execStatements = QUOTE([ARR_2(QQGVAR(doTask), group this)] call CBA_fnc_localEvent);
 };
 
-systemChat format ["_execStatements", _execStatements];
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _targetPos = [_group, _marker, ["MOVE", _execStatements, _condition]] call EFUNC(waypoint,generateWaypoint);
 _group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];

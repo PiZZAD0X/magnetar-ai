@@ -42,7 +42,7 @@ private _determineSize = {
     params ["_grpSize"];
 
     private _size = 0;
-    if (_grpSize isEqualTo []) then {
+    if (_grpSize isEqualType []) then {
         _grpSize params ["_minSize", "_maxSize"];
         _size = _minSize + floor (random (_maxSize - _minSize));
     } else {
@@ -59,7 +59,7 @@ if (_groupSize isEqualType []) then {
         _size = [_groupSize] call _determineSize;
     } else {
         _groupSize params ["_gSize", "_cargoSize"];
-        _size = [_gSize call _determineSize, _cargoSize call _determineSize];
+        _size = [[_groupSize # 0] call _determineSize, [_groupSize # 1] call _determineSize];
     };
 } else {
     _size = _groupSize;

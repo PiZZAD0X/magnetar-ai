@@ -16,7 +16,7 @@
 #include "script_component.hpp"
 
 params ["_group", "_state"];
-
+systemChat format ["building"];
 private _inBuilding = [_group] call FUNC(moveInBuilding);
 if (_inBuilding) then {
     _group setVariable [QEGVAR(tasks,inBuilding), true];

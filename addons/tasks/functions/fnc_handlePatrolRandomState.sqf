@@ -17,7 +17,7 @@
 
 params ["_group", "_state"];
 
-//if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
+if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
 
 if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
 
@@ -53,8 +53,10 @@ if (_inBuilding && {CBA_missionTime > (_group getVariable [QGVAR(finishedBuildin
 };
 
 private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
-private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos])*100) min 70;
-if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
+private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos]))*100 min 70;
+systemChat format ["%1 %2 %3 %3 %5 %6 %7", _unitType in ["infantry", "wheeled"], CBA_missionTime >= _buildingCheckTime , _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet, !_inBuilding, random 100 < _checkProbability, _checkProbability];
+systemChat format ["Result %1", _unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}];
+if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
     if (_unitTYpe isEqualTo "wheeled") then {
         _group setVariable [QGVAR(checkBuildings), true];
         [QGVAR(disembark), _group] call CBA_fnc_localEvent;
@@ -67,4 +69,4 @@ if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime > _buildingCheckTim
 
 
 // Perform the next check in 10 seconds
-//_group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 10];
+_group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 5];

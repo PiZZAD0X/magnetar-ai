@@ -57,7 +57,6 @@ while {_tries < 50} do {
 };
 
 _options params [["_waypointType", "MOVE"], ["_execStatemets", ""], ["_condition", "true"]];
-systemChat format ["genWaypoint %1", _execStatemets];
 private _waypoint = [_group, _targetPos, _waypointType, _execStatemets, _condition] call FUNC(addWaypoint);
 
 _group setCurrentWaypoint _waypoint;

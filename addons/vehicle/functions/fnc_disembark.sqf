@@ -38,12 +38,13 @@ private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 
 private _count = count _units;
+private _dirIncrease = 0; private _dirOffset = 0;
 switch (true) do {
-    case _count == 1: {_dirIncrease = 5; _dirOffset = 270;};   // Provide small variation in order to iterate in case no positions are found.
-    case _count == 2: {_dirIncrease = 120; _dirOffset = 210;}; // Units form a perimeter at the back of the vehicle with an angle of 120 degrees.
-    case (_count >= 3 && _count <= 5): {_dirIncrease = 180/_count; _dirOffset = 180;};
-    case (_count > 5 && _count <= 8): {_dirIncrease = 240/_count; _dirOffset = 150;};
-    case (_count > 8): {_dirIncrease = 360/_units; _dirOffset = 0;};
+    case (_count == 1): {_dirIncrease = 0; _dirOffset = 180;};
+    case (_count == 2): {_dirIncrease = 120; _dirOffset = 120;}; // Units form a perimeter at the back of the vehicle with an angle of 120 degrees.
+    case (_count >= 3 && _count <= 5): {_dirIncrease = 180/(_count -1); _dirOffset = 90;};
+    case (_count > 5 && _count <= 8): {_dirIncrease = 240/(_count -1); _dirOffset = 60;};
+    case (_count > 8): {_dirIncrease = 360/(_count - 1); _dirOffset = 0;};
 };
 
 {

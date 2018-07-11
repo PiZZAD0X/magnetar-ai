@@ -21,12 +21,14 @@ params ["_group"];
 if (!local _group) exitWith {};
 
 private _disembarkUnits = (units _group) select {alive _x && {_x getVariable [QGVAR(markedForDisembark), false]}};
+
 if (_disembarkUnits isEqualTo []) exitWith {};
 
 // Units that have just disembarked
 private _markAsDisembarked = _disembarkUnits select {vehicle _x == _x && {!(_x getVariable [QGVAR(disembarked), false])}};
 {
     _x setVariable [QGVAR(disembarked), true];
+    _group setSpeedMode "FULL";
     _x doMove (_x getVariable [QGVAR(checkedPos), [0,0,0]]);
 } forEach _markAsDisembarked;
 
@@ -47,11 +49,11 @@ if (count _readyUnits != count _disembarkUnits) exitWith {};
 {
     _x setUnitPos "UP";
     _x setVariable [QGVAR(ready), false];
-    _x setVariable [QGVAR(disembarked), false]
+    _x setVariable [QGVAR(disembarked), false];
     _x setVariable [QGVAR(markedForDisembark), false];
+    _x setVariable [QGVAR(waitUntil), nil];
 } forEach _disembarkUnits;
 
-systemChat format ["embark embark embark embark embark"];
 [QEGVAR(tasks,embark), _group] call CBA_fnc_localEvent;
 
 /*

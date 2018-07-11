@@ -27,7 +27,7 @@ if (_forceAll) exitWith {
         };
     } forEach fullCrew [_vehicle, "", false];
 };
-systemChat format ["vehicleType %1", typeOf _vehicle];
+
 if (_vehicle iskindof "TANK" || _vehicle iskindof "Wheeled_APC_F" || _vehicle isKindOf "Air" || _vehicle isKindOf "SHIP") then {
     // Only cargo units
     {
@@ -47,7 +47,6 @@ if (_vehicle iskindof "TANK" || _vehicle iskindof "Wheeled_APC_F" || _vehicle is
     } forEach fullCrew [_vehicle, "cargo", false];
 } else {
     // Only the driver and gunner stay in the vehicle
-    systemChat format ["Moving crew"];
     {
         if (alive _x && {_x != driver _vehicle && _x != gunner _vehicle}) then {
             _units pushBack _x;

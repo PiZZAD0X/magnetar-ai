@@ -1,6 +1,5 @@
 PREP(checkDoTask);
 PREP(handlePatrolRandomState);
-PREP(onDisembarkStateEntered);
 PREP(onDoTaskStateEntered);
 PREP(onEmbarkStateEntered);
 PREP(onInitStateEntered);
