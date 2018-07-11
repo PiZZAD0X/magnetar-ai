@@ -20,17 +20,16 @@
 
 params ["_group", ["_unassign", true], ["_doPerimeter", true], ["_forceAll", false]];
 
-systemChat format ["Arguments %1", _this];
-
 private _vehicle = vehicle (leader _group);
 _group setVariable [QGVAR(assignedVehicle), _vehicle];
-systemChat format ["disembark"];
 
 private _units = [_vehicle, _forceAll] call FUNC(selectUnitsDisembark);
 
-// put leader at the first position
-if ((leader _group) in _units) then {
-    _units deleteAt (_units find (leaderGroup));
+private _leader = leader _group;
+// put leader at the first position. TODO: check if necessary
+if (_leader in _units) then {
+    _units deleteAt (_units find _leader);
+    _units pushBack _leader;
     reverse _units;
 };
 private _settings = _group getVariable [QEGVAR(core,settings), []];
@@ -38,9 +37,15 @@ private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 
-private _dirIncrease = 360/(count _units);
-systemChat format ["dirIncrease %1", _dirIncrease];
-private _dirOffset = 0;
+private _count = count _units;
+switch (true) do {
+    case _count == 1: {_dirIncrease = 5; _dirOffset = 270;};   // Provide small variation in order to iterate in case no positions are found.
+    case _count == 2: {_dirIncrease = 120; _dirOffset = 210;}; // Units form a perimeter at the back of the vehicle with an angle of 120 degrees.
+    case (_count >= 3 && _count <= 5): {_dirIncrease = 180/_count; _dirOffset = 180;};
+    case (_count > 5 && _count <= 8): {_dirIncrease = 240/_count; _dirOffset = 150;};
+    case (_count > 8): {_dirIncrease = 360/_units; _dirOffset = 0;};
+};
+
 {
     if (_unassign) then {
         unassignVehicle _x;
@@ -54,7 +59,7 @@ private _dirOffset = 0;
     // Calculate new position
     while {_tries < 50 && _doPerimeter} do {
         // Start by checking the back of the vehicle
-        private _dir = (getDir _vehicle) + 180 + (_dirOffset + random 20 - 10);
+        private _dir = (getDir _vehicle) + (_dirOffset + random 10 - 5);
         _dirOffset = _dirOffset + _dirIncrease;
 
         private _trialPos = _vehicle getPos [20 + random 10 -5, _dir];

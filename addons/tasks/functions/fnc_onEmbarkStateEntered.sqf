@@ -21,6 +21,7 @@ private _unitsToEmbark = (units _group) select {vehicle _x == _x && {alive _x}};
 
 if (_unitsToEmbark isEqualTo []) exitWith {};
 
+// Allow units to get in
 _unitsToEmbark allowGetIn true;
 
 // If units were patrolling on their own, fall back to following the group leader

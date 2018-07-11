@@ -48,6 +48,7 @@ if (count _readyUnits != count _disembarkUnits) exitWith {};
     _x setUnitPos "UP";
     _x setVariable [QGVAR(ready), false];
     _x setVariable [QGVAR(disembarked), false]
+    _x setVariable [QGVAR(markedForDisembark), false];
 } forEach _disembarkUnits;
 
 systemChat format ["embark embark embark embark embark"];
