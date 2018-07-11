@@ -11,15 +11,12 @@
  * 5: Settings <HASH> (default: [])
  * 6: Group options <ARRAY> (default: [])
  * 7: Sleep time between units <NUMBER> (default: 0.05)
- * 2: Side <STRING>
- * 3: List of options <STRING> (default [])
- * 4: Sleep time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
  * Group <OBJECT>
  *
  * Example:
- * [player] call mai_spawn_fnc_spawnInfantryGroup
+ * [units, "marker", "infantry", "west"] call mai_spawn_fnc_spawnGroup
  *
  * Public: Yes
  */

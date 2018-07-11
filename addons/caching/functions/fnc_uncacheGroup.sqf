@@ -17,12 +17,13 @@
 
 params ["_group"];
 
-_group setVariable [QGVAR(cached), false];
+_group setVariable [QGVAR(cached), false, true];
 private _leader = leader _group;
 
 {
     if (!simulationEnabled _x}) then {
         _x enableSimulationGlobal false;
         _x hideObjectGlobal false;
+        _x setPos (formationPosition _x)
     };
 } forEach (units _group);

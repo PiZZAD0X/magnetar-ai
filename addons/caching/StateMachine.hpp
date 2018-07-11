@@ -6,36 +6,37 @@ class MAI_Caching_StateMachine {
         onStateEntered = QFUNC(onInitStateEntered);
         class Cache {
             targetState = "Cache";
-            condition = QUOTE(CBA_missionTime > 0);
+            condition = QUOTE([] call FUNC(shouldCache));
         };
     };
 
     class Cache {
         class LeaderChanged {
             targetState = "LeaderChanged";
-            condition = QUOTE(CBA_missionTime > 0);
+            condition = QUOTE(leader _this != (_this getVariable QQGVAR(leader)));
         };
+
         class Uncache {
             targetState = "Uncache";
-            events[] = {QGVAR(Uncache)};
+            condition = QUOTE(!([] call FUNC(shouldCache)))
         };
     };
 
     class LeaderChanged {
         onStateEntered = QFUNC(changeLeader);
-        class Running {
-            targetState = "Running";
-            events[] = {QGVAR(running)};
+
+        class Cache {
+            targetState = "Cache";
+            events[] = {QGVAR(cache)};
         };
     };
 
     class Uncache {
-        onStateEntered = QFUNC(onPatrolRandomStateEntered);
-        onState = QFUNC(handlePatrolRandomState);
+        onStateEntered = QFUNC(uncacheGroup);
 
         class Cache {
-            targetState = "PatrolBuildings";
-            events[] = {QGVAR(patrolBuildings)};
+            targetState = "Cache";
+            condition = QUOTE(!([] call FUNC(shouldCache)));
         };
     };
 };

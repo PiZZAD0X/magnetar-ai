@@ -17,7 +17,8 @@
 
 params ["_group"];
 
-_group setVariable [QGVAR(cached), true];
+_group setVariable [QGVAR(cached), true, true];
+
 private _leader = leader _group;
 {
     if (!(_x isEqualTo _leader) || {!("driver" isEqualTo (assignedVehicleRole _x))}) then {
