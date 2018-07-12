@@ -34,6 +34,7 @@ private _markAsDisembarked = _disembarkUnits select {vehicle _x == _x && {!(_x g
 
 // Select units that are ready
 private _unitsToStop = _disembarkUnits select {(_x distance2D (_x getVariable [QGVAR(checkedPos), [0,0,0]]) < 1) && {!(_x getVariable [QGVAR(ready), false])}};
+//private _unitsToStop = _disembarkUnits select {(moveToCompleted _x || {moveToFailed _x}) && {!(_x getVariable [QGVAR(ready), false])}};
 {
     _x setUnitPos "MIDDLE";
     doStop _x;

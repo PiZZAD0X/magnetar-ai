@@ -69,8 +69,8 @@ private _enteredBuildings = [];
 } forEach _buildings;
 
 if (_enteredBuildings isEqualTo []) then {
+    false
+} else {
     [QGVAR(handleEnteredBuildings), _enteredBuildings] call CBA_fnc_serverEvent;
     true
-} else {
-    false
 };
