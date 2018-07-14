@@ -26,7 +26,7 @@ private _leader = leader _group;
 private _units = (units _group) deleteAt ((units _group) find _leader);
 
 {
-    if (_x isKindOf "Man" && {alive _x} && {unitReady _x} && {_x == vehicle _x} && {canMove _x} && {canStand _x}) then {
+    if (_x isKindOf "CAManBase" && {alive _x} && {unitReady _x} && {vehicle _x == _x} && {canStand _x}) then {
         _unitsToMove pushBack _x;
     } else {
         if (_x != vehicle _x && {!(_x in (crew (vehicle _x)))}) then {

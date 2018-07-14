@@ -20,6 +20,7 @@ title: Using MAI with Editor Placed Groups
 | patrolBuildings | _true_, false                 | Group can enter and patrol buildings.
 | randomBehaviour | _true_, false                 | Randomise the group's behaviour, combatMode, formation and speed at each waypoint.
 | randomPosition  | true, _false_                 | Randomise the position of the group.
+| reinforcement   | true, _false_                 | Unit can be used as a reinforcement.
 | skill           |
 | skillLeader     |
 | spawnInBuilding | true, _false_                 |

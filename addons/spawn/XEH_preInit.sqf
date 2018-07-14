@@ -6,4 +6,7 @@ ADDON = false;
 
 #include "initSettings.sqf"
 
+GVAR(spawnPFH) = -1;
+GVAR(toSpawn) = [];
+
 ADDON = true;

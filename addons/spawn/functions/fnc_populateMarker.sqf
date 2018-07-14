@@ -23,8 +23,6 @@
 
 params ["_markerInfo", "_groupsToSpawn"];
 
-if (!isServer) exitWith {};
-
 _markerInfo params ["_marker"];
 
 if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
