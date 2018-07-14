@@ -16,20 +16,18 @@
 #include "script_component.hpp"
 
 params ["_group"];
-
-if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
+if ((units _group) findIf {alive _x} == -1) exitWith {deleteGroup _group;};
 
 if (!local (leader _group)) exitWith {
-    _group setVariable [QGVAR(tasks,waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
-    _group setVariable [QGVAR(tasks,distance), _group getVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos], true];
-    _group setVariable [QGVAR(tasks,buildingCheckTime), _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime], true];
-    _group setVariable [QGVAR(tasks,inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
+    _group setVariable [QEGVAR(tasks,waitUntil), _group getVariable [QEGVAR(tasks,waitUntil), CBA_missionTime], true];
+    //_group setVariable [QEGVAR(tasks,distance), _group getVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos], true];
+    _group setVariable [QEGVAR(tasks,buildingCheckTime), _group getVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime], true];
+    _group setVariable [QGVAR(inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
 };
 
 private _allUnitsFinished = true;
 {
-    private _inBuilding = (_x getVariable [QGVAR(building), [false]]) # 0;
-
+    private _inBuilding = (_x getVariable [QGVAR(inBuilding), [false]]) # 0;
     if (_inBuilding) then {
         _x call FUNC(patrolBuilding);
         _allUnitsFinished = false;
@@ -37,6 +35,8 @@ private _allUnitsFinished = true;
 } forEach (units _group);
 
 if (_allUnitsFinished) then {
+    systemChat format ["All finished"];
+    (units _group) doFollow (leader _group);
     _group setVariable [QEGVAR(tasks,finishedBuildingPatrol), CBA_missionTime + 10];
     _group lockWP false;
 

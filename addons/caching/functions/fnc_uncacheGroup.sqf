@@ -21,7 +21,7 @@ _group setVariable [QGVAR(cached), false, true];
 private _leader = leader _group;
 
 {
-    if (!simulationEnabled _x}) then {
+    if (!simulationEnabled _x) then {
         _x enableSimulationGlobal false;
         _x hideObjectGlobal false;
         _x setPos (formationPosition _x)

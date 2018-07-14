@@ -27,9 +27,9 @@ if (!alive _unit) exitWith {
 _buildingPatrol params ["_inBuilding", "_building", ["_buildingPos", []], ["_waitUntilTime", CBA_missionTime], ["_moving", false], ["_returnLeader", false]];
 
 if (_buildingPos isEqualTo []) exitWith {
-systemChat format ["Building pos is []"];
     if (!_returnLeader) then {
-        _unit doMove (position leader _unit);
+        systemChat format ["return leader"];
+        _unit doMove (formationPosition _unit);
         _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, CBA_missionTime + 60, _moving, true]];
     } else {
         if (CBA_missionTime > _waitUntilTime) then {
@@ -37,7 +37,14 @@ systemChat format ["Building pos is []"];
         };
     };
 };
-systemChat format ["moving %1", _buildingPos];
+
+if (moveToCompleted _unit || {moveToFailed _unit} || {CBA_missionTime >= _waitUntilTime}) then {
+    private _index = floor random (count _buildingPos);
+    _unit doMove (_building buildingPos _index);
+    _buildingPos deleteAt _index;
+    _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, CBA_missionTime + 60, true, _returnLeader]];
+};
+/*
 if (!_moving) then {
     private _index = floor random (count _buildingPos);
     _unit doMove (_building buildingPos _index);
@@ -48,4 +55,4 @@ if (!_moving) then {
         _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, _waitUntilTime, false, _returnLeader]];
     };
 };
-
+*/

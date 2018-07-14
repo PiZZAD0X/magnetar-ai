@@ -27,7 +27,7 @@ private _targetPos = waypointPosition [_group, 0];
 if (!local (leader _group)) exitWith {
     _group setVariable [QGVAR(waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
     _group setVariable [QGVAR(distance), _group getVariable [QGVAR(distance), (getPos _leader) distance2D _targetPos], true];
-    _group setVariable [QGVAR(buildingCheckTime), _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime], true];
+    _group setVariable [QEGVAR(tasks,buildingCheckTime), _group getVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime], true];
     _group setVariable [QGVAR(inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
 };
 
@@ -47,20 +47,21 @@ private _unitType = [_settings, "type"] call CBA_fnc_hashGet;
 private _inBuilding = _group getVariable [QGVAR(inBuilding), false];
 
 if (_inBuilding && {CBA_missionTime > (_group getVariable [QGVAR(finishedBuildingPatrol), CBA_missionTime])}) then {
-    _group setVariable [QGVAR(inBuilding), true];
     _inBuilding = false;
     _group setVariable [QGVAR(buildingCheckTime), CBA_missionTime + 10];
 };
 
 private _buildingCheckTime = _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime];
 private _checkProbability = (1 - _distance/(_group getVariable [QGVAR(distance), _leader distance _targetPos]))*100 min 70;
-systemChat format ["%1 %2 %3 %3 %5 %6 %7", _unitType in ["infantry", "wheeled"], CBA_missionTime >= _buildingCheckTime , _distance < _checkingDistance, [_settings, "patrolBuildings"] call CBA_fnc_hashGet, !_inBuilding, random 100 < _checkProbability, _checkProbability];
-systemChat format ["Result %1", _unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}];
-if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
-    if (_unitTYpe isEqualTo "wheeled") then {
+
+//if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding} && {random 100 < _checkProbability}) then {
+//if (_unitType in ["infantry", "wheeled"] && {CBA_missionTime >= _buildingCheckTime} && {_distance < _checkingDistance} && {[_settings, "patrolBuildings"] call CBA_fnc_hashGet} && {!_inBuilding}) then {
+if (random 100 < 90 && CBA_missionTime > 15) then {
+    if (_unitType isEqualTo "wheeled") then {
         _group setVariable [QGVAR(checkBuildings), true];
         [QGVAR(disembark), _group] call CBA_fnc_localEvent;
     } else {
+        systemChat format ["patrol buildings"];
         [QGVAR(patrolBuildings), _group] call CBA_fnc_localEvent;
     };
 };

@@ -23,6 +23,6 @@ _group setVariable [QGVAR(leader), _leader, true];
 if !(simulationEnabled _leader) then {
     _leader enableSimulationGlobal false;
     _leader hideObjectGlobal false;
-}
+};
 
 [QGVAR(cache), _group] call CBA_fnc_localEvent;
