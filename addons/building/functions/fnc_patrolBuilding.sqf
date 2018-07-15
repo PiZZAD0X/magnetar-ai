@@ -28,7 +28,6 @@ _buildingPatrol params ["_inBuilding", "_building", ["_buildingPos", []], ["_wai
 
 if (_buildingPos isEqualTo []) exitWith {
     if (!_returnLeader) then {
-        systemChat format ["return leader"];
         _unit doMove (formationPosition _unit);
         // Give the unit 10 seconds to go back to the leader
         _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, CBA_missionTime + 10, true]];

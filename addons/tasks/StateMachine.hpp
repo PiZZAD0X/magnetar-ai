@@ -27,7 +27,7 @@ class MAI_Tasks_StateMachine {
         class TaskPatrol {
             targetState = "TaskPatrol";
             events[] = {QGVAR(patrol)};
-        }
+        };
         class TaskPatrolRandom {
             targetState = "TaskPatrolRandom";
             events[] = {QGVAR(patrolRandom)};

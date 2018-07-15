@@ -8,8 +8,8 @@ class CfgPatches {
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {"mai_main", "mai_vehicle", "mai_building"};
         authors[] = {"TheMagnetar"};
-        author = "UST101";
-        authorUrl = "http://www.ust101.com/";
+        author = "MAI-Team";
+        authorUrl = "http://www.github.com/theMagnetar";
         VERSION_CONFIG;
     };
 };

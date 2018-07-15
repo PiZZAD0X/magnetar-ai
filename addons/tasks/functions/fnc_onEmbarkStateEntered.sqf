@@ -16,7 +16,6 @@
 #include "script_component.hpp"
 
 params ["_group", "_state"];
-systemChat format ["embarking"];
 private _unitsToEmbark = (units _group) select {vehicle _x == _x && {alive _x}};
 
 if (_unitsToEmbark isEqualTo []) exitWith {};

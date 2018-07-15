@@ -39,4 +39,5 @@ if ([_settings, "forceRoads"] call CBA_fnc_hashGet) then {
     (leader _group) forceFollowRoad true;
 };
 
+[_group] call EFUNC(waypoint,clearWaypoints);
 _group setVariable [QEGVAR(core,settings), _settings, true];

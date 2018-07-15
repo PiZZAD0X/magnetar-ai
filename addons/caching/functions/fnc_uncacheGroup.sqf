@@ -22,8 +22,8 @@ private _leader = leader _group;
 
 {
     if (!simulationEnabled _x) then {
-        _x enableSimulationGlobal false;
+        _x enableSimulationGlobal true;
         _x hideObjectGlobal false;
-        _x setPos (formationPosition _x)
+        _x setPos (formationPosition _x);
     };
 } forEach (units _group);

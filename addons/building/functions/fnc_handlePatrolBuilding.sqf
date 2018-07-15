@@ -35,7 +35,6 @@ private _allUnitsFinished = true;
 } forEach (units _group);
 
 if (_allUnitsFinished) then {
-    systemChat format ["All finished"];
     (units _group) doFollow (leader _group);
     _group setVariable [QEGVAR(tasks,finishedBuildingPatrol), CBA_missionTime + 10];
     _group lockWP false;

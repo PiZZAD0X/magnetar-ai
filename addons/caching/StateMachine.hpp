@@ -6,11 +6,12 @@ class MAI_Caching_StateMachine {
         onStateEntered = QFUNC(onInitStateEntered);
         class Cache {
             targetState = "Cache";
-            condition = QUOTE([] call FUNC(shouldCache));
+            condition = QFUNC(shouldCache);
         };
     };
 
     class Cache {
+        onStateEntered = QFUNC(cacheGroup);
         class LeaderChanged {
             targetState = "LeaderChanged";
             condition = QUOTE(leader _this != (_this getVariable QQGVAR(leader)));
@@ -18,7 +19,7 @@ class MAI_Caching_StateMachine {
 
         class Uncache {
             targetState = "Uncache";
-            condition = QUOTE(!([] call FUNC(shouldCache)))
+            condition = QUOTE(!([_this] call FUNC(shouldCache)));
         };
     };
 
@@ -36,7 +37,7 @@ class MAI_Caching_StateMachine {
 
         class Cache {
             targetState = "Cache";
-            condition = QUOTE(!([] call FUNC(shouldCache)));
+            condition = QFUNC(shouldCache);
         };
     };
 };

@@ -18,7 +18,6 @@
 params ["_group", "_state"];
 
 private _inBuilding = [_group] call FUNC(moveInBuilding);
-systemChat format ["State  building %1", _inBuilding];
 
 if (_inBuilding) then {
     _group setVariable [QEGVAR(tasks,inBuilding), true];
@@ -34,7 +33,7 @@ if (_inBuilding) then {
         _markerName setMarkerType "hd_dot";
         _markerName setMarkerColor "colorYellow";
     };
-    private _comp = format ["systemChat format ['completed']; this setFormation '%1'; this setBehaviour '%2'; deleteWaypoint [group this, currentWaypoint (group this)];", formation _group, behaviour _leader];
+    private _comp = format ["this setFormation '%1'; this setBehaviour '%2'; deleteWaypoint [group this, currentWaypoint (group this)];", formation _group, behaviour _leader];
     _wp setWaypointStatements ["thislist findIf {unitReady _x || !(alive _x)} == -1;", _comp];
 
     _group setBehaviour "Combat";

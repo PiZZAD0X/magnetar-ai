@@ -21,7 +21,7 @@ _group setVariable [QGVAR(cached), true, true];
 
 private _leader = leader _group;
 {
-    if (!(_x isEqualTo _leader) || {!("driver" isEqualTo (assignedVehicleRole _x))}) then {
+    if (!(_x isEqualTo _leader) && {!("driver" isEqualTo (assignedVehicleRole _x))}) then {
         _x enableSimulationGlobal false;
         _x hideObjectGlobal true;
     };

@@ -2,7 +2,7 @@
     QGVAR(cacheDistance),
     "SLIDER",
     "Cache Distance",
-    "UST-Framework",
+    "Magnetar AI",
     [10, 10000, 1000, 0],
     true,
     {}
