@@ -19,20 +19,20 @@ params ["_group", "_state"];
 
 if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
 
-if (units _group select {alive _x} isEqualTo []) exitWith {deleteGroup _group;};
-
-// Do not do advanced actions if unit  is cached
-if (_group getVariable [QGVAR(cached), false]) exitWith {};
+if ((units _group) findIf {alive _x} == -1) exitWith {deleteGroup _group;};
 
 private _leader = leader _group;
 private _targetPos = waypointPosition [_group, 0];
 
-if (!local (leader _group)) exitWith {
+if (!local _leader) exitWith {
     _group setVariable [QGVAR(waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
     _group setVariable [QGVAR(distance), _group getVariable [QGVAR(distance), (getPos _leader) distance2D _targetPos], true];
     _group setVariable [QEGVAR(tasks,buildingCheckTime), _group getVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime], true];
     _group setVariable [QGVAR(inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
 };
+
+// Do not do advanced actions if unit is cached
+if (_group getVariable [QGVAR(cached), false]) exitWith {};
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _checkingDistance = [_settings, "checkingDistance"] call CBA_fnc_hashGet;

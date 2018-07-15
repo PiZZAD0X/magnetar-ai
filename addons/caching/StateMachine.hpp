@@ -3,23 +3,35 @@ class MAI_Caching_StateMachine {
     skipNull = 1;
 
     class Init {
-        onStateEntered = QFUNC(onInitStateEntered);
+        onStateEntered = QFUNC(onCacheInit);
         class Cache {
             targetState = "Cache";
-            condition = QFUNC(shouldCache);
+            events[] = {QGVAR(uncache)};
+        };
+
+        class Uncache {
+            targetState = "Uncache";
+            events[] = {QGVAR(cache)};
         };
     };
 
     class Cache {
         onStateEntered = QFUNC(cacheGroup);
+        onState = QFUNC(handleCache);
+
         class LeaderChanged {
             targetState = "LeaderChanged";
-            condition = QUOTE(leader _this != (_this getVariable QQGVAR(leader)));
+            events[] = {QGVAR(leaderChanged)};
+        };
+
+        class MoveUnits {
+            targetState = "MoveUnits";
+            events[] = {QFVAR(moveUnits)};
         };
 
         class Uncache {
             targetState = "Uncache";
-            condition = QUOTE(!([_this] call FUNC(shouldCache)));
+            events[] = {QGVAR(uncache)};
         };
     };
 
@@ -32,12 +44,22 @@ class MAI_Caching_StateMachine {
         };
     };
 
-    class Uncache {
-        onStateEntered = QFUNC(uncacheGroup);
+    class MoveUnits {
+        onStateEntered = QFUNC(moveCachedUnits);
 
         class Cache {
             targetState = "Cache";
-            condition = QFUNC(shouldCache);
+            events[] = {QGVAR(cache)};
+        };
+    };
+
+    class Uncache {
+        onStateEntered = QFUNC(uncacheGroup);
+        onState = QFUNC(handleUncache);
+
+        class Cache {
+            targetState = "Cache";
+            events[] = {QGVAR(cache)};
         };
     };
 };

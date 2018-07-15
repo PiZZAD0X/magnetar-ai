@@ -1,0 +1,47 @@
+/*
+ * Author: TheMagnetar
+ * Handles groups that are cached
+ *
+ * Arguments:
+ * 0: Group <OBJECT>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [group1] call mai_cache_fnc_handleCache
+ *
+ * Public: No
+ */
+#include "script_component.hpp"
+
+params ["_group"];
+
+// Only when unit is local
+if (!local _group) exitWith {
+    _group setVariable [QGVAR(cached), false, true];
+    _group setVariable [QGVAR(leader), leader _group, true];
+};
+
+if (CBA_missionTime < (_group getVariable [QGVAR(lastCheck), CBA_missionTime]) exitWith {};
+
+// Check in 10 seconds
+_group setVariable [QGVAR(lastCheck), CBA_missionTime + 10];
+
+if !([_group] call FUNC(shouldCache)) then {
+    [QGVAR(uncache), _group] call CBA_fnc_localEvent;
+} else {
+
+    if (leader _group != (_group getVariable [QGVAR(leader), leader _group])) then {
+        [QGVAR(leaderChanged), _group] call CBA_fnc_localEvent;
+    };
+
+    // Delete cache units that are dead
+    if !(((units _group) select {!alive _x} )isEqualTo []) then {
+        [QGVAR(deleteUnits), _group] call CBA_fnc_localEvent;
+    };
+
+    [QGVAR(moveUnits), _group] call CBA_fnc_localEvent;
+};
+
+

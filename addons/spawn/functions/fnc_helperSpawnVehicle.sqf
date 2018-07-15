@@ -23,11 +23,11 @@
 
 params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_targetPos", []]];
 
-private _vehiclePool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "vehicles");
-private _crewPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "crew");
-private _cargoLeaders = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargoLeaders");
-private _cargoPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "cargo");
-private _pilotPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "pilot");
+private _vehiclePool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "vehicles");
+private _crewPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "crew");
+private _cargoLeaders = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "cargoLeaders");
+private _cargoPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "cargo");
+private _pilotPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "pilot");
 
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;

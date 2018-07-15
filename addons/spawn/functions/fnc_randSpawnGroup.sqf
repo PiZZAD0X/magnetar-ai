@@ -25,16 +25,16 @@ params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05], ["_position",
 // Basic options should be always defined
 private _options = [];
 {
-    private _values = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> _x);
+    private _values = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> _x);
     _options pushBack [_x, _values];
 } forEach ["behaviour", "combatMode", "formation", "speed", "skill", "skillLeader"];
 
 // Additional options defined in config
-private _options =+ getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "options");
+private _options =+ getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "options");
 
 // Init settings for the group
 private _settings = [] call CBA_fnc_hashCreate;
-private _type = toLower (getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "type"));
+private _type = toLower (getText (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "type"));
 _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
 _settings = [_settings, _options] call EFUNC(core,parseOptions);
 
@@ -66,7 +66,7 @@ if (_groupSize isEqualType []) then {
 };
 
 // Determine group side
-private _side = getText (configFile >> "CfgGroupCompositions" >> _configEntry >> "side");
+private _side = getText (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "side");
 
 // Generate units
 if (_type isEqualTo "infantry") then {

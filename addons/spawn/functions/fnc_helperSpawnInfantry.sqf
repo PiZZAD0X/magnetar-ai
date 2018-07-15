@@ -23,8 +23,8 @@
 
 params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_targetPos", []]];
 
-private _leaderPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
-private _unitPool = getArray (configFile >> "CfgGroupCompositions" >> _configEntry >> "units");
+private _leaderPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
+private _unitPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "units");
 
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
