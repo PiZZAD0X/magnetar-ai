@@ -6,12 +6,12 @@ class MAI_Caching_StateMachine {
         onStateEntered = QFUNC(onCacheInit);
         class Cache {
             targetState = "Cache";
-            events[] = {QGVAR(uncache)};
+            events[] = {QGVAR(cache)};
         };
 
         class Uncache {
             targetState = "Uncache";
-            events[] = {QGVAR(cache)};
+            events[] = {QGVAR(uncache)};
         };
     };
 
@@ -26,7 +26,7 @@ class MAI_Caching_StateMachine {
 
         class MoveUnits {
             targetState = "MoveUnits";
-            events[] = {QFVAR(moveUnits)};
+            events[] = {QGVAR(moveUnits)};
         };
 
         class Uncache {

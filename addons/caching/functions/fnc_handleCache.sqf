@@ -23,16 +23,19 @@ if (!local _group) exitWith {
     _group setVariable [QGVAR(leader), leader _group, true];
 };
 
-if (CBA_missionTime < (_group getVariable [QGVAR(lastCheck), CBA_missionTime]) exitWith {};
+if (CBA_missionTime < (_group getVariable [QGVAR(lastCheck), CBA_missionTime])) exitWith {};
 
 // Check in 10 seconds
-_group setVariable [QGVAR(lastCheck), CBA_missionTime + 10];
+_group setVariable [QGVAR(lastCheck), CBA_missionTime + 1];
 
 if !([_group] call FUNC(shouldCache)) then {
+
     [QGVAR(uncache), _group] call CBA_fnc_localEvent;
 } else {
 
-    if (leader _group != (_group getVariable [QGVAR(leader), leader _group])) then {
+    private _leader = leader _group;
+
+    if (!alive _leader || {_leader != (_group getVariable [QGVAR(leader), leader _group])}) then {
         [QGVAR(leaderChanged), _group] call CBA_fnc_localEvent;
     };
 

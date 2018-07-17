@@ -15,7 +15,7 @@
  * None
  *
  * Example:
- * [["marker"], [[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]] call mai_spawn_fnc_populateMarker
+ * [["marker"], [[[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]]] call mai_spawn_fnc_populateMarker
  *
  * Public: Yes
  */
@@ -25,14 +25,16 @@ params ["_markerInfo", "_groupsToSpawn"];
 
 _markerInfo params ["_marker"];
 
+if (getMarkerColor _marker == "") exitWith {
+    ERROR_1("marker %1 does not exist", _marker);
+};
+
 if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
     _marker setMarkerAlpha 0;
 };
 
 {
-    private _numGroups = _x # 0;
-    (_x # 1) params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
-
+    _x params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
     for "_i" from 1 to _groupCount do {
         [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
     };

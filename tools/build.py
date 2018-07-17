@@ -5,7 +5,7 @@ import sys
 import subprocess
 
 ######## GLOBALS #########
-MAINPREFIX = "u"
+MAINPREFIX = "m"
 PREFIX = "mai_"
 ##########################
 

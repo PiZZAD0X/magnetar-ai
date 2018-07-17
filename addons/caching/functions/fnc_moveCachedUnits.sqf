@@ -18,8 +18,9 @@
 params ["_group"];
 
 {
-    if (!simulationEnabled _x && {_vehicle _x == _x}) then {
+    if (!simulationEnabled _x && {vehicle _x == _x}) then {
         _x setPos (formationPosition _x);
     };
 } forEach (units _group);
 
+[QGVAR(cache), _group] call CBA_fnc_localEvent;

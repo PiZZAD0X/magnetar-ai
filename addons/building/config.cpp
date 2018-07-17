@@ -9,7 +9,7 @@ class CfgPatches {
         requiredAddons[] = {"mai_main"};
         authors[] = {"TheMagnetar"};
         author = "MAI-Team";
-        authorUrl = "http://www.github.com/theMagnetar";
+        authorUrl = "https://gitlab.gruppe-w.de/Magnetar";
         VERSION_CONFIG;
     };
 };

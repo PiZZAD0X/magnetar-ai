@@ -1,1 +1,1 @@
-#include "\u\mai\addons\core\script_component.hpp"
+#include "\m\mai\addons\core\script_component.hpp"

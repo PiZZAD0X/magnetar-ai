@@ -1,1 +1,1 @@
-#include "\u\mai\addons\waypoint\script_component.hpp"
+#include "\m\mai\addons\waypoint\script_component.hpp"

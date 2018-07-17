@@ -24,6 +24,10 @@
 
 params [["_units", []], "_marker", "_type", "_side", ["_position", []], ["_settings", []], ["_options", []], ["_sleep", 0.05]];
 
+if (getMarkerColor _marker == "") exitWith {
+    ERROR_1("marker %1 does not exist", _marker);
+};
+
 private _group = objNull;
 switch (_side) do {
     case "civilian": {_group = createGroup civilian};

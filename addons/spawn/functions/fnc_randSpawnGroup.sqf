@@ -6,8 +6,8 @@
  * 0: Config entry <STRING>
  * 1: Group size either in [min, max] format or a defined number <ARRAY><NUMBER>
  * 2: Marker <STRING>
- * 4: Speel time between unit creation <NUMBER> (default: 0.05)
  * 3: Position <ARRAY> (default: [])
+ * 4: Speel time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
  * None
@@ -20,7 +20,11 @@
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_groupSize", "_marker", ["_sleep", 0.05], ["_position", []]];
+params ["_configEntry", "_groupSize", "_marker", ["_position", []], ["_sleep", 0.05]];
+
+if (getMarkerColor _marker == "") exitWith {
+    ERROR_1("marker %1 does not exist", _marker);
+};
 
 // Basic options should be always defined
 private _options = [];

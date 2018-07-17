@@ -1,6 +1,6 @@
 #define COMPONENT vehicle
 #define COMPONENT_BEAUTIFIED Vehicle
-#include "\u\mai\addons\main\script_mod.hpp"
+#include "\m\mai\addons\main\script_mod.hpp"
 
 // #define DEBUG_MODE_FULL
 // #define DISABLE_COMPILE_CACHE
@@ -14,4 +14,4 @@
     #define DEBUG_SETTINGS DEBUG_SETTINGS_VEHICLE
 #endif
 
-#include "\u\mai\addons\main\script_macros.hpp"
+#include "\m\mai\addons\main\script_macros.hpp"

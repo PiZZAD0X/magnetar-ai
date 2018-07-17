@@ -12,7 +12,7 @@ import subprocess
 import winreg
 
 ######## GLOBALS #########
-MAINDIR = "u"
+MAINDIR = "m"
 PROJECTDIR = "mai"
 ##########################
 

@@ -17,12 +17,10 @@
 
 params ["_group"];
 
+[_group] call FUNC(uncacheGroup);
 private _leader = leader _group;
-_group setVariable [QGVAR(leader), _leader, true];
+_group setVariable [QGVAR(leader), _leader];
 
-if !(simulationEnabled _leader) then {
-    _leader enableSimulationGlobal false;
-    _leader hideObjectGlobal false;
-};
+[_group] call FUNC(cacheGroup);
 
 [QGVAR(cache), _group] call CBA_fnc_localEvent;

@@ -15,7 +15,7 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_state"];
+params ["_group"];
 
 private _playerUnits = [] call CBA_fnc_players;
 private _leader = leader _group;

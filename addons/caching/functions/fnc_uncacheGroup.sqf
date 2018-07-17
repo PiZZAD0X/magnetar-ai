@@ -18,7 +18,6 @@
 params ["_group"];
 
 _group setVariable [QGVAR(cached), false, true];
-private _leader = leader _group;
 
 {
     if (!simulationEnabled _x) then {

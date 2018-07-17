@@ -1,1 +1,1 @@
-#include "\u\mai\addons\spawn\script_component.hpp"
+#include "\m\mai\addons\spawn\script_component.hpp"
