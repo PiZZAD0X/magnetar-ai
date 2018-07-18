@@ -28,73 +28,90 @@ private _crewPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _co
 private _cargoLeaders = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "cargoLeaders");
 private _cargoPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "cargo");
 private _pilotPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "pilot");
+private _random = (getNumber (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "random")) == 1;
 
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 
-{
-    if (count _x > 1) then {
-       _x = [_x, 10] call EFUNC(core,shuffleArray);
-    };
-} forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPool];
-
-private _spawnVehicles = [];
-
 _size params ["_groupSize", "_cargoSize"];
+if (_random) then {
+    {
+        if (count _x > 1) then {
+           _x = [_x, 10] call EFUNC(core,shuffleArray);
+        };
+    } forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPool];
+} else {
+    _groupSize = count _vehiclePool;
+}
 
 for "_i" from 1 to _groupSize do {
-    private _vehicle = selectRandom _vehiclePool;
-    private _roles = _vehicle call BIS_fnc_vehicleRoles;
-    private _turrets = [_vehicle, false] call BIS_fnc_allTurrets;
-    private _cargoUnits = [];
-    _cargoUnits pushBack (selectRandom _cargoLeaders);
+
+    private _vehicle = objNull;
     private _crewUnits = [];
     private _pilots = [];
-    private _numCargo = 0;
+    private _cargoUnits = [];
 
-    {
-        private _role = toLower (_x # 0);
-        switch (_role) do {
-            case "cargo": {
-                if (_numCargo < (_cargoSize - 1)) then {
-                    _cargoUnits pushBack (selectRandom _cargoPool);
-                    _numCargo = _numCargo + 1;
+    if (_random) then {
+        _vehicle = selectRandom _vehiclePool;
+        private _roles = _vehicle call BIS_fnc_vehicleRoles;
+        private _turrets = [_vehicle, false] call BIS_fnc_allTurrets;
+
+        _cargoUnits pushBack (selectRandom _cargoLeaders);
+
+        private _numCargo = 0;
+
+        {
+            private _role = toLower (_x # 0);
+            switch (_role) do {
+                case "cargo": {
+                    if (_numCargo < (_cargoSize - 1)) then {
+                        _cargoUnits pushBack (selectRandom _cargoPool);
+                        _numCargo = _numCargo + 1;
+                    };
                 };
-            };
-            case "driver": {
-                if (_vehicle isKindOf "Air") then {
-                    _pilots pushBack (selectRandom _pilotPool);
-                } else {
-                    _crewUnits pushBack (selectRandom _crewPool);
-                };
-            };
-            case "gunner": {
-                if (_vehicle isKindOf "Air") then {
-                    _pilots pushBack (selectRandom _pilotPool);
-                } else {
-                    _crewUnits pushBack (selectRandom _crewPool);
-                };
-            };
-            case "commander": {
-                _crewUnits pushBack (selectRandom _crewPool);
-            };
-            case "turret": {
-                if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 1] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
-                    _pilots pushBack (selectRandom _pilotPool);
-                } else {
-                    if (_x # 1 in _turrets) then {
-                        _crewUnits pushBack (selectRandom _crewPool);
+                case "driver": {
+                    if (_vehicle isKindOf "Air") then {
+                        _pilots pushBack (selectRandom _pilotPool);
                     } else {
-                        if (_numCargo < (_cargoSize - 1)) then {
-                            _cargoUnits pushBack (selectRandom _cargoPool);
-                            _numCargo = _numCargo + 1;
+                        _crewUnits pushBack (selectRandom _crewPool);
+                    };
+                };
+                case "gunner": {
+                    if (_vehicle isKindOf "Air") then {
+                        _pilots pushBack (selectRandom _pilotPool);
+                    } else {
+                        _crewUnits pushBack (selectRandom _crewPool);
+                    };
+                };
+                case "commander": {
+                    _crewUnits pushBack (selectRandom _crewPool);
+                };
+                case "turret": {
+                    if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 1] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
+                        _pilots pushBack (selectRandom _pilotPool);
+                    } else {
+                        if (_x # 1 in _turrets) then {
+                            _crewUnits pushBack (selectRandom _crewPool);
+                        } else {
+                            if (_numCargo < (_cargoSize - 1)) then {
+                                _cargoUnits pushBack (selectRandom _cargoPool);
+                                _numCargo = _numCargo + 1;
+                            };
                         };
                     };
                 };
             };
-        };
-    } forEach _roles;
+        } forEach _roles;
+    } else {
+        _vehicle = _vehiclePool # (_i - 1);
+        _crewUnits = _crewPool;
+        _pilots = _pilotPool;
+
+        _cargoUnits = [];
+        _cargoUnits append _cargoLeaders;
+        _cargoUnits append _cargoPool;
+    }
 
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
 };

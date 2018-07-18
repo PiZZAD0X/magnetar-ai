@@ -16,6 +16,7 @@ title: Using MAI with Editor Placed Groups
 | forceroads      | true, *false*                 | Forces waypoints on roads.
 | formation       | Any valid group formation     | Group formation. 1)
 | init            | Any string code (default: "") | Code executed when the group is created.
+| preInit         | Any string code (default: "") | Code executed before the units are spawned.
 | marker          | Any valid marker name         | Marker assigned to a group.
 | patrolBuildings | _true_, false                 | Group can enter and patrol buildings.
 | randomBehaviour | _true_, false                 | Randomise the group's behaviour, combatMode, formation and speed at each waypoint.

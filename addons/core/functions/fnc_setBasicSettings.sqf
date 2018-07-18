@@ -44,4 +44,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "randomPosition", false] call CBA_fnc_hashSet;
 [_settings, "execWaypoint", ""] call CBA_fnc_hashSet;
 
+[_settings, "init", ""] call CBA_fnc_hashSet;
+[_settings, "preInit", ""] call CBA_fnc_hashSet;
+
 _settings

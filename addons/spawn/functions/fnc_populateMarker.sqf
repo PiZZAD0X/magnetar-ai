@@ -15,7 +15,7 @@
  * None
  *
  * Example:
- * [["marker"], [[[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]]] call mai_spawn_fnc_populateMarker
+ * [["marker"], [[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]]] call mai_spawn_fnc_populateMarker
  *
  * Public: Yes
  */

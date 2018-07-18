@@ -40,7 +40,6 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
             _positionAllowed = true;
         };
 
-
         if (_positionAllowed) then {
             // Check if the vehicle transport has enough empty cargo spaces
             private _vehicle = vehicle (leader _group);
@@ -55,8 +54,6 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
             if (_availablePositions >= _unitCount) then {
                 _availableGroups pushBack [_group, [_settings, "type"] call CBA_fnc_hashGet];
             };
-
-
         };
 
     };

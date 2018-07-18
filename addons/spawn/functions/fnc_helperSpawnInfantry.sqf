@@ -30,19 +30,27 @@ private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 
-_unitPool = [_unitPool, 10] call EFUNC(core,shuffleArray);
-
-if (count _leaderPool > 1) then {
-    _leaderPool = [_leaderPool, 10] call EFUNC(core,shuffleArray);
-};
-
+private _random = (getNumber (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "random")) == 1;
 private _spawnUnits = [];
-_spawnUnits pushBack (selectRandom _leaderPool);
 
-// Ignore leader
-for "_i" from 1 to (_size - 1) do {
-    _spawnUnits pushBack (selectRandom _unitPool);
-};
+if (_random) then {
+    _unitPool = [_unitPool, 10] call EFUNC(core,shuffleArray);
+
+    if (count _leaderPool > 1) then {
+        _leaderPool = [_leaderPool, 10] call EFUNC(core,shuffleArray);
+    };
+
+
+    _spawnUnits pushBack (selectRandom _leaderPool);
+
+    // Ignore leader
+    for "_i" from 1 to (_size - 1) do {
+        _spawnUnits pushBack (selectRandom _unitPool);
+    };
+} else {
+    _spawnUnits append _leaderPool;
+    _spawnUnits append _unitPool;
+}
 
 if (_targetPos isEqualTo []) then {
     _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _spawnUnits # 0]] call EFUNC(waypoint,markerRandomPos)

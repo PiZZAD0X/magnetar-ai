@@ -42,6 +42,7 @@ params ["_settings", ["_options", []]];
         case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; };
         case "patrolbuildings": { [_settings, "patrolBuildings", _value] call CBA_fnc_hashSet; };
         case "randombehaviour": { [_settings, "randomBehaviour", _value] call CBA_fnc_hashSet; };
+        case "randomposition": {[_settings, "randomPosition", _value] call CBA_fnc_hashSet; };
         case "skill": { [_settings, "skill", _value] call CBA_fnc_hashSet; };
         case "skillleader": { [_settings, "skillLeader", _value] call CBA_fnc_hashSet; };
         case "spawninbuilding": { [_settings, "spawnInBuilding", _value] call CBA_fnc_hashSet; };
