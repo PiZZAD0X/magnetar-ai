@@ -82,7 +82,7 @@ release: clean version commit
 	@echo "  ZIP  $(ZIP)_$(VERSION).zip"
 	@cp authors.txt license logo_ust101_ca.paa logo_ust101_over_ca.paa logo_ust101_small_ca.paa mod.cpp readme.md $(BIN)
 	@echo "7z a -tzip -r $(ZIP)_$(VERSION).zip $(BIN)"
-	@7z a -tzip -r $(ZIP)_$(VERSION).zip %$(BIN)
+	@7z a -tzip -r $(ZIP)_$(VERSION).zip @$(BIN)
 
 clean:
 	rm -rf $(BIN) $(ZIP)_*.zip
