@@ -30,10 +30,6 @@ private _cargoPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _c
 private _pilotPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "pilot");
 private _random = (getNumber (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "random")) == 1;
 
-private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
-private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
-private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
-
 _size params ["_groupSize", "_cargoSize"];
 if (_random) then {
     {
@@ -118,8 +114,10 @@ for "_i" from 1 to _groupSize do {
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
 };
 
-if (_targetPos isEqualTo []) then {
-    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, (_spawnVehicles # 0) # 0]] call EFUNC(waypoint,markerRandomPos);
+GVAR(spawnQueue) pushBack [_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _targetPos, _settings, []];
+//[_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);
+
+if (GVAR(spawnGroupPFH) == -1) then {
+    GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;
 };
 
-[_spawnVehicles, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);

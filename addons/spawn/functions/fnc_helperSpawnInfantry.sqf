@@ -26,10 +26,6 @@ params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_t
 private _leaderPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
 private _unitPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "units");
 
-private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
-private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
-private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
-
 private _random = (getNumber (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "random")) == 1;
 private _spawnUnits = [];
 
@@ -51,8 +47,8 @@ if (_random) then {
     _spawnUnits append _unitPool;
 };
 
-if (_targetPos isEqualTo []) then {
-    _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _spawnUnits # 0]] call EFUNC(waypoint,markerRandomPos)
-};
+GVAR(spawnQueue) pushBack [_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _targetPos, _settings, []];
 
-[_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, [], _sleep] spawn FUNC(spawnGroup);
+if (GVAR(spawnGroupPFH) == -1) then {
+    GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;
+};

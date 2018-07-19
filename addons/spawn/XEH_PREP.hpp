@@ -4,5 +4,6 @@ PREP(helperCloneVehicle);
 PREP(helperSpawnInfantry);
 PREP(helperSpawnVehicle);
 PREP(populateMarker);
-PREP(randSpawnGroup);
 PREP(spawnGroup);
+PREP(spawnGroupFromConfig);
+PREP(spawnGroupPFH);

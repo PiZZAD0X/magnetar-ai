@@ -73,4 +73,4 @@ for "_i" from 1 to _num do {
     _groupsCreated pushBack _group;
 };
 
-_group
+_groupsCreated

@@ -36,7 +36,7 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 {
     _x params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
     for "_i" from 1 to _groupCount do {
-        QGVAR(spawnQueue) pushBack [_configEntry, _marker, "", "", _groupSize, _position];
+        GVAR(spawnQueue) pushBack [_configEntry, _marker, "", "", _groupSize, _position];
     };
 } forEach _groupsToSpawn;
 
