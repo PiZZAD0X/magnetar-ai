@@ -2,8 +2,8 @@ VERSION = $(shell cat "VERSION")
 PREFIX = mai
 BIN = @mai
 ZIP = mai
-FLAGS = -i include -w unquoted-string -w redefinition-wo-undef
-VERSION_FILES = mod.cpp
+FLAGS = -i include -w redefinition-wo-undef -w unquoted-string
+VERSION_FILES = readme.md mod.cpp
 
 MAJOR = $(word 1, $(subst ., ,$(VERSION)))
 MINOR = $(word 2, $(subst ., ,$(VERSION)))
@@ -40,8 +40,8 @@ $(BIN)/optionals/$(PREFIX)_%.pbo: optionals/%
 %.pbo:
 	"$(MAKE)" $(MAKEFLAGS) $(patsubst %, $(BIN)/addons/$(PREFIX)_%, $@)
 
-all: $(patsubst addons/%, $(BIN)/addons/$(PREFIX)_%.pbo, $(wildcard addons/*)) \
-		$(patsubst optionals/%, $(BIN)/optionals/$(PREFIX)_%.pbo, $(wildcard optionals/*))
+all: $(patsubst addons/%, $(BIN)/addons/$(PREFIX)_%.pbo, $(wildcard addons/*))# \
+#		$(patsubst optionals/%, $(BIN)/optionals/$(PREFIX)_%.pbo, $(wildcard optionals/*))
 
 filepatching:
 	"$(MAKE)" $(MAKEFLAGS) FLAGS="-w unquoted-string -p"
@@ -79,11 +79,11 @@ push: commit
 
 release: clean version commit
 	@"$(MAKE)" $(MAKEFLAGS) signatures
-	@echo "  ZIP  $(ZIP)_v$(VERSION_S).zip"
-	@cp authors.txt license logo_ust101_ca.paa logo_ust101_over_ca.paa logo_ust101_small_ca.paa mod.cpp readme.md $(BIN)
-	@zip -qr $(ZIP)_v$(VERSION_S).zip $(BIN)
+	@echo "  ZIP  $(ZIP)_$(VERSION).zip"
+	@cp *.dll authors.txt license logo_ust101_ca.paa logo_ust101_over_ca.paa logo_ust101_small_ca.paa mod.cpp readme.md $(BIN)
+	@zip -qr $(ZIP)_$(VERSION).zip $(BIN)
 
 clean:
 	rm -rf $(BIN) $(ZIP)_*.zip
 
-.PHONY: all filepatching signatures extensions extensions-win64 version commit push release clean
+.PHONY: all filepatching signatures extensions-win64 version commit pushrelease clean
