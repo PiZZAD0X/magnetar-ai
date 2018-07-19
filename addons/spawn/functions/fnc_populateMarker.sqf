@@ -36,6 +36,10 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 {
     _x params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
     for "_i" from 1 to _groupCount do {
-        [_configEntry, _groupSize, _marker, _position] call FUNC(randSpawnGroup);
+        QGVAR(spawnQueue) pushBack [_configEntry, _marker, "", "", _groupSize, _position];
     };
 } forEach _groupsToSpawn;
+
+if (GVAR(spawnGroupPFH) == -1) then {
+    GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;
+};

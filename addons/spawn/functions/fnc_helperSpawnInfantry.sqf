@@ -40,7 +40,6 @@ if (_random) then {
         _leaderPool = [_leaderPool, 10] call EFUNC(core,shuffleArray);
     };
 
-
     _spawnUnits pushBack (selectRandom _leaderPool);
 
     // Ignore leader
@@ -50,7 +49,7 @@ if (_random) then {
 } else {
     _spawnUnits append _leaderPool;
     _spawnUnits append _unitPool;
-}
+};
 
 if (_targetPos isEqualTo []) then {
     _targetPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _spawnUnits # 0]] call EFUNC(waypoint,markerRandomPos)

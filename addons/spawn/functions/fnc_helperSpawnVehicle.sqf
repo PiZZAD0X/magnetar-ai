@@ -43,7 +43,9 @@ if (_random) then {
     } forEach [_vehiclePool, _crewPool, _cargoLeaders, _cargoPool, _pilotPool];
 } else {
     _groupSize = count _vehiclePool;
-}
+};
+
+private _spawnVehicles = [];
 
 for "_i" from 1 to _groupSize do {
 
@@ -111,7 +113,7 @@ for "_i" from 1 to _groupSize do {
         _cargoUnits = [];
         _cargoUnits append _cargoLeaders;
         _cargoUnits append _cargoPool;
-    }
+    };
 
     _spawnVehicles pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
 };
