@@ -27,10 +27,6 @@ private _inRandomBuilding = [_settings, "spawnInBuilding"] call CBA_fnc_hashGet;
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 
 private _position = _group getVariable [QGVAR(startPosition), []];
-if (_position isEqualTo [] && !_inRandomPosition && !_inRandomBuilding) then {
-    _inRandomPosition = true;
-    [_settings, "randomPosition", true] call CBA_fnc_hashSet;
-};
 
 if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
