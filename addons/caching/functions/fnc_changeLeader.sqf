@@ -19,7 +19,7 @@ params ["_group"];
 
 [_group] call FUNC(uncacheGroup);
 private _leader = leader _group;
-_group setVariable [QGVAR(leader), _leader];
+_group setVariable [QEGVAR(core,leader), _leader];
 
 [_group] call FUNC(cacheGroup);
 

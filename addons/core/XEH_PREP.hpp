@@ -1,4 +1,5 @@
 PREP(applyOptions);
+PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);
 PREP(init);

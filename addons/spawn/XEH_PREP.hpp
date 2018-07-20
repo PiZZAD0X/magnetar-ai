@@ -7,3 +7,4 @@ PREP(populateMarker);
 PREP(spawnGroup);
 PREP(spawnGroupFromConfig);
 PREP(spawnGroupPFH);
+PREP(spawnUnitsGroupPFH);

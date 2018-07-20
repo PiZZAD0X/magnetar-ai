@@ -20,7 +20,7 @@ params ["_group"];
 // Only when unit is local
 if (!local _group) exitWith {
     _group setVariable [QGVAR(cached), false, true];
-    _group setVariable [QGVAR(leader), leader _group, true];
+    _group setVariable [QEGVAR(core,leader), leader _group, true];
 };
 
 if (CBA_missionTime < (_group getVariable [QGVAR(lastCheck), CBA_missionTime])) exitWith {};

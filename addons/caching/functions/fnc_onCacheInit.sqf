@@ -18,7 +18,6 @@
 params ["_group"];
 
 _group setVariable [QGVAR(cached), false];
-_group setVariable [QGVAR(leader), leader _group];
 
 if ([_group] call FUNC(shouldCache)) then {
     [QGVAR(cache), _group] call CBA_fnc_localEvent;

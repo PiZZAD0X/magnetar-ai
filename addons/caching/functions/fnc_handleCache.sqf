@@ -20,7 +20,7 @@ params ["_group"];
 // Only when unit is local
 if (!local _group) exitWith {
     _group setVariable [QGVAR(cached), false, true];
-    _group setVariable [QGVAR(leader), leader _group, true];
+    _group setVariable [QEGVAR(core,leader), leader _group, true];
 };
 
 if (CBA_missionTime < (_group getVariable [QGVAR(lastCheck), CBA_missionTime])) exitWith {};
@@ -35,7 +35,7 @@ if !([_group] call FUNC(shouldCache)) then {
 
     private _leader = leader _group;
 
-    if (!alive _leader || {_leader != (_group getVariable [QGVAR(leader), leader _group])}) then {
+    if (!alive _leader || {_leader != (_group getVariable [QEGVAR(core,leader), leader _group])}) then {
         [QGVAR(leaderChanged), _group] call CBA_fnc_localEvent;
     };
 
