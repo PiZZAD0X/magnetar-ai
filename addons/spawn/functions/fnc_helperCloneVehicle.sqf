@@ -40,7 +40,7 @@ private _vehicleUnits = [];
         if (!isNull _modelUnit) then {
             private _type = typeOf _modelUnit;
             private _pos = _position findEmptyPosition [0, 50, _type];
-            private _unit = _cloneGroup createUnit [typeOf _modelUnit, _position, [], 2, "NONE"];
+            private _unit = _cloneGroup createUnit [typeOf _modelUnit, _position, [], 0, "CAN_COLLIDE"];
             _unit setSkill (skill _modelUnit);
 
             private _role = _x # 1;

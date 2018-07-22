@@ -29,5 +29,5 @@ _toSpawn params [["_units", [], ["", []]], "_marker", "_type", "_side", ["_size"
 if (_units isEqualType "") then {
     [_units, _size, _marker, _position] call FUNC(spawnGroupFromConfig);
 } else {
-    [_units, _marker, _type, _side, _position, _settings, _options] spawn FUNC(spawnGroup);
+    [_units, _marker, _type, _side, _position, _settings, _options] call FUNC(spawnGroup);
 };
