@@ -10,7 +10,6 @@
  * 4: Position <ARRAY> (default: [])
  * 5: Settings <HASH> (default: [])
  * 6: Group options <ARRAY> (default: [])
- * 7: Sleep time between units <NUMBER> (default: 0.05)
  *
  * Return Value:
  * Group <OBJECT>
@@ -22,7 +21,7 @@
  */
 #include "script_component.hpp"
 
-params [["_units", []], "_marker", "_type", "_side", ["_position", []], ["_settings", []], ["_options", []], ["_sleep", 0.05]];
+params [["_units", []], "_marker", "_type", "_side", ["_position", []], ["_settings", []], ["_options", []]];
 
 if (getMarkerColor _marker == "") exitWith {
     ERROR_1("marker %1 does not exist", _marker);
@@ -40,13 +39,24 @@ if (_settings isEqualTo []) then {
     _settings = [] call CBA_fnc_hashCreate;
     _settings = [_settings, _marker, _type] call EFUNC(core,setBasicSettings);
     [_settings, _options] call EFUNC(core,parseOptions);
-} else {
-    _type = [_settings, "type"] call CBA_fnc_hashGet;
+    _group setVariable [QGVAR(settings), _settings, true];
 };
 
 if !(_position isEqualTo []) then {
     _group setVariable [QEGVAR(core,startPosition), _position];
 };
+
 _group setVariable [QEGVAR(core,settings), _settings];
 _group setVariable [QGVAR(unitsToSpawn), _units];
+
+private _template = [_settings, "template"] call CBA_fnc_hashGet;
+
+if !(_template isEqualTo "") then {
+    private _templateValues = [QGVAR(groupTemplates), _template] call CBA_fnc_hashGet;
+
+    _tempate params ["", "", "", "_loadout", "_rank", "_skill"]
+    _group setVariable [QGVAR(template), _loadout, _rank, _skill];
+
+};
+
 [DFUNC(spawnUnitsGroupPFH), 0.1, _group] call CBA_fnc_addPerFrameHandler;
