@@ -1,7 +1,10 @@
 PREP(applyOptions);
+PREP(createTemplate);
 PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);
+PREP(helperTemplateInfantry);
+PREP(helperTemplateVehicle);
 PREP(init);
 PREP(parseOptions);
 PREP(restart);

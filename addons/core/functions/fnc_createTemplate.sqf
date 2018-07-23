@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * [group1, 3, [["task", "attack"], ["forceRoads", true]], 0.1] call mai_spawn_fnc_cloneGroup
+ * [group1, 3, [["task", "attack"], ["forceRoads", true]], 0.1] call mai_spawn_fnc_createTemplate
  *
  * Public: No
  */
@@ -34,7 +34,7 @@ if !(_type isEqualTo "infantry") then {
     _helperFunction = missionNamespace getVariable QFUNC(helperTemplateVehicle);
 };
 
-_templateValues = [_modelGroup] spawn _helperFunction;
+private _templateValues = [_modelGroup] spawn _helperFunction;
 
 _templateValues params ["_units", "_loadout", "_rank", "_skill"];
 

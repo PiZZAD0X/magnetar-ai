@@ -8,6 +8,7 @@ ADDON = false;
 
 if (isServer) then {
     DGVAR(groupRegisters) = 0;
+    GVAR(groupTemplates);
 };
 
 ADDON = true;

@@ -34,4 +34,9 @@ private _skillLeader = [_settings, "skillLeader"] call CBA_fnc_hashGet;
 // Init settings
 [_group] call compile ([_settings, "init"] call CBA_fnc_hashGet);
 
+private _templateName = [_settings, "createTemplate"] call CBA_fnc_hashGet;
+if !(_templateName isEqualTo "") then {
+    [_group, _templateName] call FUNC(createTemplate);
+};
+
 [_group, _settings] call FUNC(handleStartPosition);

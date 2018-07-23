@@ -45,5 +45,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "execWaypoint", ""] call CBA_fnc_hashSet;
 
 [_settings, "init", ""] call CBA_fnc_hashSet;
+[_settings, "template", ""] call CBA_fnc_hashSet;
+[_settings, "createTemplate", ""] call CBA_fnc_hashSet;
 
 _settings

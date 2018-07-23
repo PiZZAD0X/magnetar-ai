@@ -34,7 +34,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 
     // Select a unit
-    private _unitInVehicle = (units _group) findIf {!(vehicle _x != _x)};
+    private _unitInVehicle = (units _group) findIf {vehicle _x != _x};
     private _assignedVehicles = [];
     private _unit = objNull;
 
@@ -43,7 +43,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
         // Get all vehicles
         {
             if (vehicle _x != _x) then {
-                assignedVehicles pushBackUnique (vehicle _x);
+                _assignedVehicles pushBackUnique (vehicle _x);
             };
         } forEach (units _group);
     } else {
@@ -62,14 +62,14 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
         {
             _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);
-        } forEach _assignedVehicles - [vehicle _leader];
+        } forEach (_assignedVehicles - [vehicle _leader]);
     };
 
     {
         if (vehicle _x == _x) then {
-            _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);
+            _x setPos ((_position findEmptyPosition [0, 60, typeOf _x]) vectorAdd (formationPosition _x));
         }
-    } forEach (units _group) - [_leader];
+    } forEach ((units _group) - [_leader]);
 
     _group setVariable [QGVAR(startPosition), nil];
 };
@@ -82,3 +82,5 @@ if (_inRandomBuilding) exitWith {
         _x setPos (_positions # _forEachIndex);
     } forEach (units _group);
 };
+
+ERROR("No position assigned");

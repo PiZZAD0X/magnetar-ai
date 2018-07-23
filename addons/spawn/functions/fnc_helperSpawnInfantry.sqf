@@ -8,7 +8,6 @@
  * 2: Side <STRING>
  * 3: Size <NUMBER>
  * 4: Marker <STRING>
- * 5: Sleep time between unit creation <NUMBER> (default: 0.05)
  * 6: Position <ARRAY> (default: [])
  *
  * Return Value:
@@ -21,7 +20,7 @@
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_settings", "_side", "_size", "_marker", "_sleep", ["_targetPos", []]];
+params ["_configEntry", "_settings", "_side", "_size", "_marker", ["_targetPos", []]];
 
 private _leaderPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
 private _unitPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "units");

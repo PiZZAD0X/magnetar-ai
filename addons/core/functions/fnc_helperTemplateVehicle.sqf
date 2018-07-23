@@ -6,7 +6,6 @@
  * 0: Group to clone <OBJECT>
  * 1: Cloned group <OBJECT>
  * 2: Position <ARRAY>
- * 3: Sleep time between unit creation <NUMBER> (default: 0.05)
  *
  * Return Value:
  * None
@@ -18,7 +17,7 @@
  */
 #include "script_component.hpp"
 
-params ["_modelGroup", "_cloneGroup", "_position", "_sleep"];
+params ["_modelGroup", "_cloneGroup", "_position"];
 
 private _units = units _modelGroup;
 private _vehicleUnits = [];

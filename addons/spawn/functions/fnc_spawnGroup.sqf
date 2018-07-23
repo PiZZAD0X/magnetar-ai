@@ -52,11 +52,10 @@ _group setVariable [QGVAR(unitsToSpawn), _units];
 private _template = [_settings, "template"] call CBA_fnc_hashGet;
 
 if !(_template isEqualTo "") then {
-    private _templateValues = [QGVAR(groupTemplates), _template] call CBA_fnc_hashGet;
+    private _templateValues = [QEGVAR(core,groupTemplates), _template] call CBA_fnc_hashGet;
 
-    _tempate params ["", "", "", "_loadout", "_rank", "_skill"]
-    _group setVariable [QGVAR(template), _loadout, _rank, _skill];
-
+    _template params ["", "", "", "_loadout", "_rank", "_skill"];
+    _group setVariable [QGVAR(template), [_loadout, _rank, _skill]];
 };
 
 [DFUNC(spawnUnitsGroupPFH), 0.1, _group] call CBA_fnc_addPerFrameHandler;

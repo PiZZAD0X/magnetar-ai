@@ -73,7 +73,7 @@ private _side = getText (missionConfigFile >> "CfgGroupCompositions" >> _configE
 
 // Generate units
 if (_type isEqualTo "infantry") then {
-    [_configEntry, _settings, _side, _size, _marker, _sleep, _position] call FUNC(helperSpawnInfantry);
+    [_configEntry, _settings, _side, _size, _marker, _position] call FUNC(helperSpawnInfantry);
 } else {
-    [_configEntry, _settings, _side, _size, _marker, _sleep, _position] call FUNC(helperSpawnVehicle);
+    [_configEntry, _settings, _side, _size, _marker, _position] call FUNC(helperSpawnVehicle);
 };
