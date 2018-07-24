@@ -1,4 +1,5 @@
 PREP(applyOptions);
+PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
 PREP(handleStartPosition);
 PREP(hasRebreather);

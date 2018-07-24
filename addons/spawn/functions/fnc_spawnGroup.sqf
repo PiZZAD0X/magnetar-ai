@@ -58,4 +58,6 @@ if !(_template isEqualTo "") then {
     _group setVariable [QGVAR(template), [_loadout, _rank, _skill]];
 };
 
+[_group, _settings] call EFUNC(core,applyOptionsPreSpawn);
+
 [DFUNC(spawnUnitsGroupPFH), 0.1, _group] call CBA_fnc_addPerFrameHandler;

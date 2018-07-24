@@ -23,4 +23,13 @@
  */
 #include "script_component.hpp"
 
-[0, 0, 0]
+// Get all buildings
+params ["_numPos", "_marker", "_filter"];
+
+private _center = getMarkerPos _marker;
+(getMarkerSize _marker) params ["_radiusX", "_radiusY"];
+
+private _buildings = [_center, _radiusX max _radiusY] call EFUNC(building,getNearBuildings);
+private _filteredBuildings = [_buildings, _filter] call EFUNC(building,filterBuildings);
+
+// Find first buildings that allow a certain number of positions

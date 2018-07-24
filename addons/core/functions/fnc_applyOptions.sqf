@@ -38,5 +38,3 @@ private _templateName = [_settings, "createTemplate"] call CBA_fnc_hashGet;
 if !(_templateName isEqualTo "") then {
     [_group, _templateName] call FUNC(createTemplate);
 };
-
-[_group, _settings] call FUNC(handleStartPosition);

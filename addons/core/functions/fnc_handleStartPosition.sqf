@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * [group1] call mai_spawn_fnc_populateMarker
+ * [group1] call mai_spawn_fnc_handleStartPosition
  *
  * Public: No
  */
@@ -28,59 +28,44 @@ private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 
 private _position = _group getVariable [QGVAR(startPosition), []];
 
+private _units = units _group;
+if (_units isEqualTo []) then {
+    _units = _group getVariable [QEGVAR(spawn,unitsToSpawn), []];
+};
+
 if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
     private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
     private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
 
     // Select a unit
-    private _unitInVehicle = (units _group) findIf {vehicle _x != _x};
-    private _assignedVehicles = [];
-    private _unit = objNull;
+    private _unit = "";
 
-    if (_unitInVehicle != -1) then {
-        _unit = vehicle ((units _group) # _unitInVehicle);
-        // Get all vehicles
-        {
-            if (vehicle _x != _x) then {
-                _assignedVehicles pushBackUnique (vehicle _x);
-            };
-        } forEach (units _group);
+    if !((_units # 0) isEqualTypeAny ["", []]) then {
+        if ((_units # 0) isEqualType "") {
+            _unit = _units # 0;
+        } else {
+            _unit = _units # 0 # 0;
+        };
     } else {
-        _unit = (units _group) # 0;
+        private _unitInVehicle = _units findIf {vehicle _x != _x};
+        if (_unitInVehicle != -1) then {
+            _unit = typeOf (vehicle (_units # _unitInVehicle));
+        } else {
+            _unit = typeOf (_units # 0);
+        };
     };
 
     if (_position isEqualTo []) then {
-        _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, typeOf _unit]] call EFUNC(waypoint,markerRandomPos);
+        _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit]] call EFUNC(waypoint,markerRandomPos);
     };
-
-    private _leader = leader _group;
-    if (vehicle _leader == _leader) then {
-        _leader setPos _position;
-    } else {
-        (vehicle _leader) setPos _position;
-
-        {
-            _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);
-        } forEach (_assignedVehicles - [vehicle _leader]);
-    };
-
-    {
-        if (vehicle _x == _x) then {
-            _x setPos ((_position findEmptyPosition [0, 60, typeOf _x]) vectorAdd (formationPosition _x));
-        }
-    } forEach ((units _group) - [_leader]);
 
     _group setVariable [QGVAR(startPosition), nil];
 };
 
 if (_inRandomBuilding) exitWith {
     private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
-    private _positions = [_marker, [0, 50, (units _group # 0)]] call EFUNC(waypoint,markerRandomBuildingPos);
-
-    {
-        _x setPos (_positions # _forEachIndex);
-    } forEach (units _group);
+    private _positions = [_marker, [0, 50, _units # 0]] call EFUNC(waypoint,markerRandomBuildingPos);
 };
 
 ERROR("No position assigned");
