@@ -21,7 +21,6 @@ params ["_group", "_handle"];
 private _unitsToSpawn = _group getVariable [QGVAR(unitsToSpawn), []];
 
 if (_unitsToSpawn isEqualTo []) exitWith {
-    systemChat format ["deleting %1"];
     [_handle] call CBA_fnc_removePerFrameHandler;
     _group setVariable [QGVAR(position), nil];
 
@@ -77,7 +76,8 @@ if (_unitType isEqualType "") then {
     _skill params ["_skillCrew", "_skillCargo", "_skillPilots"];
 
     private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
-    private _vehicleUnit =  createVehicle [_vehicle, _unitPos, [], 20, "FORM"];
+
+    private _vehicleUnit = createVehicle [_vehicle, _unitPos, [], 20, "FORM"];
     private _vehicleRoles = fullCrew [_vehicleUnit, "", true];
     private _turrets = allTurrets [_vehicleUnit, false];
     private _hasCommander = false;

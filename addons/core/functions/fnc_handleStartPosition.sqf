@@ -40,9 +40,8 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
     // Select a unit
     private _unit = "";
-
-    if !((_units # 0) isEqualTypeAny ["", []]) then {
-        if ((_units # 0) isEqualType "") {
+    if ((_units # 0) isEqualTypeAny ["", []]) then {
+        if ((_units # 0) isEqualType "") then {
             _unit = _units # 0;
         } else {
             _unit = _units # 0 # 0;
@@ -60,7 +59,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
         _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit]] call EFUNC(waypoint,markerRandomPos);
     };
 
-    _group setVariable [QGVAR(startPosition), nil];
+    _group setVariable [QGVAR(startPosition), _position];
 };
 
 if (_inRandomBuilding) exitWith {
