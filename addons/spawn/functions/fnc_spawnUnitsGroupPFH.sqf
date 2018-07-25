@@ -37,6 +37,7 @@ if (_unitsToSpawn isEqualTo []) exitWith {
 };
 
 private _pos = _group getVariable [QEGVAR(core,startPosition), [0, 0, 0]];
+private _position = [0, 0, 0];
 if ((_pos # 0) isEqualType []) then {
     _position = _pos deleteAt 0;
 } else {
@@ -55,7 +56,7 @@ private _applyTemplate = {
 };
 
 if (_unitType isEqualType "") then {
-    private _unitPos = _position findEmptyPosition [0, 60, _x];
+    private _unitPos = _position findEmptyPosition [0, 60, _unitType];
     private _spawnedUnit = _group createUnit [_unitType, _unitPos, [], 2, "FORM"];
 
     if (isNull (_group getVariable [QEGVAR(core,leader), objNull])) then {
