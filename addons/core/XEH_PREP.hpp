@@ -1,12 +1,14 @@
 PREP(applyOptions);
 PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
+PREP(getGroupVehicles);
 PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);
 PREP(helperTemplateInfantry);
 PREP(helperTemplateVehicle);
 PREP(init);
+PREP(moveGroupToPosition);
 PREP(parseOptions);
 PREP(restart);
 PREP(setBasicSettings);
