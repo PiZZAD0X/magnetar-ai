@@ -28,7 +28,7 @@ if (getMarkerColor _marker == "") exitWith {
 };
 
 private _group = objNull;
-switch (_side) do {
+switch (toLower _side) do {
     case "civilian": {_group = createGroup civilian};
     case "east": {_group = createGroup east};
     case "resistance": {_group = createGroup resistance};
@@ -52,9 +52,9 @@ _group setVariable [QGVAR(unitsToSpawn), _units];
 private _template = [_settings, "template"] call CBA_fnc_hashGet;
 
 if !(_template isEqualTo "") then {
-    private _templateValues = [QEGVAR(core,groupTemplates), _template] call CBA_fnc_hashGet;
+    private _templateValues = [EGVAR(core,groupTemplates), _template] call CBA_fnc_hashGet;
 
-    _template params ["", "", "", "_loadout", "_rank", "_skill"];
+    _templateValues params ["", "", "", "_loadout", "_rank", "_skill"];
     _group setVariable [QGVAR(template), [_loadout, _rank, _skill]];
 };
 

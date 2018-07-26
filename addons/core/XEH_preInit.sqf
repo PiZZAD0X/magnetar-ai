@@ -8,7 +8,7 @@ ADDON = false;
 
 if (isServer) then {
     DGVAR(groupRegisters) = 0;
-    GVAR(groupTemplates);
+    DGVAR(groupTemplates) = [] call CBA_fnc_hashCreate;
 };
 
 ADDON = true;

@@ -5,6 +5,7 @@
  * Arguments:
  * 0: Group to clone <OBJECT>
  * 1: Template name <STRING>
+ * 2: Settings <HASH>
  *
  * Return Value:
  * None
@@ -16,15 +17,18 @@
  */
 #include "script_component.hpp"
 
-params ["_modelGroup", ["_templateName", ""], ["_overrideOptions", []]];
+params ["_modelGroup", ["_templateName", ""], ["_settings", []], ["_overrideOptions", []]];
 
 if (_templateName isEqualTo "") exitWith {
     ERROR("Empty template name");
 };
 
-private _side = side _modelGroup;
-private _settings =+ (_modelGroup getVariable [QEGVAR(core,settings), []]);
-["_settings", "template", _templateName] call CBA_fnc_hashSet;
+private _side = format ["%1", side _modelGroup];
+if (_settings isEqualTo []) then {
+    _settings =+ (_modelGroup getVariable [QGVAR(settings), []]);
+};
+
+[_settings, "template", _templateName] call CBA_fnc_hashSet;
 
 private _type = toLower ([_settings, "type"] call CBA_fnc_hashGet);
 
@@ -34,8 +38,8 @@ if !(_type isEqualTo "infantry") then {
     _helperFunction = missionNamespace getVariable QFUNC(helperTemplateVehicle);
 };
 
-private _templateValues = [_modelGroup] spawn _helperFunction;
+private _templateValues = [_modelGroup] call _helperFunction;
 
 _templateValues params ["_units", "_loadout", "_rank", "_skill"];
 
-[QGVAR(groupTemplates), _templateName, [_side, _settings, _units, _loadout, _rank, _skill]] call CBA_fnc_hashSet;
+[GVAR(groupTemplates), _templateName, [_side, _settings, _units, _loadout, _rank, _skill]] call CBA_fnc_hashSet;

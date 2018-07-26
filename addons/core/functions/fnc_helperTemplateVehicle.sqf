@@ -71,7 +71,7 @@ private _skill = [];
                     _rankPilots pushBack (rank _unit);
                     _skillPilots pushBack (skill _unit);
                 } else {
-                    _crewUnits pushBack _unit;
+                    _crewUnits pushBack _unitType;
                     _loadoutCrew pushBack (getUnitLoadout _unit);
                     _rankCrew pushBack (rank _unit);
                     _skillCrew pushBack (skill _unit);
@@ -79,37 +79,37 @@ private _skill = [];
             };
             case "gunner": {
                 if (_vehicle isKindOf "Air") then {
-                    _pilots pushBack _unit;
+                    _pilots pushBack _unitType;
                     _loadoutPilots pushBack (getUnitLoadout _unit);
                     _rankPilots pushBack (rank _unit);
                     _skillPilots pushBack (skill _unit);
                 } else {
-                    _crewUnits pushBack _unit;
+                    _crewUnits pushBack _unitType;
                     _loadoutCrew pushBack (getUnitLoadout _unit);
                     _rankCrew pushBack (rank _unit);
                     _skillCrew pushBack (skill _unit);
                 };
             };
             case "commander": {
-                _crewUnits pushBack _unit;
+                _crewUnits pushBack _unitType;
                 _loadoutCrew pushBack (getUnitLoadout _unit);
                 _rankCrew pushBack (rank _unit);
                 _skillCrew pushBack (skill _unit);
             };
             case "turret": {
                 if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
-                    _pilots pushBack _unit;
+                    _pilots pushBack _unitType;
                     _loadoutPilots pushBack (getUnitLoadout _unit);
                     _rankPilots pushBack (rank _unit);
                     _skillPilots pushBack (skill _unit);
                 } else {
                     if (_x # 3 in _turrets) then {
-                        _crewUnits pushBack _unit;
+                        _crewUnits pushBack _unitType;
                         _loadoutCrew pushBack (getUnitLoadout _unit);
                         _rankCrew pushBack (rank _unit);
                         _skillCrew pushBack (skill _unit);
                     } else {
-                        _cargoUnits pushBack _unit;
+                        _cargoUnits pushBack _unitType;
                         _loadoutCargo pushBack (getUnitLoadout _unit);
                         _rankCargo pushBack (rank _unit);
                         _skillCargo pushBack (skill _unit);
@@ -117,12 +117,12 @@ private _skill = [];
                 };
             };
         };
-    } forEach fullCrew [_x, "", true];
+    } forEach fullCrew [_x, "", false];
 
     _unitsToSpawn pushBack [_vehicle, _crewUnits, _cargoUnits, _pilots];
     _loadout pushBack [[], _loadoutCrew, _loadoutCargo, _loadoutPilots];
-    _rank pushBack [[], _rankCrew, _rankCargo, _rankPilots];
-    _skill pushBack [[], _skillCrew, _skillCargo, _skillPilots];
+    _rank pushBack [_rankCrew, _rankCargo, _rankPilots];
+    _skill pushBack [_skillCrew, _skillCargo, _skillPilots];
 
 } forEach _vehicleUnits;
 

@@ -36,5 +36,5 @@ private _skillLeader = [_settings, "skillLeader"] call CBA_fnc_hashGet;
 
 private _templateName = [_settings, "createTemplate"] call CBA_fnc_hashGet;
 if !(_templateName isEqualTo "") then {
-    [_group, _templateName] call FUNC(createTemplate);
+    [_group, _templateName, _settings] call FUNC(createTemplate);
 };

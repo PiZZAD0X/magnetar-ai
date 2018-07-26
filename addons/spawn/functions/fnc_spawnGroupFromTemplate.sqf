@@ -3,15 +3,18 @@
  * Creates a group template.
  *
  * Arguments:
- * 0: Model group <OBJECT>
- * 1: Template name <STRING>
- * 2: Additional options for the group <ARRAY>
+ * 0: Template name <STRING>
+ * 1: Marker <STRING>
+ * 2: Number of groups <NUMBER>
+ * 3: Position <ARRAY> (Default: [])
+ * 4: Additional options for the group <ARRAY>
  *
  * Return Value:
  * None
  *
  * Example:
- * [group1, 3, [["task", "attack"], ["forceRoads", true]], 0.1] call mai_spawn_fnc_cloneGroup
+ * ["SpecOps", "marker", 2] call mai_spawn_fnc_spawnFromTemplate
+ * ["SpecOps", "marker", 3, [], [["SpawnInBuildings", true]]] call mai_spawn_fnc_spawnGroupFromTemplate
  *
  * Public: Yes
  */
@@ -19,7 +22,7 @@
 
 params ["_templateName", "_marker", "_numGroups", ["_position", []], ["_overrideOptions", []]];
 
-private _template = [QEGVAR(core,groupTemplates), "_templateName"] call CBA_fnc_hashGet;
+private _template = [EGVAR(core,groupTemplates), _templateName] call CBA_fnc_hashGet;
 if !(_template isEqualType []) exitWith {
     ERROR_1("Undefined template name %1",_templateName);
 };
@@ -35,11 +38,21 @@ if (_numGroups isEqualType []) then {
     _num = _numGroups;
 };
 
-if (_overrideOptions isEqualTo []) then {
+if !(_overrideOptions isEqualTo []) then {
     [_settings, _overrideOptions] call EFUNC(core,parseOptions);
 };
 
-for "_i" from 1 to _num do {
-    GVAR(spawnQueue) pushBack [_units, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _position, _settings, []];
+private _inRandomPosition = [_settings, "randomPosition"] call CBA_fnc_hashGet;
+private _inRandomBuilding = [_settings, "spawnInBuilding"] call CBA_fnc_hashGet;
+if (!_inRandomPosition && {!_inRandomBuilding} && {_position isEqualTo []}) then {
+    [_settings, "randomPosition", true] call CBA_fnc_hashSet;
 };
 
+for "_i" from 1 to _num do {
+    private _toSpawn =+ [_units, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _position, _settings, []];
+    GVAR(spawnQueue) pushBack _toSpawn;
+};
+
+if (GVAR(spawnGroupPFH) == -1) then {
+    GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;
+};
