@@ -72,4 +72,6 @@ if (_inRandomBuilding) exitWith {
     private _positions = [_marker, [0, 50, _units # 0]] call EFUNC(waypoint,markerRandomBuildingPos);
 };
 
-ERROR("No position assigned");
+if ((units _group) isEqualTo []) then {
+    ERROR("No position assigned");
+}
