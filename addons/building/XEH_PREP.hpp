@@ -1,3 +1,4 @@
+PREP(filterBuildings);
 PREP(getBuildingPos);
 PREP(getNearBuildings);
 PREP(handleEnteredBuildings);

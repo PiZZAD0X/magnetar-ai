@@ -4,10 +4,10 @@
  *
  * Arguments:
  * 0: Unit array. First position is always the leader <ARRAY> (Default: [])
- * 1: Marker <STRING>
- * 2: Unit type <STRING>
- * 3: Unit side <STRING>
- * 4: Position <ARRAY> (default: [])
+ * 1: Marker <STRING> (default: "")
+ * 2: Unit type <STRING> (default: "")
+ * 3: Unit side <STRING> (default: "")
+ * 4: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
  * 5: Settings <HASH> (default: [])
  * 6: Group options <ARRAY> (default: [])
  *
@@ -21,11 +21,21 @@
  */
 #include "script_component.hpp"
 
-params [["_units", []], "_marker", "_type", "_side", ["_position", []], ["_settings", []], ["_options", []]];
+params [
+    ["_units", [], [[]]],
+    ["_marker", "", [""]],
+    ["_type", "", [""]],
+    ["_side", "", [""]],
+    ["_position", [], [[], objNull, grpNull, locationNull], [2]],
+    ["_settings", [], [[]]],
+    ["_options", [], [[]]]
+];
 
 if (getMarkerColor _marker == "") exitWith {
     ERROR_1("marker %1 does not exist", _marker);
 };
+
+_position = _position call CBA_fnc_getPos;
 
 private _group = objNull;
 switch (toLower _side) do {

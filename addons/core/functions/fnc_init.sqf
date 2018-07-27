@@ -20,12 +20,9 @@
 
 params [["_unit", objNull], "_marker", ["_type", "infantry"], ["_options", []]];
 
-// Only execute on the server
-if (!isServer) exitWith {};
-
+// Only execute where the group is local
 private _group = group _unit;
-
-if (!local (leader _group)) exitWith {};
+if (!local _group) exitWith {};
 
 if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
     _marker setMarkerAlpha 0;
@@ -41,11 +38,14 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
 [_settings, "speed", [speedMode _group]] call CBA_fnc_hashSet;
 
 _settings = [_settings, _options] call FUNC(parseOptions);
-[_group, _settings] call FUNC(applyOptionsPreSpawn);
+[_group, _settings]l call FUNC(applyOptionsPreSpawn);
 [_group, _settings] call FUNC(applyOptions);
 
 _group setVariable [QGVAR(settings), _settings, true];
-_group setVariable [QGVAR(enabled), true, true];
 
 // Register the group
-[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_localEvent;
+[QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
+
+if !([_settings, "release"] call CBA_fnc_hashGet) then {
+    _group setVariable [QGVAR(enabled), true, true];
+};

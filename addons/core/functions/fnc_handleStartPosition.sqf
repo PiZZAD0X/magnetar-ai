@@ -26,9 +26,16 @@ private _inRandomBuilding = [_settings, "spawnInBuilding"] call CBA_fnc_hashGet;
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _position = _group getVariable [QGVAR(startPosition), []];
 
+// Only infantry units spawn in buildings
+private _type = [_settings, "type"] call CBA_fnc_hashGet;
+if (!(_type isEqualTo "infantry") && {_inRandomBuilding}) then {
+    _inRandomBuilding = false;
+    [_settings, "spawnInBuilding", false] call CBA_fnc_hashSet;
+};
+
 private _units = units _group;
 if (_units isEqualTo []) then {
-    _units = _group getVariable [QEGVAR(spawn,unitsToSpawn), []];
+    _units =+ _group getVariable [QEGVAR(spawn,unitsToSpawn), []];
 };
 
 if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
@@ -69,7 +76,39 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
 if (_inRandomBuilding) exitWith {
     private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
-    private _positions = [_marker, [0, 50, _units # 0]] call EFUNC(waypoint,markerRandomBuildingPos);
+    private _positions = [count _units, _marker, [["area", _marker], ["enterable", true]], false] call EFUNC(waypoint,markerRandomBuildingPos);
+
+    // Generate positions for all units
+    if (count _units > count _positions) then {
+
+        // Generate a random position since there are no suitable buildings
+        if (_positions isEqualTo []) then {
+            private _unitType = _units # 0;
+            if !(_unitType isEqualTo "") then {
+                _unitType = typeOf _unitType;
+            };
+            _positions pushBack [[_marker, [false, true, false], [0, 50, _unitType]] call EFUNC(waypoint,markerRandomPos)];
+        };
+
+        for "_i" from 0 to (count _units - count _positions) do {
+            private _unitType = _units # (count _positions + _i);
+            if !(_unitType isEqualTo "") then {
+                _unitType = typeOf _unitType;
+            };
+            _positions pushBack ((_positions # 0) findEmptyPosition [0, 60, _unitType]);
+        };
+    };
+
+    private _moveUnits = false;
+    if !((_units # 0) isEqualType "") then {
+        _moveUnits = true;
+    };
+
+    if (_moveUnits) then {
+        [units _group, _positions] call FUNC(moveUnitsToPosition);
+    } else {
+        _group setVariable [QGVAR(startPosition), _positions];
+    };
 };
 
 if ((units _group) isEqualTo []) then {

@@ -3,24 +3,34 @@
  * Creates a group template.
  *
  * Arguments:
- * 0: Template name <STRING>
- * 1: Marker <STRING>
- * 2: Number of groups <NUMBER>
- * 3: Position <ARRAY> (Default: [])
- * 4: Additional options for the group <ARRAY>
+ * 0: Template name <STRING> (default: "")
+ * 1: Group size either in [min, max] format or a defined number <ARRAY><NUMBER>
+ * 2: Marker <STRING> (default: "")
+ * 3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
+ * 4: Additional options for the group <ARRAY> (default: [])
  *
  * Return Value:
  * None
  *
  * Example:
- * ["SpecOps", "marker", 2] call mai_spawn_fnc_spawnFromTemplate
+ * ["SpecOps", "marker", 2] call mai_spawn_fnc_spawnGroupFromTemplate
  * ["SpecOps", "marker", 3, [], [["SpawnInBuildings", true]]] call mai_spawn_fnc_spawnGroupFromTemplate
  *
  * Public: Yes
  */
 #include "script_component.hpp"
 
-params ["_templateName", "_marker", "_numGroups", ["_position", []], ["_overrideOptions", []]];
+params [
+    ["_templateName", "", [""]],
+    ["_numGroups", 0, [[], 0], [2]],
+    ["_marker", "", [""]],
+    ["_position", [], [[], objNull, grpNull, locationNull], [2]],
+    ["_overrideOptions", [], [[]]]
+];
+
+if (_templateName isEqualTo "") exitWith {
+    ERROR("Emtpy template name given")
+};
 
 private _template = [EGVAR(core,groupTemplates), _templateName] call CBA_fnc_hashGet;
 if !(_template isEqualType []) exitWith {
@@ -28,15 +38,10 @@ if !(_template isEqualType []) exitWith {
 };
 
 _template params ["_side", "_settings", "_units"];
+_position = _position call CBA_fnc_getPos;
 
 // Determine group size
-private _num = 0;
-if (_numGroups isEqualType []) then {
-    _numGroups params ["_minSize", "_maxSize"];
-    _num = _minSize + floor (random (_maxSize - _minSize));
-} else {
-    _num = _numGroups;
-};
+private _num = [_numGroups] EFUNC(core,getRandomMinMax);
 
 if !(_overrideOptions isEqualTo []) then {
     [_settings, _overrideOptions] call EFUNC(core,parseOptions);

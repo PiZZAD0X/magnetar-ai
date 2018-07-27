@@ -23,6 +23,10 @@ if (_templateName isEqualTo "") exitWith {
     ERROR("Empty template name");
 };
 
+if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)) exitWith {
+    ERROR_1("Template name %1 already defined as config entry",_configEntry);
+};
+
 private _side = format ["%1", side _modelGroup];
 if (_settings isEqualTo []) then {
     _settings =+ (_modelGroup getVariable [QGVAR(settings), []]);

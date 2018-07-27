@@ -6,10 +6,10 @@
  * 0: Marker information <ARRAY>
  *  0: Marker <STRING>
  * 1: Groups to Spawn <ARRAY>
- *  0: Group count <NUMBER>
- *  1: Config entry <STRING>
- *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER>
- *  3: Position <ARRAY> (default: [])
+ *  0: Group count either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
+ *  1: Config/template entry <STRING> (default: "")
+ *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
+ *  3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
  *
  * Return Value:
  * None
@@ -21,9 +21,12 @@
  */
 #include "script_component.hpp"
 
-params ["_markerInfo", "_groupsToSpawn"];
+params [
+    ["_markerInfo", [], [1]],
+    ["_groupsToSpawn", [], [3, 4]]
+];
 
-_markerInfo params ["_marker"];
+_markerInfo params [["_marker", "", [""]]];
 
 if (getMarkerColor _marker == "") exitWith {
     ERROR_1("marker %1 does not exist", _marker);
@@ -34,9 +37,18 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 };
 
 {
-    _x params ["_groupCount", "_configEntry", "_groupSize", ["_position", []]];
-    for "_i" from 1 to _groupCount do {
-        GVAR(spawnQueue) pushBack [_configEntry, _marker, "", "", _groupSize, _position];
+    _x params [
+        ["_groupCount", 0, [[], 0], [1, 2]],
+        ["_entry", "", [""]],
+        ["_groupSize", 0, [[], 0], [2]],
+        ["_position", [], [[], objNull, grpNull, locationNull], [2]]
+    ];
+
+    // Determine group count
+    private _num = [_groupCount] call EFUNC(core,getRandomMinMax);
+
+    for "_i" from 1 to _num do {
+        GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _groupSize, _position];
     };
 } forEach _groupsToSpawn;
 
