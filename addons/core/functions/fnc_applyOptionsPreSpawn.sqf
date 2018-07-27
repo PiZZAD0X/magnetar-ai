@@ -18,4 +18,7 @@
 
 params ["_group", ["_settings", []]];
 
+// PreSpawn code
+[_group] call compile ([_settings, "preSpawn"] call CBA_fnc_hashGet);
+
 [_group, _settings] call FUNC(handleStartPosition);

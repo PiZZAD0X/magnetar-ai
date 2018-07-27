@@ -42,10 +42,16 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "patrolBuildings", true] call CBA_fnc_hashSet;
 [_settings, "spawnInBuilding", false] call CBA_fnc_hashSet;
 [_settings, "randomPosition", false] call CBA_fnc_hashSet;
+[_settings, "reinforcement", true] call CBA_fnc_hashSet;
 [_settings, "execWaypoint", ""] call CBA_fnc_hashSet;
 
 [_settings, "init", ""] call CBA_fnc_hashSet;
+[_settings, "preSpawn", ""] call CBA_fnc_hashSet;
+
 [_settings, "template", ""] call CBA_fnc_hashSet;
 [_settings, "createTemplate", ""] call CBA_fnc_hashSet;
+
+[_settings, "release", false] call CBA_fnc_hashSet;
+
 
 _settings

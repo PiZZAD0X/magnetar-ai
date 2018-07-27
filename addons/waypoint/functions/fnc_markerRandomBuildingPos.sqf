@@ -17,19 +17,54 @@
  * Random point <ARRAY> ([0,0] if invalid marker)
  *
  * Example:
- * ["marker"] call mai_waypoint_fnc_markerRandomPos
+ * ["marker"] call mai_waypoint_fnc_markerRandomBuildingPos
  *
  * Public: No
  */
 #include "script_component.hpp"
 
 // Get all buildings
-params ["_numPos", "_marker", "_filter"];
+params ["_numPos", "_position", "_filter", ["_suffle", true]];
 
-private _center = getMarkerPos _marker;
-(getMarkerSize _marker) params ["_radiusX", "_radiusY"];
+private _center = 0;
+private _radius = 0;
 
-private _buildings = [_center, _radiusX max _radiusY] call EFUNC(building,getNearBuildings);
+if (_position isEqualType "") then {
+    _center = getMarkerPos _marker;
+    (getMarkerSize _marker) params ["_radiusX", "_radiusY"];
+    _radius = _radiusX max _radiusY;
+} else {
+    _center = _position # 0;
+    _radius = _position # 1;
+};
+
+
+private _buildings = [_center, _radius] call EFUNC(building,getNearBuildings);
 private _filteredBuildings = [_buildings, _filter] call EFUNC(building,filterBuildings);
 
-// Find first buildings that allow a certain number of positions
+if (_filteredBuildings isEqualTo []) exitWith {[]};
+
+_building = ([_filteredBuildings, 5] call EFUNC(core,shuffleArray)) # 0;
+
+_freePos = _building getVariable [QGVAR(freePositions), -1];
+
+if (_freePos == -1) then {
+    _freePos = _building buildingPos -1;
+};
+
+private _returnPositions = [];
+
+if (count _freePos < _numPos) then {
+    _building setVariable [QGVAR(freePositions), []];
+    _returnPositions append _freePos;
+    _returnPositions append ([_numPos - (count _freePos)), [getPos _building, 25], _filter, false] call FUNC(markerRandomBuildingPos);
+} else {
+    _returnPositions append (([_freePos, 5] call FUNC(suffleArray)) select [1, _numPos]);
+    {
+        _freePos deleteAt (_freePos findIf _x);
+    } forEach _returnPositions;
+
+    _building setVariable [QGVAR(freePositions), _freePos];
+};
+
+_returnPositions

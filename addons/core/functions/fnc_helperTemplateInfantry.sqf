@@ -35,6 +35,6 @@ private _unitsGroup = units _modelGroup;
     _loadout pushBack (getUnitLoadout _x);
     _rank pushBack (rank _x);
     _skill pushBack (skill _x)
-} forEach (_unitsGroup - [_leader]);
+} forEach (_unitsGroup deleteAt (_unitsGroup find _leader));
 
 [_unitsToSpawn, _loadout, _rank, _skill]

@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [group1] call mai_core_fnc_getGroupVehicles
+ * [group1] call mai_core_fnc_moveGroupToPosition
  *
  * Public: No
  */
@@ -17,7 +17,7 @@
 
 params ["_group", "_position"];
 
-private _vehicles = [_group] call FUNC(getGroupVehicles);
+private _vehicles = [_group] call EFUNC(vehicle,getGroupVehicles);
 
 {
     _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);

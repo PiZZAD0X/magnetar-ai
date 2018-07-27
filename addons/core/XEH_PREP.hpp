@@ -1,7 +1,6 @@
 PREP(applyOptions);
 PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
-PREP(getGroupVehicles);
 PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);
