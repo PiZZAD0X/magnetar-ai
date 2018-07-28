@@ -26,7 +26,7 @@ params [
     ["_marker", "", [""]],
     ["_type", "", [""]],
     ["_side", "", [""]],
-    ["_position", [], [[], objNull, grpNull, locationNull], [2]],
+    ["_position", [], [[], objNull, grpNull, locationNull], [2, 3]],
     ["_settings", [], [[]]],
     ["_options", [], [[]]]
 ];

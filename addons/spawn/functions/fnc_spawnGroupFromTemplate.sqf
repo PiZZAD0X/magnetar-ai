@@ -24,7 +24,7 @@ params [
     ["_templateName", "", [""]],
     ["_numGroups", 0, [[], 0], [2]],
     ["_marker", "", [""]],
-    ["_position", [], [[], objNull, grpNull, locationNull], [2]],
+    ["_position", [], [[], objNull, grpNull, locationNull], [0, 2, 3]],
     ["_overrideOptions", [], [[]]]
 ];
 

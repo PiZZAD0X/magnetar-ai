@@ -17,7 +17,7 @@
 #include "script_component.hpp"
 
 params [
-    ["_range", 0, [[], 0], [2]];
+    ["_range", 0, [[], 0], [2]]
 ];
 
 private _value = 0;

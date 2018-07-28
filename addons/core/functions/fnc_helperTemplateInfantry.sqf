@@ -30,11 +30,13 @@ _rank pushBack (rank _leader);
 _skill pushBack (skill _leader);
 
 private _unitsGroup = units _modelGroup;
+_unitsGroup deleteAt (_unitsGroup find _leader);
+
 {
     _unitsToSpawn pushBack (typeOf _x);
     _loadout pushBack (getUnitLoadout _x);
     _rank pushBack (rank _x);
     _skill pushBack (skill _x)
-} forEach (_unitsGroup deleteAt (_unitsGroup find _leader));
+} forEach _unitsGroup;
 
 [_unitsToSpawn, _loadout, _rank, _skill]

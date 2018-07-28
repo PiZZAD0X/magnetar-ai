@@ -35,7 +35,7 @@ if (!(_type isEqualTo "infantry") && {_inRandomBuilding}) then {
 
 private _units = units _group;
 if (_units isEqualTo []) then {
-    _units =+ _group getVariable [QEGVAR(spawn,unitsToSpawn), []];
+    _units =+ (_group getVariable [QEGVAR(spawn,unitsToSpawn), []]);
 };
 
 if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
@@ -63,7 +63,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
         };
     };
 
-    if (_position isEqualTo []) then {
+    if (_position isEqualTo [0, 0, 0]) then {
         _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit]] call EFUNC(waypoint,markerRandomPos);
     };
 

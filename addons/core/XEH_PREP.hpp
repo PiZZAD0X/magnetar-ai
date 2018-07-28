@@ -1,6 +1,7 @@
 PREP(applyOptions);
 PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
+PREP(getRandomMinMax);
 PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);

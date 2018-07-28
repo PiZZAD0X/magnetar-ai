@@ -22,8 +22,8 @@
 #include "script_component.hpp"
 
 params [
-    ["_markerInfo", [], [1]],
-    ["_groupsToSpawn", [], [3, 4]]
+    ["_markerInfo", [], [[]], [1]],
+    ["_groupsToSpawn", [], [[]]]
 ];
 
 _markerInfo params [["_marker", "", [""]]];

@@ -24,14 +24,14 @@ if (GVAR(spawnQueue) isEqualTo []) exitWith {
 };
 
 private _toSpawn = GVAR(spawnQueue) deleteAt 0;
-_toSpawn params [["_units", [], ["", []]], "_marker", "_type", "_side", ["_size", 0], ["_position", []], ["_settings", []], ["_options", []]];
+_toSpawn params [["_entity", [], ["", []]], "_marker", "_type", "_side", ["_size", 0], ["_position", []], ["_settings", []], ["_options", []]];
 
-if (_units isEqualType "") then {
-    if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)) then {
-        [_units, _size, _marker, _position] call FUNC(spawnGroupFromConfig);
+if (_entity isEqualType "") then {
+    if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _entity)) then {
+        [_entity, _size, _marker, _position] call FUNC(spawnGroupFromConfig);
     } else {
-        [_units, _size, _marker, _position] call FUNC(spawnGroupFromTemplate);
+        [_entity, 1, _marker, _position] call FUNC(spawnGroupFromTemplate);
     }
 } else {
-    [_units, _marker, _type, _side, _position, _settings, _options] call FUNC(spawnGroup);
+    [_entity, _marker, _type, _side, _position, _settings, _options] call FUNC(spawnGroup);
 };

@@ -24,7 +24,7 @@ params [
     ["_configEntry", "", [""]],
     ["_groupSize", 0, [[], 0], [2]],
     ["_marker", "", [""]],
-    ["_position", [], [[], objNull, grpNull, locationNull], [2]],
+    ["_position", [], [[], objNull, grpNull, locationNull], [0, 2, 3]],
     ["_overrideOptions", [], [[]]]
 ];
 
@@ -32,7 +32,7 @@ if (getMarkerColor _marker == "") exitWith {
     ERROR_1("Marker %1 does not exist", _marker);
 };
 
-if (_configEntry isEqualTo "" || !{isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)}) exitWith {
+if (_configEntry isEqualTo "" || {!isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)}) exitWith {
     ERROR_1("Empty or invalid config entry %1",_configEntry);
 };
 

@@ -27,15 +27,16 @@ if (_unitsToSpawn isEqualTo []) exitWith {
     _group setVariable [QGVAR(unitsToSpawn), nil];
 
     private _settings = _group getVariable [QEGVAR(core,settings), []];
-    [_group, _settings] call FUNC(applyOptions);
+    [_group, _settings] call EFUNC(core,applyOptions);
 
-    _group setVariable [QGVAR(settings), _settings, true];
+    _group setVariable [QEGVAR(core,settings), _settings, true];
 
     // Register the group
-    [QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
+    private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
+    [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 
     if !([_settings, "release"] call CBA_fnc_hashGet) then {
-        _group setVariable [QGVAR(enabled), true, true];
+        _group setVariable [QEGVAR(core,enabled), true, true];
     };
 };
 
@@ -108,11 +109,11 @@ if (_unitType isEqualType "") then {
             case "driver": {
                 if (_vehicle isKindOf "Air") then {
                     if !(_pilots isEqualTo []) then {
-                        _unit = [_pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
+                        _unit = [_group, _pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 } else {
                     if !(_crew isEqualTo []) then {
-                        _unit = [_crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
+                        _unit = [_group, _crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 };
                 _unit moveInDriver _vehicleUnit;
@@ -121,11 +122,11 @@ if (_unitType isEqualType "") then {
             case "gunner": {
                 if (_vehicle isKindOf "Air") then {
                     if !(_pilots isEqualTo []) then {
-                        _unit = [_pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
+                        _unit = [_group, _pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 } else {
                     if !(_crew isEqualTo []) then {
-                        _unit = [_crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
+                        _unit = [_group, _crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 };
                 _hasGunner = true;
@@ -135,16 +136,16 @@ if (_unitType isEqualType "") then {
             case "turret": {
                 if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
                     if !(_pilots isEqualTo []) then {
-                        _unit = [_pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
+                        _unit = [_group, _pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 } else {
                     if (_x # 3 in _turrets) then {
                         if !(_crew isEqualTo []) then {
-                            _unit = [_crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
+                            _unit = [_group, _crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
                         };
                     } else {
                         if !(_cargo isEqualTo []) then {
-                            _unit = [_cargo deleteAt 0, _loadoutCargo deleteAt 0, _rankCargo deleteAt 0, _skillCargo deleteAt 0, _useTemplate] call _handleUnitCreation;
+                            _unit = [_group, _cargo deleteAt 0, _loadoutCargo deleteAt 0, _rankCargo deleteAt 0, _skillCargo deleteAt 0, _useTemplate] call _handleUnitCreation;
                         };
                     };
                 };
@@ -153,7 +154,7 @@ if (_unitType isEqualType "") then {
 
             case "commander": {
                 if !(_crew isEqualTo []) then {
-                    _unit = [_crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
+                    _unit = [_group, _crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
 
                     _hasCommander = true;
                     _unit moveInCommander _vehicleUnit;
@@ -162,7 +163,7 @@ if (_unitType isEqualType "") then {
 
             case "cargo": {
                 if !(_cargo isEqualTo []) then {
-                    _unit = [_cargo deleteAt 0, _loadoutCargo deleteAt 0, _rankCargo deleteAt 0, _skillCargo deleteAt 0, _useTemplate] call _handleUnitCreation;
+                    _unit = [_group, _cargo deleteAt 0, _loadoutCargo deleteAt 0, _rankCargo deleteAt 0, _skillCargo deleteAt 0, _useTemplate] call _handleUnitCreation;
 
                     _unit assignAsCargoIndex [_vehicleUnit, _x # 2];
                     _unit moveInCargo _vehicleUnit;
