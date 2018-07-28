@@ -16,12 +16,12 @@
  */
 #include "script_component.hpp"
 
-params ["_units", "_position"];
+params ["_units", "_positions"];
 
 if (count _units != count _positions) exitWith {
-    ERROR("Different number of units (%1) and positions (%2)",count _units, count _positions);
+    ERROR_2("Different number of units (%1) and positions (%2)",count _units, count _positions);
 };
 
 {
-    x setPos (_positions # _forEachIndex);
+    _x setPos (_positions # _forEachIndex);
 } forEach _units;

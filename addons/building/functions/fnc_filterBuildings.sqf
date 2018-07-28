@@ -22,12 +22,12 @@ params ["_buildings", "_filter"];
 private _filteredBuildings = [];
 
 {
-    params ["_key", "_value"];
+    _x params ["_key", "_value"];
     private _filteredBuildings = [];
+
     switch (_key) do {
         case "area": {
             _filteredBuildings = _buildings select {_x inArea _value};
-            };
         };
         case "enterable": {
             // Enterable buildings are those that a) can be entered b) do not have occupied positions
@@ -35,7 +35,7 @@ private _filteredBuildings = [];
         };
     };
 
-    _building = _filteredBuildings;
+    _buildings = _filteredBuildings;
 } forEach _filter;
 
 _buildings

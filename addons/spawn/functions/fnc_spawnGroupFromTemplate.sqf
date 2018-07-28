@@ -41,7 +41,7 @@ _template params ["_side", "_settings", "_units"];
 _position = _position call CBA_fnc_getPos;
 
 // Determine group size
-private _num = [_numGroups] EFUNC(core,getRandomMinMax);
+private _num = [_numGroups] call EFUNC(core,getRandomMinMax);
 
 if !(_overrideOptions isEqualTo []) then {
     [_settings, _overrideOptions] call EFUNC(core,parseOptions);

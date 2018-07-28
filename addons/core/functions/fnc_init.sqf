@@ -38,7 +38,7 @@ _settings = [_settings, _marker, _type] call FUNC(setBasicSettings);
 [_settings, "speed", [speedMode _group]] call CBA_fnc_hashSet;
 
 _settings = [_settings, _options] call FUNC(parseOptions);
-[_group, _settings]l call FUNC(applyOptionsPreSpawn);
+[_group, _settings] call FUNC(applyOptionsPreSpawn);
 [_group, _settings] call FUNC(applyOptions);
 
 _group setVariable [QGVAR(settings), _settings, true];

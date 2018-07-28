@@ -8,6 +8,7 @@ PREP(helperTemplateInfantry);
 PREP(helperTemplateVehicle);
 PREP(init);
 PREP(moveGroupToPosition);
+PREP(moveUnitsToPositions);
 PREP(parseOptions);
 PREP(restart);
 PREP(setBasicSettings);

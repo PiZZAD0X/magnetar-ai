@@ -30,23 +30,22 @@ private _center = 0;
 private _radius = 0;
 
 if (_position isEqualType "") then {
-    _center = getMarkerPos _marker;
-    (getMarkerSize _marker) params ["_radiusX", "_radiusY"];
+    _center = getMarkerPos _position;
+    (getMarkerSize _position) params ["_radiusX", "_radiusY"];
     _radius = _radiusX max _radiusY;
 } else {
     _center = _position # 0;
     _radius = _position # 1;
 };
 
-
 private _buildings = [_center, _radius] call EFUNC(building,getNearBuildings);
+
 private _filteredBuildings = [_buildings, _filter] call EFUNC(building,filterBuildings);
 
 if (_filteredBuildings isEqualTo []) exitWith {[]};
 
-_building = ([_filteredBuildings, 5] call EFUNC(core,shuffleArray)) # 0;
-
-_freePos = _building getVariable [QGVAR(freePositions), -1];
+private _building = ([_filteredBuildings, 5] call EFUNC(core,shuffleArray)) # 0;
+private _freePos = _building getVariable [QGVAR(freePositions), -1];
 
 if (_freePos == -1) then {
     _freePos = _building buildingPos -1;
@@ -56,12 +55,12 @@ private _returnPositions = [];
 
 if (count _freePos < _numPos) then {
     _building setVariable [QGVAR(freePositions), []];
-    _returnPositions append _freePos;
-    _returnPositions append ([_numPos - (count _freePos)), [getPos _building, 25], _filter, false] call FUNC(markerRandomBuildingPos);
+    _returnPositions =+ _freePos;
+    _returnPositions append ([_numPos - (count _freePos), [getPos _building, 25], _filter, false] call FUNC(markerRandomBuildingPos));
 } else {
-    _returnPositions append (([_freePos, 5] call FUNC(suffleArray)) select [1, _numPos]);
+    _returnPositions =+ ([_freePos, 5] call EFUNC(core,shuffleArray)) select [1, _numPos];
     {
-        _freePos deleteAt (_freePos findIf _x);
+        _freePos deleteAt (_freePos find _x);
     } forEach _returnPositions;
 
     _building setVariable [QGVAR(freePositions), _freePos];

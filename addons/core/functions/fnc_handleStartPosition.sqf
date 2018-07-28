@@ -87,11 +87,13 @@ if (_inRandomBuilding) exitWith {
             if !(_unitType isEqualTo "") then {
                 _unitType = typeOf _unitType;
             };
-            _positions pushBack [[_marker, [false, true, false], [0, 50, _unitType]] call EFUNC(waypoint,markerRandomPos)];
+            _positions pushBack ([_marker, [false, true, false], [0, 50, _unitType]] call EFUNC(waypoint,markerRandomPos));
         };
 
-        for "_i" from 0 to (count _units - count _positions) do {
-            private _unitType = _units # (count _positions + _i);
+        private _requiredPositions = (count _units) - (count _positions) - 1;
+        private _numPositions = count _positions;
+        for "_i" from 0 to _requiredPositions do {
+            private _unitType = _units # (_numPositions + _i);
             if !(_unitType isEqualTo "") then {
                 _unitType = typeOf _unitType;
             };
@@ -105,7 +107,7 @@ if (_inRandomBuilding) exitWith {
     };
 
     if (_moveUnits) then {
-        [units _group, _positions] call FUNC(moveUnitsToPosition);
+        [units _group, _positions] call FUNC(moveUnitsToPositions);
     } else {
         _group setVariable [QGVAR(startPosition), _positions];
     };
