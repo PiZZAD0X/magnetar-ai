@@ -1,6 +1,7 @@
 PREP(applyOptions);
 PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
+PREP(getMarkerGroups);
 PREP(getRandomMinMax);
 PREP(handleStartPosition);
 PREP(hasRebreather);
@@ -11,8 +12,8 @@ PREP(init);
 PREP(moveGroupToPosition);
 PREP(moveUnitsToPositions);
 PREP(parseOptions);
+PREP(reenable);
 PREP(restart);
 PREP(setBasicSettings);
 PREP(setSkill);
 PREP(shuffleArray);
-PREP(suspend);

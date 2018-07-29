@@ -55,6 +55,7 @@ params ["_settings", ["_options", []]];
         case "task": { [_settings, "task", format [QEGVAR(tasks,%1),_value]] call CBA_fnc_hashSet; };
         case "template": { [_settings, "template", _value] call CBA_fnc_hashSet; };
         case "waitatwaypoint": { [_settings, "waitAtWaypoint", _value] call CBA_fnc_hashSet; };
+        case "waypointmarker": { [_settings, "waypointMarker", _value] call CBA_fnc_hashSet; };
     };
 } forEach _options;
 

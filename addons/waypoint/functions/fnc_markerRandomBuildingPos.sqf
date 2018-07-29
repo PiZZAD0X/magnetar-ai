@@ -34,8 +34,15 @@ if (_position isEqualType "") then {
     (getMarkerSize _position) params ["_radiusX", "_radiusY"];
     _radius = _radiusX max _radiusY;
 } else {
-    _center = _position # 0;
-    _radius = _position # 1;
+    if ((_position # 0) isEqualType []) then {
+        private _marker = [_position] call FUNC(selectRandomMarker);
+        _center = getMarkerPos _marker;
+        (getMarkerSize _marker) params ["_radiusX", "_radiusY"];
+        _radius = _radiusX max _radiusY;
+    } else {
+        _center = _position # 0;
+        _radius = _position # 1;
+    };
 };
 
 private _buildings = [_center, _radius] call EFUNC(building,getNearBuildings);

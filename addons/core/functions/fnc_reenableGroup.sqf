@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Reenables all AI management.
+ * Reenables AI management for the specified group.
  *
  * Arguments:
  * 0: Group <OBJECT> (Default: objNull)
@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [group player] call mai_core_fnc_restart
+ * [group player] call mai_core_fnc_reenableGroup
  *
  * Public: Yes
  */
@@ -17,8 +17,10 @@
 
 params ["_group"];
 
-if (_group getVariable [QGVAR(settings), []] isEqualTo []) exitWith {
+if (!local _group) exitWith {};
+
+if ((_group getVariable [QGVAR(settings), []]) isEqualTo []) exitWith {
     ERROR_1("Group %1 has not been initialised",_group);
 };
 
-_group setVariable [QGVAR(enable), true, true];
+_group setVariable [QGVAR(enable), true];

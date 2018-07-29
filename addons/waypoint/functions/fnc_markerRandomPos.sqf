@@ -10,7 +10,7 @@
  *  2: Force waypoint on roads <BOOL>
  * 2: Check radius for a valid unit position <ARRAY> (default: [0, 50, ""])
  *  0: Min radius <NUMBER>
- *  1: MAx radius <NUBMER>
+ *  1: Max radius <NUBMER>
  *  2: Object classname <STRING>
  *
  * Return Value:
@@ -23,9 +23,15 @@
  */
 #include "script_component.hpp"
 
-params [["_marker", ""], ["_condition", [false, true, false]], ["_checkRadius", [0, 50, ""]]];
+params [
+    ["_marker", "", ["", []]],
+    ["_condition", [false, true, false]],
+    ["_checkRadius", [0, 50, ""]]
+];
 
-if (_marker isEqualTo "") exitWith {[0,0]};
+if (_marker isEqualTo "" || {_marker isEqualTo []}) exitWith {[0, 0, 0]};
+
+[_marker] call FUNC(markerRandomPos);
 
 private _center = getMarkerPos _marker;
 private _centerX = abs(_center # 0);

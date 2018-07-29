@@ -17,4 +17,10 @@
 
 params ["_group"];
 
+if (!local _group) exitWith {};
+
+if ((_group getVariable [QGVAR(settings), []]) isEqualTo []) exitWith {
+    ERROR_1("Group %1 has not been initialised",_group);
+};
+
 _group setVariable [QGVAR(enabled), false];
