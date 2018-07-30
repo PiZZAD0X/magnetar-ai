@@ -38,13 +38,18 @@ private _currentPos = getPos (leader _group);
 private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
 private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
 private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
+private _blackListedMarkers = [_settings, "blacklist"] call CBA_fnc_hashGet;
+if (_blackListedMarkers isEqualTo "") then {
+    _blackListedMarkers = [_blackListedMarkers];
+};
+
 private _targetPos = _currentPos;
 
 // Delete all waypoints
 [_group] call FUNC(clearWaypoints);
 _targetPos = _currentPos;
 while {_tries < 50} do {
-    private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads]] call FUNC(markerRandomPos);
+    private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads], _blackListedMarkers] call FUNC(markerRandomPos);
 
     TRACE_3("waypoint at %1. Minimum distance %2. Greater than minimum distance %3",_trialPos,_minimumDistance,_trialPos distance2D _currentPos >= _minimumDistance);
 

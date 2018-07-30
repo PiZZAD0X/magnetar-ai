@@ -23,6 +23,11 @@ if (_settings isEqualTo []) then {
 };
 private _inRandomPosition = [_settings, "randomPosition"] call CBA_fnc_hashGet;
 private _inRandomBuilding = [_settings, "spawnInBuilding"] call CBA_fnc_hashGet;
+private _blackListedMarkers = [_settings, "blacklist"] call CBA_fnc_hashGet;
+if (_blackListedMarkers isEqualTo "") then {
+    _blackListedMarkers = [_blackListedMarkers];
+};
+
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _position = _group getVariable [QGVAR(startPosition), []];
 
@@ -42,6 +47,8 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
     private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
     private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
+
+
     private _moveUnits = false;
 
     // Select a unit
@@ -64,7 +71,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     };
 
     if (_position isEqualTo [0, 0, 0]) then {
-        _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit]] call EFUNC(waypoint,markerRandomPos);
+        _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit], _blackListedMarkers] call EFUNC(waypoint,markerRandomPos);
     };
 
     if (_moveUnits) then {
@@ -87,7 +94,7 @@ if (_inRandomBuilding) exitWith {
             if !(_unitType isEqualTo "") then {
                 _unitType = typeOf _unitType;
             };
-            _positions pushBack ([_marker, [false, true, false], [0, 50, _unitType]] call EFUNC(waypoint,markerRandomPos));
+            _positions pushBack ([_marker, [false, true, false], [0, 50, _unitType], _blackListedMarkers] call EFUNC(waypoint,markerRandomPos));
         };
 
         private _requiredPositions = (count _units) - (count _positions) - 1;

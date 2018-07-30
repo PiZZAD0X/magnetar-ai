@@ -26,7 +26,8 @@
 params [
     ["_marker", "", ["", []]],
     ["_condition", [false, true, false]],
-    ["_checkRadius", [0, 50, ""]]
+    ["_checkRadius", [0, 50, ""]],
+    ["_blacklisted", [], [[]]]
 ];
 
 if (_marker isEqualTo "" || {_marker isEqualTo []}) exitWith {[0, 0, 0]};
@@ -60,11 +61,18 @@ while {_tries < 50} do {
     private _trialPos = [_sizeX, _sizeY, _centerX, _centerY, _markerDir] call _rndFunction;
     private _found = false;
 
-    if (_allowWater && {surfaceIsWater _trialPos}) then {
+    private _inBlacklisted = false;
+    {
+        if (_trialPos inArea _x) exitWith {
+            _inBlacklisted = true;
+        };
+    } forEach _blacklisted;
+
+    if (!_inBlacklisted && {_allowWater} && {surfaceIsWater _trialPos}) then {
         _found = true;
     };
 
-    if (_allowLand && {!surfaceIsWater _trialPos}) then {
+    if (!_inBlacklisted && {_allowLand} && {!surfaceIsWater _trialPos}) then {
         if (_forceRoads) then {
             private _roads = (_trialPos nearRoads 50);
             if !(_roads isEqualTo []) then {
@@ -78,7 +86,7 @@ while {_tries < 50} do {
         };
     };
 
-    if (_allowWater && {_allowLand} && {!_forceRoads}) then {
+    if (!_inBlacklisted && {_allowWater} && {_allowLand} && {!_forceRoads}) then {
         _found = true;
     };
 
@@ -90,7 +98,13 @@ while {_tries < 50} do {
             _checkedPos = _trialPos findEmptyPosition [_minRadius, _maxRadius, _vehicleType];
         };
 
-        if (_checkedPos isEqualTo [] || {!(_checkedPos inArea _marker)}) then {
+        {
+            if (_checkedPos inArea _x) exitWith {
+                _inBlacklisted = true;
+            };
+        } forEach _blacklisted;
+
+        if (_checkedPos isEqualTo [] || {_inBlacklisted} || {!(_checkedPos inArea _marker)}) then {
             _tries = _tries + 1;
             _found = false;
         } else {

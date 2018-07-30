@@ -33,6 +33,17 @@ private _filteredBuildings = [];
             // Enterable buildings are those that a) can be entered b) do not have occupied positions
             _filteredBuildings = _buildings select {count (_x buildingPos -1) > 0 && {_x getVariable [QGVAR(freePositions), -1] == -1 || {_x getVariable [QGVAR(freePositions), -1] > 0}}};
         };
+        case "blacklist": {
+            _filteredBuildings = _buildings select {
+                private _bldg = _x;
+                private _passFilter = true;
+                {
+                    if (_bldg in _x) exitWith {_passFilter = false;};
+                } forEach _value;
+
+                _passFilter;
+            };
+        };
     };
 
     _buildings = _filteredBuildings;

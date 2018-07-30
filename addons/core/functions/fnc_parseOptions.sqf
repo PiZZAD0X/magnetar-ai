@@ -34,6 +34,7 @@ params ["_settings", ["_options", []]];
         case "allowvehicles": { [_settings, "allowVehicles", _value] call CBA_fnc_hashSet };
         case "allowwater": { [_settings, "allowWater", _value] call CBA_fnc_hashSet; };
         case "behaviour": { [_settings, "behaviour", _value] call CBA_fnc_hashSet; };
+        case "blacklist": { [_settings, "blacklist", _value] call CBA_fnc_hashSet; };
         case "combatmode": { [_settings, "combatMode", _value] call CBA_fnc_hashSet; };
         case "createtemplate": { [_settings, "createTemplate", _value] call CBA_fnc_hashSet; };
         case "execwaypoint": { [_settings, "execWaypoint", _value] call CBA_fnc_hashSet; };
