@@ -83,7 +83,7 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
 if (_inRandomBuilding) exitWith {
     private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
-    private _positions = [count _units, _marker, [["area", _marker], ["enterable", true]], false] call EFUNC(waypoint,markerRandomBuildingPos);
+    private _positions = [count _units, _marker, [["area", _marker], ["enterable", true], ["blacklist", _blackListedMarkers]], false] call EFUNC(waypoint,markerRandomBuildingPos);
 
     // Generate positions for all units
     if (count _units > count _positions) then {

@@ -37,6 +37,7 @@ params ["_settings", ["_options", []]];
         case "blacklist": { [_settings, "blacklist", _value] call CBA_fnc_hashSet; };
         case "combatmode": { [_settings, "combatMode", _value] call CBA_fnc_hashSet; };
         case "createtemplate": { [_settings, "createTemplate", _value] call CBA_fnc_hashSet; };
+        case "deletespawnmarkers": { [_settings, "deleteSpawnMarkers", _value] call CBA_fnc_hashSet; };
         case "execwaypoint": { [_settings, "execWaypoint", _value] call CBA_fnc_hashSet; };
         case "flyinheight": { [_settings, "flyInHeight", _value] call CBA_fnc_hashSet; };
         case "forceroads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
@@ -56,7 +57,7 @@ params ["_settings", ["_options", []]];
         case "task": { [_settings, "task", format [QEGVAR(tasks,%1),_value]] call CBA_fnc_hashSet; };
         case "template": { [_settings, "template", _value] call CBA_fnc_hashSet; };
         case "waitatwaypoint": { [_settings, "waitAtWaypoint", _value] call CBA_fnc_hashSet; };
-        case "waypointmarker": { [_settings, "waypointMarker", _value] call CBA_fnc_hashSet; };
+        case "waypointmarkers": { [_settings, "waypointMarkers", _value] call CBA_fnc_hashSet; };
     };
 } forEach _options;
 
