@@ -23,14 +23,12 @@
 params [
     ["_templateName", "", [""]],
     ["_numGroups", 0, [[], 0], [2]],
-    ["_marker", "", [""]],
+    ["_marker", "", ["", []]],
     ["_position", [], [[], objNull, grpNull, locationNull], [0, 2, 3]],
     ["_overrideOptions", [], [[]]]
 ];
 
-if (_templateName isEqualTo "") exitWith {
-    ERROR("Emtpy template name given")
-};
+if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
 
 private _template = [EGVAR(core,groupTemplates), _templateName] call CBA_fnc_hashGet;
 if !(_template isEqualType []) exitWith {

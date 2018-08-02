@@ -24,7 +24,7 @@ if (_markers isEqualType "") exitWith {
 private _totalWeight = 0;
 
 {
-    _totalWeight = _totalWeight + (_markers # _forEachIndex # 1);
+    _totalWeight = _totalWeight + (_x # _forEachIndex # 1);
 } forEach _markers;
 
 {

@@ -31,6 +31,11 @@ if (_blackListedMarkers isEqualTo "") then {
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _position = _group getVariable [QGVAR(startPosition), []];
 
+// Exit if marker configuration is invalid and position is either empty or at [0, 0, 0]
+if (!([_marker] call EFUNC(waypoint,checkMarkerInput)) && {_position isEqualTo [] || {_position isEqualTo [0, 0, 0]}}) exitWith {
+    ERROR("Invalid marker configuration and/or empty or null position speficied");
+};
+
 // Only infantry units spawn in buildings
 private _type = [_settings, "type"] call CBA_fnc_hashGet;
 if (!(_type isEqualTo "infantry") && {_inRandomBuilding}) then {

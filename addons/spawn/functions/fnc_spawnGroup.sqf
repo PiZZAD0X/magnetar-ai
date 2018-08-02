@@ -23,7 +23,7 @@
 
 params [
     ["_units", [], [[]]],
-    ["_marker", "", [""]],
+    ["_marker", "", ["", []]],
     ["_type", "", [""]],
     ["_side", "", [""]],
     ["_position", [], [[], objNull, grpNull, locationNull], [2, 3]],
@@ -31,9 +31,7 @@ params [
     ["_options", [], [[]]]
 ];
 
-if (getMarkerColor _marker == "") exitWith {
-    ERROR_1("marker %1 does not exist", _marker);
-};
+if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
 
 _position = _position call CBA_fnc_getPos;
 

@@ -10,6 +10,7 @@
  *  1: Config/template entry <STRING> (default: "")
  *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
  *  3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
+ *  4: Override options <ARRAY> (default: [])
  *
  * Return Value:
  * None
@@ -22,15 +23,11 @@
 #include "script_component.hpp"
 
 params [
-    ["_markerInfo", [], [[]], [1]],
+    ["_marker", "", ["", []]],
     ["_groupsToSpawn", [], [[]]]
 ];
 
-_markerInfo params [["_marker", "", [""]]];
-
-if (getMarkerColor _marker == "") exitWith {
-    ERROR_1("marker %1 does not exist", _marker);
-};
+if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
 
 if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
     _marker setMarkerAlpha 0;
@@ -48,7 +45,7 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
     private _num = [_groupCount] call EFUNC(core,getRandomMinMax);
 
     for "_i" from 1 to _num do {
-        GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _groupSize, _position];
+        GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _groupSize, _position, [], _overrideOptions];
     };
 } forEach _groupsToSpawn;
 

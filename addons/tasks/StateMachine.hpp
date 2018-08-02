@@ -43,6 +43,16 @@ class MAI_Tasks_StateMachine {
         };
     };
 
+    class TaskAttack {
+        onStateEntered = QFUNC(onAttackStateEntered);
+        onState = QFUNC(onAttackState);
+    };
+
+    class TaskDefend {
+        onStateEntered = QFUNC(onDefendStateEntered);
+        onState = QFUNC(onDefendState);
+    };
+
     class TaskPatrolRandom {
         onStateEntered = QFUNC(onPatrolRandomStateEntered);
         onState = QFUNC(handlePatrolRandomState);

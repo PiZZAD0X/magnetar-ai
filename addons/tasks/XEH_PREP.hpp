@@ -1,5 +1,9 @@
 PREP(checkDoTask);
 PREP(handlePatrolRandomState);
+PREP(onAttackState);
+PREP(onAttackStateEntered);
+PREP(onDefendState);
+PREP(onDefendStateEntered);
 PREP(onDoTaskStateEntered);
 PREP(onEmbarkStateEntered);
 PREP(onInitStateEntered);
