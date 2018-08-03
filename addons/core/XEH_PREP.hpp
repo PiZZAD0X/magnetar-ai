@@ -12,7 +12,7 @@ PREP(init);
 PREP(moveGroupToPosition);
 PREP(moveUnitsToPositions);
 PREP(parseOptions);
-PREP(reenable);
+PREP(reenableGroup);
 PREP(removeGroup);
 PREP(restart);
 PREP(setBasicSettings);

@@ -3,7 +3,7 @@
  * Spawns a random group of units.
  *
  * Arguments:
- * 0: Marker information <ARRAY>
+ * 0: Marker information <STRING><ARRAY>
  *  0: Marker <STRING>
  * 1: Groups to Spawn <ARRAY>
  *  0: Group count either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
@@ -16,7 +16,7 @@
  * None
  *
  * Example:
- * [["marker"], [[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]]] call mai_spawn_fnc_populateMarker
+ * ["marker", [[3, "infantryUSMC", [2, 5]], [2, "infantryUSMC", 4]]] call mai_spawn_fnc_populateMarker
  *
  * Public: Yes
  */
@@ -38,7 +38,8 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
         ["_groupCount", 0, [[], 0], [1, 2]],
         ["_entry", "", [""]],
         ["_groupSize", 0, [[], 0], [2]],
-        ["_position", [], [[], objNull, grpNull, locationNull], [2]]
+        ["_position", [], [[], objNull, grpNull, locationNull], [0, 2]],
+        ["_overrideOptions", [], [[]]]
     ];
 
     // Determine group count

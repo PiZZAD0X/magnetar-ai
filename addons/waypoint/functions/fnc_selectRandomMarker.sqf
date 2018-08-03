@@ -16,26 +16,26 @@
 #include "script_component.hpp"
 
 params [
-    ["_markers", "", ["", []]]
+    ["_markers", [], [[]]]
 ];
 
-if (_markers isEqualTo "" || {_markers isEqualTo []}) exitWith {
+if (_markers isEqualTo []) exitWith {
     ERROR("Empty markers");
-};
-
-if (_markers isEqualType "") exitWith {
-    _markers
+    ""
 };
 
 // Sum chances
 private _rnd = (count _markers) random 100;
 private _previousWeight = 0;
+private _selectedMarker = "";
 {
     _x params ["_marker", "_weight"];
 
-    if (_rnd < _weight && {_rnd => _previousWeight}) exitWith {
-        _marker;
-    } else {
-        _previousWeight = _weight;
+    if (_rnd < _weight && {_rnd >= _previousWeight}) exitWith {
+        _selectedMarker = _marker;
     };
+
+    _previousWeight = _weight;
 } forEach _markers;
+
+_selectedMarker

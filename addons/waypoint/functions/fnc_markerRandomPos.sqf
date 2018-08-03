@@ -32,8 +32,6 @@ params [
 
 if (_marker isEqualTo "" || {_marker isEqualTo []}) exitWith {[0, 0, 0]};
 
-[_marker] call FUNC(markerRandomPos);
-
 private _center = getMarkerPos _marker;
 private _centerX = abs(_center # 0);
 private _centerY = abs(_center # 1);

@@ -29,6 +29,7 @@ if (_blackListedMarkers isEqualTo "") then {
 };
 
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
+_marker = ([_marker] call EFUNC(waypoint,selectRandomMarker));
 private _position = _group getVariable [QGVAR(startPosition), []];
 
 // Exit if marker configuration is invalid and position is either empty or at [0, 0, 0]
@@ -87,7 +88,6 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 };
 
 if (_inRandomBuilding) exitWith {
-    private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
     private _positions = [count _units, _marker, [["area", _marker], ["enterable", true], ["blacklist", _blackListedMarkers]], false] call EFUNC(waypoint,markerRandomBuildingPos);
 
     // Generate positions for all units

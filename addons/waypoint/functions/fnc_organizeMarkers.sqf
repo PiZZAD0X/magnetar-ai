@@ -18,17 +18,17 @@
 params ["_markers"];
 
 if (_markers isEqualType "") exitWith {
-    _markers
+    [[_markers, 100]]
 };
 
 private _totalWeight = 0;
 
 {
-    _totalWeight = _totalWeight + (_x # _forEachIndex # 1);
+    _totalWeight = _totalWeight + (_x # 1);
 } forEach _markers;
 
 {
-    _x set [1, (_x # _forEachIndex # 1)/_totalWeight*100];
+    _x set [1, (_x # 1)/_totalWeight*100];
 } forEach _markers;
 
 _markers

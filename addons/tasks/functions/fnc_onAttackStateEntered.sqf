@@ -17,7 +17,7 @@
 
 params ["_group"];
 
-private _settings = _group getVariable [QEGVAR(core,settings), []]
+private _settings = _group getVariable [QEGVAR(core,settings), []];
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 
 _marker = [_marker] call EFUNC(waypoint,selectRandomMarker);

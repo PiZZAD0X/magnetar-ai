@@ -40,9 +40,9 @@ if !(_templateName isEqualTo "") then {
 };
 
 // Handle spawn and waypoint markers
-private _markers =  [_settings, "marker"] call CBA_fnc_hashGet;
-private _deleteSpawnMarkers = [_settings, "deletespawnmarkers"] call CBA_fnc_hashGet;
-private _waypointMarkers = [_settings, "waypointmarkers"] call CBA_fnc_hashGet;
+private _markers = [_settings, "marker"] call CBA_fnc_hashGet;
+private _deleteSpawnMarkers = [_settings, "deleteSpawnMarkers"] call CBA_fnc_hashGet;
+private _waypointMarkers = [_settings, "waypointMarkers"] call CBA_fnc_hashGet;
 
 if (_deleteSpawnMarkers) then {
     if !(_waypointMarkers isEqualTo []) then {
@@ -55,3 +55,4 @@ if (_deleteSpawnMarkers) then {
 _markers append _waypointMarkers;
 
 _markers = [_markers] call EFUNC(waypoint,organizeMarkers);
+[_settings, "marker", _markers] call CBA_fnc_hashSet;

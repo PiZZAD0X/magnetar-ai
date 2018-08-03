@@ -28,9 +28,9 @@ _toSpawn params [["_entity", [], ["", []]], "_marker", "_type", "_side", ["_size
 
 if (_entity isEqualType "") then {
     if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _entity)) then {
-        [_entity, _size, _marker, _position] call FUNC(spawnGroupFromConfig);
+        [_entity, _size, _marker, _position, _options] call FUNC(spawnGroupFromConfig);
     } else {
-        [_entity, 1, _marker, _position] call FUNC(spawnGroupFromTemplate);
+        [_entity, 1, _marker, _position, _options] call FUNC(spawnGroupFromTemplate);
     }
 } else {
     [_entity, _marker, _type, _side, _position, _settings, _options] call FUNC(spawnGroup);

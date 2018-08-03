@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Checks marker array format
+ * Checks marker array format.
  *
  * Arguments:
  * 0: Marker(s) <STRING><ARRAY> (default: "")

@@ -25,6 +25,8 @@ if (!local _group) exitWith {};
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 
+_marker = [_marker] call FUNC(selectRandomMarker);
+
 private _sizeX = (markerSize _marker) # 0;
 private _sizeY = (markerSize _marker) # 1;
 private _minimumDistance = 2/3*sqrt(_sizeX^2 + _sizeY^2);
@@ -49,7 +51,7 @@ private _targetPos = _currentPos;
 [_group] call FUNC(clearWaypoints);
 _targetPos = _currentPos;
 while {_tries < 50} do {
-    private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads], _blackListedMarkers] call FUNC(markerRandomPos);
+    private _trialPos = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, ""], _blackListedMarkers] call FUNC(markerRandomPos);
 
     TRACE_3("waypoint at %1. Minimum distance %2. Greater than minimum distance %3",_trialPos,_minimumDistance,_trialPos distance2D _currentPos >= _minimumDistance);
 

@@ -17,13 +17,13 @@
 
 params ["_group", "_type"];
 
-if (_type isEqualTo "infantry") then {
-    _unitCount = count (units _group);
-};
+if !(_type isEqualTo "infantry") exitWith {};
+
+private _unitCount = count (units _group);
 
 // Check if a transport is available within a certain radius
 private _availableGroups = [];
-private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled), false)]};
+private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled), false]};
 {
     private _settings = _x getVariable [QEGVAR(core,settings), []];
     private _task = [_settings, "task"] call CBA_fnc_hashGet;
@@ -31,12 +31,12 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
         // Check if the transport can go to the designated coordinates
         private _positionAllowed = false;
 
-        _targetPos = waypointPosition [_group, 0];
+        private _targetPos = waypointPosition [_group, 0];
         if (surfaceIsWater _targetPos && {[_settings, "allowWater"] call CBA_fnc_hashGet}) then {
             _positionAllowed = true;
         };
 
-        if (!surfaceIsWater && {[_settings, "allowLand"] call CBA_fnc_hashGet}) then {
+        if (!surfaceIsWater _targetPos && {[_settings, "allowLand"] call CBA_fnc_hashGet}) then {
             _positionAllowed = true;
         };
 
@@ -49,7 +49,7 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
                 if (isNull (_x # 0)) then {
                     _availablePositions = _availablePositions + 1;
                 };
-            } fullCrew [_vehicle, "cargo", true];
+            } forEach (fullCrew [_vehicle, "cargo", true]);
 
             if (_availablePositions >= _unitCount) then {
                 _availableGroups pushBack [_group, [_settings, "type"] call CBA_fnc_hashGet];

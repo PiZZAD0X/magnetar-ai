@@ -18,14 +18,25 @@
  */
 #include "script_component.hpp"
 
-params [["_unit", objNull], "_marker", ["_type", "infantry"], ["_options", []]];
+params [
+    ["_unit", objNull, [objNull]],
+    ["_marker", "", ["", []]],
+    ["_type", "infantry", [""]],
+    ["_options", [], [[]]]
+];
 
 // Only execute where the group is local
 private _group = group _unit;
 if (!local _group) exitWith {};
 
-if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
-    _marker setMarkerAlpha 0;
+if (!GVAR(debugEnabled)) then {
+    if (_marker isEqualType "") then {
+        _marker setMarkerAlpha 0;
+    } else {
+        {
+            _x setMarkerAlpha 0;
+        } forEach _marker;
+    };
 };
 
 // Create default values for the group

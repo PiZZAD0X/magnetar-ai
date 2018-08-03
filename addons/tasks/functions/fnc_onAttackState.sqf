@@ -17,7 +17,7 @@
 
 params ["_group"];
 
-if (!local _leader) exitWith {};
+if (!local _group) exitWith {};
 
 if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTime])) exitWith {};
 
