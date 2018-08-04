@@ -28,8 +28,8 @@ if (_markers isEqualTo "" || {_markers isEqualTo []}) exitWith {
 if (_markers isEqualType "") exitWith {
     private _correct = true;
 
-    if (getMarkerColor _markers == "") then {
-        ERROR_1("marker %1 does not exist", _markers);
+    if ((getMarkerColor _markers) isEqualTo "") then {
+        ERROR_1("Marker %1 does not exist", _markers);
         _correct = false;
     };
 
