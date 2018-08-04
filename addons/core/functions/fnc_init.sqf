@@ -55,7 +55,7 @@ _settings = [_settings, _options] call FUNC(parseOptions);
 _group setVariable [QGVAR(settings), _settings, true];
 
 // Register the group
-_marker = [_settings, "marker"] call CBA_fnc_hashGet;
+_marker = _group getVariable [QGVAR(registerMarker), ""];
 [QGVAR(registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 
 if !([_settings, "release"] call CBA_fnc_hashGet) then {

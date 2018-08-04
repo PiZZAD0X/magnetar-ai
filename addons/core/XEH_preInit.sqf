@@ -6,23 +6,34 @@ ADDON = false;
 
 #include "initSettings.sqf"
 
-[QGVAR(registerGroup), {
-    params ["_group", "_marker"];
-    {
-        private _settings = _group getVariable [QGVAR(settings), []];
-        [_settings, "groupId", GVAR(groupRegisters)] call CBA_fnc_hashSet;
-        _group setVariable [QGVAR(settings), _settings];
-        private _markerGroups = missionNamespace getVariable [format [QGVAR(%1), _x # 0], []];
-        _markerGroups pushBack _group;
-        missionNamespace setVariable [format [QGVAR(%1), _x # 0], _markerGroups];
-
-        GVAR(groupRegisters) = GVAR(groupRegisters) + 1;
-    } forEach _marker;
-}] call CBA_fnc_addEventHandler;
-
 if (isServer) then {
-    DGVAR(groupRegisters) = 0;
+    DGVAR(groupRegisters) = [];
     DGVAR(groupTemplates) = [] call CBA_fnc_hashCreate;
 };
+
+[QGVAR(registerGroup), {
+    params ["_group", ["_registerMarker", ""]];
+
+    GVAR(groupRegisters) pushBack [_group, _registerMarker];
+
+    if (_registerMarker isEqualTo "") exitWith {};
+
+    private _markerGroups = missionNamespace getVariable [format [QGVAR(%1), _registerMarker], []];
+    _markerGroups pushBack _group;
+    missionNamespace setVariable [format [QGVAR(%1), _registerMarker], _markerGroups];
+}] call CBA_fnc_addEventHandler;
+
+[QGVAR(unregisterGroup), {
+    params ["_group"];
+
+    {
+        if ((_x # 0) isEqualTo _group) exitWith {
+            private _markerGroups = missionNamespace getVariable [format [QGVAR(%1), _x # 1], []];
+            _markerGroups deleteAt (_markerGroups find _group);
+
+            GVAR(groupRegisters) deleteAt _forEachIndex;
+        };
+    } forEach GVAR(groupRegisters);
+}] call CBA_fnc_addEventHandler;
 
 ADDON = true;

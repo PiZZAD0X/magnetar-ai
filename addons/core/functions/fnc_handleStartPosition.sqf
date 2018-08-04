@@ -28,8 +28,8 @@ if (_blackListedMarkers isEqualTo "") then {
     _blackListedMarkers = [_blackListedMarkers];
 };
 
-private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
-_marker = ([_marker] call EFUNC(waypoint,selectRandomMarker));
+private _spawnMarkers = [_settings, "marker"] call CBA_fnc_hashGet;
+private _marker = ([_spawnMarkers] call EFUNC(waypoint,selectRandomMarker));
 private _position = _group getVariable [QGVAR(startPosition), []];
 
 // Exit if marker configuration is invalid and position is either empty or at [0, 0, 0]
@@ -47,13 +47,22 @@ if (!(_type isEqualTo "infantry") && {_inRandomBuilding}) then {
 private _units = units _group;
 if (_units isEqualTo []) then {
     _units =+ (_group getVariable [QEGVAR(spawn,unitsToSpawn), []]);
+} else {
+    private _inMarker = "";
+    private _leaderPos = position (leader _group);
+    {
+        if (_leaderPos inArea (_x # 0)) exitWith {
+            _inMarker = _x # 0;
+        };
+    } forEach _spawnMarkers;
+
+    _group setVariable [QGVAR(registerMarker), _inMarker];
 };
 
 if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     private _allowWater = [_settings, "allowWater"] call CBA_fnc_hashGet;
     private _allowLand = [_settings, "allowLand"] call CBA_fnc_hashGet;
     private _forceRoads = [_settings, "forceRoads"] call CBA_fnc_hashGet;
-
 
     private _moveUnits = false;
 
@@ -78,6 +87,16 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
     if (_position isEqualTo [0, 0, 0]) then {
         _position = [_marker, [_allowWater, _allowLand, _forceRoads], [0, 50, _unit], _blackListedMarkers] call EFUNC(waypoint,markerRandomPos);
+        _group setVariable [QGVAR(registerMarker), _marker];
+    } else {
+        private _inMarker = "";
+        {
+            if (_position inArea (_x # 0)) exitWith {
+                _inMarker = _x # 0;
+            };
+        } forEach _spawnMarkers;
+
+        _group setVariable [QGVAR(registerMarker), _inMarker];
     };
 
     if (_moveUnits) then {
@@ -88,6 +107,8 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 };
 
 if (_inRandomBuilding) exitWith {
+    _group setVariable [QGVAR(registerMarker), _marker];
+
     private _positions = [count _units, _marker, [["area", _marker], ["enterable", true], ["blacklist", _blackListedMarkers]], false] call EFUNC(waypoint,markerRandomBuildingPos);
 
     // Generate positions for all units

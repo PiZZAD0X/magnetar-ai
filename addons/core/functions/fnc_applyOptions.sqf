@@ -39,10 +39,15 @@ if !(_templateName isEqualTo "") then {
     [_group, _templateName, _settings] call FUNC(createTemplate);
 };
 
-// Handle spawn and waypoint markers
+// Handle spawn and waypoint markers and group register
 private _markers = [_settings, "marker"] call CBA_fnc_hashGet;
 private _deleteSpawnMarkers = [_settings, "deleteSpawnMarkers"] call CBA_fnc_hashGet;
 private _waypointMarkers = [_settings, "waypointMarkers"] call CBA_fnc_hashGet;
+
+private _startPosition = _group getVariable [QGVAR(startPosition), []];
+if (_startPosition isEqualTo []) then {
+    _startPosition = getPos (leader _group);
+};
 
 if (_deleteSpawnMarkers) then {
     if !(_waypointMarkers isEqualTo []) then {

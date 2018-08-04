@@ -32,7 +32,7 @@ if (_unitsToSpawn isEqualTo []) exitWith {
     _group setVariable [QEGVAR(core,settings), _settings, true];
 
     // Register the group
-    private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
+    private _marker = _group getVariable [QEGVAR(core,registerMarker), ""];
     [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 
     if !([_settings, "release"] call CBA_fnc_hashGet) then {
