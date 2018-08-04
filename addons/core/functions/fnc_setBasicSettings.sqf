@@ -26,6 +26,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 
 [_settings, "blacklist", []] call CBA_fnc_hashSet;
 [_settings, "deleteSpawnMarkers", false] call CBA_fnc_hashSet;
+[_settings, "fullCache", false] call CBA_fnc_hashSet;
 [_settings, "marker", _marker] call CBA_fnc_hashSet;
 [_settings, "type", _type] call CBA_fnc_hashSet;
 [_settings, "waypointMarkers", []] call CBA_fnc_hashSet;

@@ -56,3 +56,7 @@ _markers append _waypointMarkers;
 
 _markers = [_markers] call EFUNC(waypoint,organizeMarkers);
 [_settings, "marker", _markers] call CBA_fnc_hashSet;
+
+if ([_settings, "fullCache"] call CBA_fnc_hashGet) then {
+    [_group] call EFUNC(caching,cacheFullGroup);
+};

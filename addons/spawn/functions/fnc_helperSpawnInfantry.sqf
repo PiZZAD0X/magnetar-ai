@@ -46,7 +46,7 @@ if (_random) then {
     _spawnUnits append _unitPool;
 };
 
-GVAR(spawnQueue) pushBack [_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _targetPos, _settings, []];
+GVAR(spawnQueue) pushBack [_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, []];
 
 if (GVAR(spawnGroupPFH) == -1) then {
     GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;

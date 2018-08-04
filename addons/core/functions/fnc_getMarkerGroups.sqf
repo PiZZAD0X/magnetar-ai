@@ -10,7 +10,7 @@
  * Groups <ARRAY>
  *
  * Example:
- * ["marker", {true}] call mai_core_fnc_init
+ * ["marker", {true}] call mai_core_fnc_getMarkerGroups
  *
  * Public: Yes
  */

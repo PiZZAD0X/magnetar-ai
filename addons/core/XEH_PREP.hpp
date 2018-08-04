@@ -1,6 +1,9 @@
+PREP(activateMarkerGroups);
 PREP(applyOptions);
 PREP(applyOptionsPreSpawn);
 PREP(createTemplate);
+PREP(deactivateMarkerGroups);
+PREP(deleteMarkerGroups);
 PREP(getMarkerGroups);
 PREP(getRandomMinMax);
 PREP(handleStartPosition);

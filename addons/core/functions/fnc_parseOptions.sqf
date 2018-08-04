@@ -42,6 +42,7 @@ params ["_settings", ["_options", []]];
         case "flyinheight": { [_settings, "flyInHeight", _value] call CBA_fnc_hashSet; };
         case "forceroads": { [_settings, "forceRoads", _value] call CBA_fnc_hashSet; };
         case "formation": { [_settings, "formation", _value] call CBA_fnc_hashSet; };
+        case "fullcache": { [_settings, "fullCache", _value] call CBA_fnc_hashSet; };
         case "init": { [_settings, "init", _value] call CBA_fnc_hashSet; };
         case "patrolbuildings": { [_settings, "patrolBuildings", _value] call CBA_fnc_hashSet; };
         case "prespawn": { [_settings, "preSpawn", _value] call CBA_fnc_hashSet; };

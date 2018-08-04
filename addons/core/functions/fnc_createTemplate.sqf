@@ -23,8 +23,8 @@ if (_templateName isEqualTo "") exitWith {
     ERROR("Empty template name");
 };
 
-if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)) exitWith {
-    ERROR_1("Template name %1 already defined as config entry",_configEntry);
+if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _templateName)) exitWith {
+    ERROR_1("Template name %1 already defined as config entry",_templateName);
 };
 
 private _side = format ["%1", side _modelGroup];

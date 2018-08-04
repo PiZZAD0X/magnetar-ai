@@ -52,7 +52,7 @@ if (!_inRandomPosition && {!_inRandomBuilding} && {_position isEqualTo []}) then
 };
 
 for "_i" from 1 to _num do {
-    private _toSpawn =+ [_units, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, 0, _position, _settings, []];
+    private _toSpawn =+ [_units, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _position, _settings, []];
     GVAR(spawnQueue) pushBack _toSpawn;
 };
 

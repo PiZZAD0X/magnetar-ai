@@ -11,6 +11,7 @@
  *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
  *  3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
  *  4: Override options <ARRAY> (default: [])
+ * 2: Common options to override <ARRAY> (default: [])
  *
  * Return Value:
  * None
@@ -24,7 +25,8 @@
 
 params [
     ["_marker", "", ["", []]],
-    ["_groupsToSpawn", [], [[]]]
+    ["_groupsToSpawn", [], [[]]],
+    ["_commonOptions", [], [[]]]
 ];
 
 if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
@@ -38,15 +40,24 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
         ["_groupCount", 0, [[], 0], [1, 2]],
         ["_entry", "", [""]],
         ["_groupSize", 0, [[], 0], [2]],
-        ["_position", [], [[], objNull, grpNull, locationNull], [0, 2]],
+        ["_position", [], [[], objNull, grpNull, locationNull], [0, 2, 3]],
         ["_overrideOptions", [], [[]]]
     ];
 
     // Determine group count
     private _num = [_groupCount] call EFUNC(core,getRandomMinMax);
+    _overrideOptions append _commonOptions;
 
     for "_i" from 1 to _num do {
-        GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _groupSize, _position, [], _overrideOptions];
+        if (_entry isEqualType "") then {
+            if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _entry)) then {
+                [_entry, _groupSize, _marker, _position, _overrideOptions] call FUNC(spawnGroupFromConfig);
+            } else {
+                [_entry, 1, _marker, _position, _overrideOptions] call FUNC(spawnGroupFromTemplate);
+            };
+        } else {
+            GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _position, [], _overrideOptions];
+        };
     };
 } forEach _groupsToSpawn;
 
