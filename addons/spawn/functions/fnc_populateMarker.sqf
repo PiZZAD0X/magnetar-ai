@@ -7,10 +7,11 @@
  *  0: Marker <STRING>
  * 1: Groups to Spawn <ARRAY>
  *  0: Group count either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
- *  1: Config/template entry <STRING> (default: "")
- *  2: Group size either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
+ *  1: Config/template entry or array of units <STRING><ARRAY> (default: "")
+ *  2: Group size either in [min, max] format or a defined number _position <ARRAY><NUMBER><STRING> (default: 0)
  *  3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
  *  4: Override options <ARRAY> (default: [])
+ *  5: Group type <STRING> (default: "infantry")
  * 2: Common options to override <ARRAY> (default: [])
  *
  * Return Value:
@@ -38,10 +39,11 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
 {
     _x params [
         ["_groupCount", 0, [[], 0], [1, 2]],
-        ["_entry", "", [""]],
-        ["_groupSize", 0, [[], 0], [2]],
+        ["_entry", "", ["", []]],
+        ["_groupSize", 0, ["", [], 0], [2]],
         ["_position", [], [[], objNull, grpNull, locationNull], [0, 2, 3]],
-        ["_overrideOptions", [], [[]]]
+        ["_overrideOptions", [], [[]]],
+        ["_type", "infantry", [""]]
     ];
 
     // Determine group count
@@ -56,7 +58,8 @@ if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
                 [_entry, 1, _marker, _position, _overrideOptions] call FUNC(spawnGroupFromTemplate);
             };
         } else {
-            GVAR(spawnQueue) pushBack [_entry, _marker, "", "", _position, [], _overrideOptions];
+            // _groupSize indicates in this case the group side
+            [_entry, _marker, _type, _groupSize, _position, _overrideOptions] call FUNC(spawnGroup);
         };
     };
 } forEach _groupsToSpawn;

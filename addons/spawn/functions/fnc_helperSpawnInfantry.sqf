@@ -20,7 +20,7 @@
  */
 #include "script_component.hpp"
 
-params ["_configEntry", "_settings", "_side", "_size", "_marker", ["_targetPos", []]];
+params ["_configEntry", "_settings", "_side", "_size", ["_targetPos", []]];
 
 private _leaderPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "leaders");
 private _unitPool = getArray (missionConfigFile >> "CfgGroupCompositions" >> _configEntry >> "units");
@@ -46,7 +46,7 @@ if (_random) then {
     _spawnUnits append _unitPool;
 };
 
-GVAR(spawnQueue) pushBack [_spawnUnits, _marker, [_settings, "type"] call CBA_fnc_hashGet, _side, _targetPos, _settings, []];
+GVAR(spawnQueue) pushBack [_spawnUnits, _side, _targetPos, _settings];
 
 if (GVAR(spawnGroupPFH) == -1) then {
     GVAR(spawnGroupPFH) = [DFUNC(spawnGroupPFH), 1, []] call CBA_fnc_addPerFrameHandler;
