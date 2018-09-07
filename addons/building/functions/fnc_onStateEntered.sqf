@@ -28,7 +28,7 @@ if (_inBuilding) then {
     private _wp = _group addWaypoint [getPos _leader, 0, currentWaypoint _group];
     if (EGVAR(core,debugEnabled)) then {
         private _markerName = format ["marker_%1", CBA_missionTime + random 1];
-        private _marker = createMarker [_markerName, getPos _leader];
+        createMarker [_markerName, getPos _leader];
         _markerName setMarkerShape "icon";
         _markerName setMarkerType "hd_dot";
         _markerName setMarkerColor "colorYellow";

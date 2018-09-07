@@ -8,7 +8,7 @@
  * 1: Groups to Spawn <ARRAY>
  *  0: Group count either in [min, max] format or a defined number <ARRAY><NUMBER> (default: 0)
  *  1: Config/template entry or array of units <STRING><ARRAY> (default: "")
- *  2: Group size either in [min, max] format or a defined number _position <ARRAY><NUMBER><STRING> (default: 0)
+ *  2: Group size either in [min, max] format or a defined number or group side <ARRAY><NUMBER><STRING> (default: 0)
  *  3: Position <ARRAY><OBJECT><LOCATION><GROUP> (default: [])
  *  4: Override options <ARRAY> (default: [])
  *  5: Group type <STRING> (default: "infantry")

@@ -1,6 +1,6 @@
 /*
  * Author: TheMagnetar
- * Helper function for cloning a group of infantry units.
+ * Helper function for creating a template of a group of infantry units.
  *
  * Arguments:
  * 0: Group to clone <OBJECT>
@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [gropu player1] call mai_spawn_fnc_helperCloneInfantry
+ * [group player1] call mai_core_fnc_helperTemplateInfantry
  *
  * Public: No
  */

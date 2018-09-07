@@ -75,7 +75,7 @@ switch (true) do {
                 _x setVariable [QGVAR(checkedPos), _checkedPos];
                 if (EGVAR(core,debugEnabled)) then {
                     private _markerName = format ["marker_%1", CBA_missionTime + random 1];
-                    private _marker = createMarker [_markerName, _checkedPos];
+                    createMarker [_markerName, _checkedPos];
                     _markerName setMarkerShape "icon";
                     _markerName setMarkerType "hd_dot";
                     _markerName setMarkerColor "colorGreen";

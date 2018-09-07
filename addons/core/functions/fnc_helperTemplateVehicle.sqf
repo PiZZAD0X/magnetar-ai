@@ -1,23 +1,21 @@
 /*
  * Author: TheMagnetar
- * Helper function for cloning a group of units with vehicles.
+ * Helper function for creating a template of a group with vehicles.
  *
  * Arguments:
  * 0: Group to clone <OBJECT>
- * 1: Cloned group <OBJECT>
- * 2: Position <ARRAY>
  *
  * Return Value:
  * None
  *
  * Example:
- * [gropu player1, group2, getPos player, 0.05] call mai_spawn_fnc_helperCloneVehicle
+ * [gropu player1] call mai_spawn_fnc_helperTemplateVehicle
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params ["_modelGroup", "_cloneGroup", "_position"];
+params ["_modelGroup"];
 
 private _units = units _modelGroup;
 private _vehicleUnits = [];

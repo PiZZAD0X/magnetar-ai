@@ -11,13 +11,13 @@
  * None
  *
  * Example:
- * [group1, 3, [["task", "attack"], ["forceRoads", true]], 0.1] call mai_spawn_fnc_createTemplate
+ * [group1, "TemplateName", [["task", "attack"], ["forceRoads", true]]] call mai_core_fnc_createTemplate
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params ["_modelGroup", ["_templateName", ""], ["_settings", []], ["_overrideOptions", []]];
+params ["_modelGroup", ["_templateName", ""], ["_settings", []]];
 
 if (_templateName isEqualTo "") exitWith {
     ERROR("Empty template name");
@@ -25,6 +25,11 @@ if (_templateName isEqualTo "") exitWith {
 
 if (isClass (missionConfigFile >> "CfgGroupCompositions" >> _templateName)) exitWith {
     ERROR_1("Template name %1 already defined as config entry",_templateName);
+};
+
+private _exits = [GVAR(groupTemplates), _templateName] call CBA_fnc_hashGet;
+if !(isNil _exits) exitWith {
+	ERROR_1("Template name %1 already defined",_templateName);
 };
 
 private _side = format ["%1", side _modelGroup];
