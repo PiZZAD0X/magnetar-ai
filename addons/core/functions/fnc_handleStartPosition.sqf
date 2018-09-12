@@ -24,6 +24,7 @@ if (_settings isEqualTo []) then {
 private _inRandomPosition = [_settings, "randomPosition"] call CBA_fnc_hashGet;
 private _inRandomBuilding = [_settings, "spawnInBuilding"] call CBA_fnc_hashGet;
 private _blackListedMarkers = [_settings, "blacklist"] call CBA_fnc_hashGet;
+
 if (_blackListedMarkers isEqualTo "") then {
     _blackListedMarkers = [_blackListedMarkers];
 };

@@ -24,7 +24,7 @@ if (!alive _unit) exitWith {
     _unit setVariable [QGVAR(inBuilding), [false]];
 };
 
-_buildingPatrol params ["_inBuilding", "_building", ["_buildingPos", []], ["_waitUntilTime", CBA_missionTime], ["_returnLeader", false]];
+_buildingPatrol params ["", "_building", ["_buildingPos", []], ["_waitUntilTime", CBA_missionTime], ["_returnLeader", false]];
 
 if (_buildingPos isEqualTo []) exitWith {
     if (!_returnLeader) then {

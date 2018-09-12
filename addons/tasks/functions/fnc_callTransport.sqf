@@ -15,15 +15,17 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_type"];
+params ["_group", "_type", ["_requestedType", ""]];
 
 if !(_type isEqualTo "infantry") exitWith {};
 
 private _unitCount = count (units _group);
+private _pickUpPos = getPos (leader _group);
 
 // Check if a transport is available within a certain radius
 private _availableGroups = [];
 private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled), false]};
+
 {
     private _settings = _x getVariable [QEGVAR(core,settings), []];
     private _task = [_settings, "task"] call CBA_fnc_hashGet;
@@ -31,18 +33,25 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
         // Check if the transport can go to the designated coordinates
         private _positionAllowed = false;
 
-        private _targetPos = waypointPosition [_group, 0];
-        if (surfaceIsWater _targetPos && {[_settings, "allowWater"] call CBA_fnc_hashGet}) then {
+        private _targetPos = waypointPosition [_x, 0];
+        if ((surfaceIsWater _targetPos && {surfaceIsWater _pickUpPos}) && {[_settings, "allowWater"] call CBA_fnc_hashGet}) then {
             _positionAllowed = true;
         };
 
-        if (!surfaceIsWater _targetPos && {[_settings, "allowLand"] call CBA_fnc_hashGet}) then {
+        if (!surfaceIsWater _targetPos && {!surfaceIsWater _pickUpPos} && {[_settings, "allowLand"] call CBA_fnc_hashGet}) then {
             _positionAllowed = true;
+        };
+
+        if (_requestedType != "") then {
+            private _transportType = [_settings, "type"] call CBA_fnc_hashGet;
+            if !(_transportType isEqualTo toLower _requestedType) then {
+                _positionAllowed = false;
+            };
         };
 
         if (_positionAllowed) then {
             // Check if the vehicle transport has enough empty cargo spaces
-            private _vehicle = vehicle (leader _group);
+            private _vehicle = vehicle (leader _x);
             private _availablePositions = 0;
 
             {
@@ -52,9 +61,13 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
             } forEach (fullCrew [_vehicle, "cargo", true]);
 
             if (_availablePositions >= _unitCount) then {
-                _availableGroups pushBack [_group, [_settings, "type"] call CBA_fnc_hashGet];
+                _availableGroups pushBack [_vehicle distance2D _group, _x];
             };
         };
-
     };
 } forEach _enabledGroups;
+
+// Get the nearest transport
+private _groupTransport = ((_availableGroups sort true) # 0) # 1;
+_groupTransport setVariable [QGVAR(inMission), true];
+[_groupTransport, _pickupPos, "MOVE"] call EFUNC(waypoint,addWaypoint)

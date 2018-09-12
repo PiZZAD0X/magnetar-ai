@@ -35,7 +35,7 @@ private _units = (units _group) deleteAt ((units _group) find _leader);
             _rejectedUnits pushBack _x;
         };
     };
-} foreach (units _group);
+} foreach _units;
 
 if (_unitsToMove isEqualTo []) exitWith {};
 

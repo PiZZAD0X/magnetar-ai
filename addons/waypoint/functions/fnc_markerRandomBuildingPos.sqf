@@ -24,7 +24,7 @@
 #include "script_component.hpp"
 
 // Get all buildings
-params ["_numPos", "_position", "_filter", ["_suffle", true]];
+params ["_numPos", "_position", "_filter"];
 
 private _center = 0;
 private _radius = 0;

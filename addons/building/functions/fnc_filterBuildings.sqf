@@ -19,8 +19,6 @@
 
 params ["_buildings", "_filter"];
 
-private _filteredBuildings = [];
-
 {
     _x params ["_key", "_value"];
     private _filteredBuildings = [];

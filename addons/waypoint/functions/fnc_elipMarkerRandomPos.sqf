@@ -21,9 +21,6 @@
 
 params ["_sizeX", "_sizeY", "_centerX", "_centerY", "_markerDir"];
 
-private _randX = random (_sizeX * 2) - _sizeX;
-private _randY = random (_sizeY * 2) - _sizeY;
-
 // Apply inverse CFG technique to get a random angle and radius
 private _rnd = (random 1) / 4;
 private _theta = (_sizeY * tan (_rnd*360)) atan2 _sizeX;

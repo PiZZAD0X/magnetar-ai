@@ -40,8 +40,6 @@ private _markerSize = getMarkerSize _marker;
 private _sizeX = _markerSize # 0;
 private _sizeY = _markerSize # 1;
 private _markerDir = markerDir _marker;
-private _xRnd = 0;
-private _yRnd = 0;
 
 private "_rndFunction";
 if (toLower (markerShape _marker) == "rectangle") then {

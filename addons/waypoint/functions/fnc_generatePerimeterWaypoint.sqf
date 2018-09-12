@@ -39,5 +39,5 @@ for "_i" from 1 to _count do {
         _statements pushBack QUOTE(_group setVariable [ARR_2(QQEGVAR(tasks,patrolFinished), true)]);
     };
 
-    [_group, _center getPos [_rad, _theta], ["MOVE", _statements joinString ";", _condition]] call FUNC(addWaypoint);
+    [_group, _center getPos [_rad, _theta], [_waypointType, _statements joinString ";", _condition]] call FUNC(addWaypoint);
 };
