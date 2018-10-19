@@ -73,7 +73,7 @@ while {_tries < 50} do {
             private _roads = (_trialPos nearRoads 50);
             if !(_roads isEqualTo []) then {
                 {
-                    _trialPos = getPos (selectRandom _roads);
+                    _trialPos = getPosATL (selectRandom _roads);
                     if ((_trialPos inArea _marker)) exitWith {_found = true};
                 } forEach _roads;
             };

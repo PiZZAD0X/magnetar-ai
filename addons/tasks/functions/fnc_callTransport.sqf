@@ -20,7 +20,7 @@ params ["_group", "_type", ["_requestedType", ""]];
 if !(_type isEqualTo "infantry") exitWith {};
 
 private _unitCount = count (units _group);
-private _pickUpPos = getPos (leader _group);
+private _pickUpPos = getPosATL (leader _group);
 
 // Check if a transport is available within a certain radius
 private _availableGroups = [];
