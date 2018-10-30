@@ -24,7 +24,7 @@ _group setVariable [QGVAR(cached), false, true];
         _x enableSimulationGlobal true;
         _x hideObjectGlobal false;
         if (vehicle _x == _x) then {
-            _x setPos (formationPosition _x);
+            _x setPosATL (formationPosition _x);
         };
     };
 } forEach (units _group);

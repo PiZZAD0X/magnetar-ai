@@ -20,11 +20,11 @@ params ["_group", "_position"];
 private _vehicles = [_group] call EFUNC(vehicle,getGroupVehicles);
 
 {
-    _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);
+    _x setPosATL (_position findEmptyPosition [0, 60, typeOf _x]);
 } forEach _vehicles;
 
 {
     if (vehicle _x == _x) then {
-        _x setPos (_position findEmptyPosition [0, 60, typeOf _x]);
+        _x setPosATL (_position findEmptyPosition [0, 60, typeOf _x]);
     };
 } forEach (units _group);

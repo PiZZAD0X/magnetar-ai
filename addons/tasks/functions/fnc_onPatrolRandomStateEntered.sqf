@@ -38,4 +38,4 @@ if ([_settings, "waitAtWaypoint"] call CBA_fnc_hashGet) then {
 
 private _marker = [_settings, "marker"] call CBA_fnc_hashGet;
 private _targetPos = [_group, _marker, ["MOVE", _execStatements, _condition]] call EFUNC(waypoint,generateWaypoint);
-_group setVariable [QGVAR(distance), (getPos (leader _group)) distance2D _targetPos];
+_group setVariable [QGVAR(distance), (getPosWorld (leader _group)) distance2D _targetPos];
