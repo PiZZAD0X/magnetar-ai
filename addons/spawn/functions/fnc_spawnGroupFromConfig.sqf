@@ -61,7 +61,7 @@ private _size = if (_type isEqualTo "infantry") then {
     [_groupSize] call EFUNC(core,getRandomMinMax);
 } else {
     _groupSize params ["_gSize", "_cargoSize"];
-    [[_groupSize # 0] call EFUNC(core,getRandomMinMax), [_groupSize # 1] call EFUNC(core,getRandomMinMax)];
+    [[_groupSize select 0] call EFUNC(core,getRandomMinMax), [_groupSize select 1] call EFUNC(core,getRandomMinMax)];
 };
 
 // Determine group side
@@ -69,7 +69,7 @@ private _side = getText (missionConfigFile >> "CfgGroupCompositions" >> _configE
 
 // Generate units
 if (_type isEqualTo "infantry") then {
-    [_configEntry, _settings, _side, _size, _marker, _position] call FUNC(helperSpawnInfantry);
+    [_configEntry, _settings, _side, _size, _position] call FUNC(helperSpawnInfantry);
 } else {
-    [_configEntry, _settings, _side, _size, _marker, _position] call FUNC(helperSpawnVehicle);
+    [_configEntry, _settings, _side, _size, _position] call FUNC(helperSpawnVehicle);
 };

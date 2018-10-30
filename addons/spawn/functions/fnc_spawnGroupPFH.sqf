@@ -24,6 +24,11 @@ if (GVAR(spawnQueue) isEqualTo []) exitWith {
 };
 
 private _toSpawn = GVAR(spawnQueue) deleteAt 0;
-_toSpawn params [["_entity", [], [[]]], ["_side", "", [""]], ["_position", [], [[]]], ["_settings", []]];
+_toSpawn params [
+    ["_entity", [], [[]]],
+    ["_side", "", [""]],
+    ["_position", [], [[]]],
+    ["_settings", []]
+];
 
 [_entity, _side, _position, _settings] call FUNC(helperSpawnGroup);

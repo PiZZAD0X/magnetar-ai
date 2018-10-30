@@ -1,3 +1,4 @@
+PREP(helperSpawnGroup);
 PREP(helperSpawnInfantry);
 PREP(helperSpawnVehicle);
 PREP(populateMarker);

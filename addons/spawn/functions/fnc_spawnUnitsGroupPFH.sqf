@@ -19,7 +19,7 @@
 params ["_group", "_handle"];
 
 private _unitsToSpawn = _group getVariable [QGVAR(unitsToSpawn), []];
-
+systemChat format ["Spawning %1", _unitsToSpawn];
 if (_unitsToSpawn isEqualTo []) exitWith {
     [_handle] call CBA_fnc_removePerFrameHandler;
     _group setVariable [QEGVAR(core,startPosition), nil];
@@ -42,7 +42,7 @@ if (_unitsToSpawn isEqualTo []) exitWith {
 
 private _pos = _group getVariable [QEGVAR(core,startPosition), [0, 0, 0]];
 private _position = [0, 0, 0];
-if ((_pos # 0) isEqualType []) then {
+if ((_pos select 0) isEqualType []) then {
     _position = _pos deleteAt 0;
 } else {
     _position = _pos;
@@ -76,9 +76,9 @@ if (_unitType isEqualType "") then {
     _unitType params ["_vehicle", ["_crew", []], ["_cargo", []], ["_pilots",[]]];
 
     _templateValues params ["_loadout", "_rank", "_skill"];
-    (_loadout # 0) params ["_loadoutVeh", "_loadoutCrew", "_loadoutCargo", "_loadoutPilots"];
-    (_rank # 0) params ["_rankCrew", "_rankCargo", "_rankPilots"];
-    (_skill # 0) params ["_skillCrew", "_skillCargo", "_skillPilots"];
+    (_loadout select 0) params ["_loadoutVeh", "_loadoutCrew", "_loadoutCargo", "_loadoutPilots"];
+    (_rank select 0) params ["_rankCrew", "_rankCargo", "_rankPilots"];
+    (_skill select 0) params ["_skillCrew", "_skillCargo", "_skillPilots"];
 
     private _unitPos = _position findEmptyPosition [0, 60, _vehicle];
 
@@ -102,7 +102,7 @@ if (_unitType isEqualType "") then {
     };
 
     {
-        private _role = toLower (_x # 1);
+        private _role = toLower (_x select 1);
         private _unit = objNull;
 
         switch (_role) do {
@@ -134,12 +134,12 @@ if (_unitType isEqualType "") then {
             };
 
             case "turret": {
-                if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
+                if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x select 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
                     if !(_pilots isEqualTo []) then {
                         _unit = [_group, _pilots deleteAt 0, _loadoutPilots deleteAt 0, _rankPilots deleteAt 0, _skillPilots deleteAt 0, _useTemplate] call _handleUnitCreation;
                     };
                 } else {
-                    if (_x # 3 in _turrets) then {
+                    if (_x select 3 in _turrets) then {
                         if !(_crew isEqualTo []) then {
                             _unit = [_group, _crew deleteAt 0, _loadoutCrew deleteAt 0, _rankCrew deleteAt 0, _skillCrew deleteAt 0, _useTemplate] call _handleUnitCreation;
                         };
@@ -149,7 +149,7 @@ if (_unitType isEqualType "") then {
                         };
                     };
                 };
-                _unit moveInTurret [_vehicleUnit, _x # 3];
+                _unit moveInTurret [_vehicleUnit, _x select 3];
             };
 
             case "commander": {
@@ -165,7 +165,7 @@ if (_unitType isEqualType "") then {
                 if !(_cargo isEqualTo []) then {
                     _unit = [_group, _cargo deleteAt 0, _loadoutCargo deleteAt 0, _rankCargo deleteAt 0, _skillCargo deleteAt 0, _useTemplate] call _handleUnitCreation;
 
-                    _unit assignAsCargoIndex [_vehicleUnit, _x # 2];
+                    _unit assignAsCargoIndex [_vehicleUnit, _x select 2];
                     _unit moveInCargo _vehicleUnit;
                 };
             };
