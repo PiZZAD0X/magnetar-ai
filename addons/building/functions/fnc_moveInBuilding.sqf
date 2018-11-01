@@ -23,7 +23,8 @@ private _rejectedUnits = [];
 
 // Exclude the leader in patrolling the buildings
 private _leader = leader _group;
-private _units = (units _group) deleteAt ((units _group) find _leader);
+private _units = units _group;
+_units deleteAt (_units find _leader);
 
 {
     if (_x isKindOf "CAManBase" && {alive _x} && {unitReady _x} && {vehicle _x == _x} && {canStand _x}) then {
@@ -39,7 +40,7 @@ private _units = (units _group) deleteAt ((units _group) find _leader);
 
 if (_unitsToMove isEqualTo []) exitWith {};
 
-private _buildings = [leader _group] call FUNC(getNearBuildings);
+private _buildings = [_leader] call FUNC(getNearBuildings);
 if (_buildings isEqualTo []) exitWith {};
 
 // Suffle array
