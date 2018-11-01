@@ -26,6 +26,12 @@ _unitsToEmbark allowGetIn true;
 // If units were patrolling on their own, fall back to following the group leader
 _unitsToEmbark doFollow (leader _group);
 
-private _vehicle = _group getVariable [QEGVAR(vehicle,assignedVehicle), objNull];
+private _assignedVehicles = _group getVariable [QEGVAR(vehicle,assignedVehicles), objNull];
 
-[_vehicle, _unitsToEmbark] call EFUNC(vehicle,getInVehicle);
+{
+    private _vehicle = _x;
+    private _units = _unitsToEmbark select {(_x getVariable [QEGVAR(vehicle,assignedVehicle), objNull]) isEqualTo _vehicle};
+    [_x, _units] call EFUNC(vehicle,getInVehicle);
+} forEach _assignedVehicles;
+
+

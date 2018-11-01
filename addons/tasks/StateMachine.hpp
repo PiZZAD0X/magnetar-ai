@@ -3,7 +3,7 @@ class MAI_Tasks_StateMachine {
     skipNull = 1;
 
     class Init {
-        onStateEntered = QFUNC(onInitStateEntered);
+        onStateEntered = QFUNC(onInitEntered);
         class DoTask {
             targetState = "DoTask";
             condition = QUOTE(CBA_missionTime > 0);
@@ -11,7 +11,7 @@ class MAI_Tasks_StateMachine {
     };
 
     class DoTask {
-        onStateEntered = QFUNC(onDoTaskStateEntered);
+        onStateEntered = QFUNC(onDoTaskEntered);
         class TaskAttack {
             targetState = "TaskAttack";
             events[] = {QGVAR(attack)};
@@ -44,18 +44,18 @@ class MAI_Tasks_StateMachine {
     };
 
     class TaskAttack {
-        onStateEntered = QFUNC(onAttackStateEntered);
+        onStateEntered = QFUNC(onAttackEntered);
         onState = QFUNC(onAttackState);
     };
 
     class TaskDefend {
-        onStateEntered = QFUNC(onDefendStateEntered);
+        onStateEntered = QFUNC(onDefendEntered);
         onState = QFUNC(onDefendState);
     };
 
     class TaskPatrolRandom {
-        onStateEntered = QFUNC(onPatrolRandomStateEntered);
-        onState = QFUNC(handlePatrolRandomState);
+        onStateEntered = QFUNC(onPatrolRandomEntered);
+        onState = QFUNC(onPatrolRandom);
 
         class PatrolBuildings {
             targetState = "PatrolBuildings";
@@ -108,8 +108,8 @@ class MAI_Tasks_StateMachine {
     };
 
     class PatrolBuildings {
-        onStateEntered = QEFUNC(building,onStateEntered);
-        onState = QEFUNC(building,handlePatrolBuilding);
+        onStateEntered = QFUNC(onPatrolBuildingEntered);
+        onState = QFUNC(onPatrolBuilding);
 
         class DoTask {
             targetState = "DoTask";
@@ -122,8 +122,8 @@ class MAI_Tasks_StateMachine {
     };
 
     class Disembark {
-        onStateEntered = QEFUNC(vehicle,disembark);
-        onState = QEFUNC(vehicle,handleDisembark);
+        onStateEntered = QFUNC(onDisembarkEntered);
+        onState = QFUNC(onDisembark);
 
         class PatrolBuildings {
             targetState = "PatrolBuildings";
@@ -147,8 +147,8 @@ class MAI_Tasks_StateMachine {
     };
 
     class Embark {
-        onStateEntered = QFUNC(onEmbarkStateEntered);
-        onState = QEFUNC(vehicle,handleEmbark);
+        onStateEntered = QFUNC(onEmbarkEntered);
+        onState = QFUNC(onmbark);
 
         class DoTask {
             targetState = "DoTask";

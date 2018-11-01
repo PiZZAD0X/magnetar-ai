@@ -9,7 +9,7 @@
  * None
  *
  * Example:
- * [group player] call mai_tasks_fnc_onWaypointStateEntered
+ * [group player] call mai_tasks_fnc_onInitEntered
  *
  * Public: No
  */
@@ -17,7 +17,7 @@
 
 params ["_group", "_state"];
 
-if (!(_group getVariable[QGVAR(taskInit), false])) then {
+if !(_group getVariable[QGVAR(taskInit), false]) then {
     _group getVariable[QGVAR(taskInit), true];
 };
 

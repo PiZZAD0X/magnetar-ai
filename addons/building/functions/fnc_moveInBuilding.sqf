@@ -62,6 +62,14 @@ private _enteredBuildings = [];
             _enteredBuildings pushBackUnique _building;
             _assignedUnits pushBack _x;
 
+            if (EGVAR(core,debugEnabled)) then {
+                private _markerName = format ["marker_%1", CBA_missionTime + random 1];
+                createMarker [_markerName, getPos _building];
+                _markerName setMarkerShape "icon";
+                _markerName setMarkerType "hd_dot";
+                _markerName setMarkerColor "colorBlack";
+            };
+
             _unitsToMove deleteAt (_unitsToMove find _x);
         } forEach _unitsToMove;
     };
@@ -72,6 +80,6 @@ private _enteredBuildings = [];
 if (_enteredBuildings isEqualTo []) then {
     false
 } else {
-    [QGVAR(handleEnteredBuildings), _enteredBuildings] call CBA_fnc_serverEvent;
+    [QGVAR(handleEnteredBuildings), [_enteredBuildings]] call CBA_fnc_serverEvent;
     true
 };

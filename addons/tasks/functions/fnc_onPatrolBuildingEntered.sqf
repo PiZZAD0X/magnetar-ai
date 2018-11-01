@@ -1,15 +1,15 @@
 /*
  * Author: TheMagnetar
- * Handles state entered
+ * Handles patrol building state entered
  *
  * Arguments:
- * 0: Building <OBJECT> (Default: objNull)
+ * 0: Group <OBJECT>
  *
  * Return Value:
  * None
  *
  * Example:
- * [nearestBuilding player] call mai_building_fnc_getBuildingPositions
+ * [group player] call mai_tasks_fnc_onPatrolBuildingEntered
  *
  * Public: No
  */
@@ -17,10 +17,10 @@
 
 params ["_group", "_state"];
 
-private _inBuilding = [_group] call FUNC(moveInBuilding);
+private _inBuilding = [_group] call EFUNC(building,moveInBuilding);
 
 if (_inBuilding) then {
-    _group setVariable [QEGVAR(tasks,inBuilding), true];
+    _group setVariable [QGVAR(inBuilding), true];
 
     // Lock the waypoint and add a new one
     _group lockWP true;
@@ -34,7 +34,7 @@ if (_inBuilding) then {
         _markerName setMarkerColor "colorYellow";
     };
     private _comp = format ["this setFormation '%1'; this setBehaviour '%2'; deleteWaypoint [group this, currentWaypoint (group this)];", formation _group, behaviour _leader];
-    _wp setWaypointStatements ["thislist findIf {unitReady _x || !(alive _x)} == -1;", _comp];
+    _wp setWaypointStatements ["thislist findIf {!unitReady _x} == -1;", _comp];
 
     _group setBehaviour "Combat";
 };

@@ -17,8 +17,12 @@
 
 params ["_group", "_state"];
 
+// Do not generate any new waypoint
+if !(_group getVariable [QGVAR(generateWaypoint), true]) exitWith {
+    _group setVariable [QGVAR(generateWaypoint), true];
+};
+
 private _settings = _group getVariable [QEGVAR(core,settings), []];
-private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _execStatements = "";
 private _condition = "true";
 

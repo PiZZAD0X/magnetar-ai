@@ -22,7 +22,7 @@ if (!local _group) exitWith {};
 
 private _vehicle = _group getVariable [QEGVAR(vehicle,assignedVehicle), objNull];
 if (isNull _vehicle) exitWith {
-    [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
+    [QGVAR(doTask), _group] call CBA_fnc_localEvent;
 };
 
 private _allUnitsEmbarked = true;
@@ -34,5 +34,5 @@ private _allUnitsEmbarked = true;
 
 if (_allUnitsEmbarked) then {
     _group setSpeedMode "LIMITED";
-    [QEGVAR(tasks,doTask), _group] call CBA_fnc_localEvent;
+    [QGVAR(doTask), _group] call CBA_fnc_localEvent;
 };
