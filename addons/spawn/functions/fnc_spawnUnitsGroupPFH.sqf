@@ -19,7 +19,7 @@
 params ["_group", "_handle"];
 
 private _unitsToSpawn = _group getVariable [QGVAR(unitsToSpawn), []];
-systemChat format ["Spawning %1", _unitsToSpawn];
+
 if (_unitsToSpawn isEqualTo []) exitWith {
     [_handle] call CBA_fnc_removePerFrameHandler;
     _group setVariable [QEGVAR(core,startPosition), nil];

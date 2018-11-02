@@ -48,6 +48,7 @@ if !([_settings] call CBA_fnc_isHash) exitWith {
 [_settings, "randomPosition", false] call CBA_fnc_hashSet;
 [_settings, "reinforcement", true] call CBA_fnc_hashSet;
 [_settings, "execWaypoint", ""] call CBA_fnc_hashSet;
+[_settings, "perimeterSettings", [[_marker] call CBA_fnc_getPos, 100]] call CBA_fnc_hashSet;
 
 [_settings, "init", ""] call CBA_fnc_hashSet;
 [_settings, "preSpawn", ""] call CBA_fnc_hashSet;

@@ -45,7 +45,7 @@ if (_random) then {
     _spawnUnits append _leaderPool;
     _spawnUnits append _unitPool;
 };
-systemChat format ["spawn units %1", GVAR(spawnQueue)];
+
 GVAR(spawnQueue) pushBack [_spawnUnits, _side, _targetPos, _settings];
 
 if (GVAR(spawnGroupPFH) == -1) then {

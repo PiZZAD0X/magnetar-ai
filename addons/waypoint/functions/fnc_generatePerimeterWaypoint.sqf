@@ -37,7 +37,19 @@ for "_i" from 1 to _count do {
 
     if (_i == _count) then {
         _statements pushBack QUOTE(_group setVariable [ARR_2(QQEGVAR(tasks,patrolFinished), true)]);
+        private _settings = _group getVariable [QEGVAR(core,settings), []];
+        if !(([_settings, "task"] call CBA_fnc_hashGet) isEqualTo QGVAR(patrol)) then {
+            _statements pushBack QUOTE([ARR_2(QQGVAR(doTask), _group)] call CBA_fnc_localEvent);
+        };
     };
 
-    [_group, _center getPos [_rad, _theta], [_waypointType, _statements joinString ";", _condition]] call FUNC(addWaypoint);
+    [_group, _center getPos [_rad, _theta], _waypointType, _statements joinString ";", _condition] call FUNC(addWaypoint);
+
+    if (EGVAR(core,debugEnabled)) then {
+        private _markerName = format ["marker_%1_%2", CBA_missionTime, _i];
+        createMarker [_markerName, _center getPos [_rad, _theta]];
+        _markerName setMarkerShape "icon";
+        _markerName setMarkerType "hd_dot";
+        _markerName setMarkerColor "colorRed";
+    };
 };

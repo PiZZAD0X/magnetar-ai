@@ -77,6 +77,7 @@ class MAI_Tasks_StateMachine {
 
     class TaskPatrol {
         onStateEntered = QFUNC(onPatrolEntered);
+        onState = QFUNC(onPatrolRandom);
 
         class PatrolBuildings {
             targetState = "PatrolBuildings";
