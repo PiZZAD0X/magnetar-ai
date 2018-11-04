@@ -15,3 +15,5 @@
 #endif
 
 #include "\m\mai\addons\main\script_macros.hpp"
+
+#define CLOSE_ATTACK_DISTANCE 100

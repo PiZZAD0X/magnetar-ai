@@ -24,7 +24,7 @@ private _units = [_vehicle, _forceAll] call FUNC(selectUnitsDisembark);
 
 if (_units isEqualTo []) exitWith {};
 
-private _group = group (_units # 0);
+private _group = group (_units select 0);
 private _assignedGroupVehicles = _group getVariable [QGVAR(assignedVehicles), []];
 _assignedGroupVehicles pushBackUnique _vehicle;
 _group setVariable [QGVAR(assignedVehicles), []];

@@ -27,8 +27,8 @@ private _settings = _group getVariable [QEGVAR(core,settings), []];
 
 _marker = [_marker] call FUNC(selectRandomMarker);
 
-private _sizeX = (markerSize _marker) # 0;
-private _sizeY = (markerSize _marker) # 1;
+private _sizeX = (markerSize _marker) select 0;
+private _sizeY = (markerSize _marker) select 1;
 private _minimumDistance = 2/3*sqrt(_sizeX^2 + _sizeY^2);
 
 if (_settings isEqualTo []) exitWith {

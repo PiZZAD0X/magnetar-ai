@@ -1,3 +1,4 @@
+PREP(changeAssignedTask);
 PREP(checkDoTask);
 PREP(onAttack);
 PREP(onAttackEntered);
@@ -8,6 +9,7 @@ PREP(onDisembarkEntered);
 PREP(onDoTaskEntered);
 PREP(onEmbark);
 PREP(onEmbarkEntered);
+PREP(onFlankEntered);
 PREP(onInitEntered);
 PREP(onPatrolBuildingEntered);
 PREP(onPatrolBuilding);

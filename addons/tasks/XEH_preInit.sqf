@@ -8,4 +8,6 @@ ADDON = false;
 
 GVAR(stateMachine) = (configFile >> QGVAR(StateMachine)) call CBA_statemachine_fnc_createFromConfig;
 
+GVAR(definedTasks) = ["attack", "defend", "donothing", "patrol", "patrolrandom"];
+
 ADDON = true;

@@ -47,7 +47,7 @@ params ["_settings", ["_options", []]];
         case "patrolbuildings": { [_settings, "patrolBuildings", _value] call CBA_fnc_hashSet; };
         case "perimetersettings": { [_settings, "perimeterSettings", _value] call CBA_fnc_hashSet; };
         case "perimetercenter": { [_settings, "perimeterSettings", [_value, ([_settings, "perimeterSettings"] call CBA_fnc_hashGet) select 1]] call CBA_fnc_hashSet; };
-        case "perimeterradius": { systemChat format ["val %1", _value]; [_settings, "perimeterSettings", [([_settings, "perimeterSettings"] call CBA_fnc_hashGet) select 0, _value]] call CBA_fnc_hashSet; };
+        case "perimeterradius": { [_settings, "perimeterSettings", [([_settings, "perimeterSettings"] call CBA_fnc_hashGet) select 0, _value]] call CBA_fnc_hashSet; };
         case "prespawn": { [_settings, "preSpawn", _value] call CBA_fnc_hashSet; };
         case "randombehaviour": { [_settings, "randomBehaviour", _value] call CBA_fnc_hashSet; };
         case "randomposition": {[_settings, "randomPosition", _value] call CBA_fnc_hashSet; };

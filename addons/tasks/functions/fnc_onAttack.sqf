@@ -23,5 +23,8 @@ if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTi
 
 if ((units _group) findIf {alive _x} == -1) exitWith {deleteGroup _group;};
 
+private _targetPos = _group getVariable QGVAR(targetPos);
+private _distance = (leader _group) distance _targetPos;
+
 // Perform the next check in 5 seconds
 _group setVariable [QGVAR(nextCheckTime), CBA_missionTime + 5];

@@ -18,11 +18,14 @@
  */
 #include "script_component.hpp"
 
-params ["_group", "_targetPos", ["_waypointType", ""], ["_execStatements", ""], ["_condition", "true"]];
+params ["_group", "_targetPos", ["_waypointType", ""], ["_execStatements", ""], ["_condition", "true"], ["_radius", 0], ["_completionRadius", -1]];
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
-private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
-private _waypoint = _group addWaypoint [_targetPos, 0];
+if (_completionRadius == -1) then {
+    _completionRadius = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
+};
+
+private _waypoint = _group addWaypoint [_targetPos, _radius];
 
 _waypoint setWaypointPosition [_targetPos, 0];
 
@@ -33,7 +36,7 @@ if (_waypointType isEqualTo "") then {
 };
 
 _waypoint setWaypointType _waypointType;
-_waypoint setWaypointCompletionRadius _reachedDistance;
+_waypoint setWaypointCompletionRadius _completionRadius;
 
 if ([_settings, "randomBehaviour"] call CBA_fnc_hashGet) then {
     _waypoint setWaypointFormation (selectRandom ([_settings, "formation"] call CBA_fnc_hashGet));

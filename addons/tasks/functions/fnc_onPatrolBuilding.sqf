@@ -32,7 +32,7 @@ if (!local _leader) exitWith {
 
 private _allUnitsFinished = true;
 {
-    private _inBuilding = (_x getVariable [QEGVAR(building,inBuilding), [false]]) # 0;
+    private _inBuilding = (_x getVariable [QEGVAR(building,inBuilding), [false]]) select 0;
     if (_inBuilding) then {
         _x call EFUNC(building,patrolBuilding);
         _allUnitsFinished = false;

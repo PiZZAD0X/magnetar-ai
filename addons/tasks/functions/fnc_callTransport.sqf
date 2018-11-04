@@ -55,7 +55,7 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
             private _availablePositions = 0;
 
             {
-                if (isNull (_x # 0)) then {
+                if (isNull (_x select 0)) then {
                     _availablePositions = _availablePositions + 1;
                 };
             } forEach (fullCrew [_vehicle, "cargo", true]);
@@ -68,6 +68,6 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
 } forEach _enabledGroups;
 
 // Get the nearest transport
-private _groupTransport = ((_availableGroups sort true) # 0) # 1;
+private _groupTransport = ((_availableGroups sort true) select 0) select 1;
 _groupTransport setVariable [QGVAR(inMission), true];
 [_groupTransport, _pickupPos, "MOVE"] call EFUNC(waypoint,addWaypoint)
