@@ -19,7 +19,7 @@ params ["_group", "_type", ["_requestedType", ""]];
 
 if !(_type isEqualTo "infantry") exitWith {};
 
-private _unitCount = count (units _group);
+private _unitCount = {alive _x} count (units _group);
 private _pickUpPos = getPosATL (leader _group);
 
 // Check if a transport is available within a certain radius
@@ -52,13 +52,7 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
         if (_positionAllowed) then {
             // Check if the vehicle transport has enough empty cargo spaces
             private _vehicle = vehicle (leader _x);
-            private _availablePositions = 0;
-
-            {
-                if (isNull (_x select 0)) then {
-                    _availablePositions = _availablePositions + 1;
-                };
-            } forEach (fullCrew [_vehicle, "cargo", true]);
+            private _availablePositions = {isNull (_x select 0)} count (fullCrew [_vehicle, "cargo", true]) ;
 
             if (_availablePositions >= _unitCount) then {
                 _availableGroups pushBack [_vehicle distance2D _group, _x];
@@ -68,6 +62,7 @@ private _enabledGroups = allGroups select {_x getVariable [QEGVAR(core,enabled),
 } forEach _enabledGroups;
 
 // Get the nearest transport
-private _groupTransport = ((_availableGroups sort true) select 0) select 1;
+_availableGroups sort true;
+private _groupTransport = (_availableGroups select 0) select 1;
 _groupTransport setVariable [QGVAR(inMission), true];
-[_groupTransport, _pickupPos, "MOVE"] call EFUNC(waypoint,addWaypoint)
+[_groupTransport, _pickupPos, "MOVE"] call EFUNC(waypoint,addWaypoint);

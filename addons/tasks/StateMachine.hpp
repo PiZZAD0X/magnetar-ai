@@ -193,6 +193,18 @@ class MAI_Tasks_StateMachine {
         };
     };
 
+    class TaskTransport {
+        class DoTask {
+            targetState = "DoTask";
+            events[] = {QGVAR(doTask)};
+        };
+
+        class Transport {
+            targetState = "Transport";
+            condition = QUOTE(_this getVariable [ARR_2(QQGVAR(inMission), false)]);
+        };
+    };
+
     class DoNothing {
         onStateEntered = "";
         class DoTask {
@@ -248,6 +260,10 @@ class MAI_Tasks_StateMachine {
             targetState = "DoTask";
             events[] = {QGVAR(doTask)};
         };
+    };
+
+    class Transport {
+        onStateEntered = QFUNC(onTransportEntered);
     };
 
     class Wait {
