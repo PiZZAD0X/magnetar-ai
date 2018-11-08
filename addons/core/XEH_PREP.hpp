@@ -9,6 +9,7 @@ PREP(getRandomMinMax);
 PREP(handleStartPosition);
 PREP(hasRebreather);
 PREP(hasParachute);
+PREP(hasVisual);
 PREP(helperTemplateInfantry);
 PREP(helperTemplateVehicle);
 PREP(init);
