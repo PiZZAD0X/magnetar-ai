@@ -22,7 +22,7 @@ params ["_pos", ["_radius", 25], ["_returnNearest", false]];
 private _buildings = nearestObjects [_pos, ["house", "building"] , _radius];
 
 if (_returnNearest) exitWith {
-    _buildings # 0;
+    _buildings select 0;
 };
 
 _buildings

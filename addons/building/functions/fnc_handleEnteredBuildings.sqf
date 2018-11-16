@@ -23,7 +23,7 @@ private _checkedBuildings = missionNamespace getVariable [QGVAR(checkedBuildings
 // Delete older entries
 private _toDelete = [];
 {
-    if (_x # 1 + 500 >= CBA_missionTime) then {
+    if (_x select 1 + 500 >= CBA_missionTime) then {
         _toDelete pushBack _forEachIndex;
     };
 } forEach _checkedBuildings;

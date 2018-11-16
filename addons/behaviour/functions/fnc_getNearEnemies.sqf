@@ -5,18 +5,18 @@
  *
  * Arguments:
  * 0: Unit <OBJECT><ARRAY>
- * 1: Radius <NUMBER> (default: 50)
+ * 1: Radius <NUMBER> (default: -1)
  *
  * Return Value:
  * Array of dead bodies <ARRAY>
  *
  * Example:
- * [player, 100] call mai_behaviour_fnc_getNearDeadBodies
+ * [player, 100] call mai_behaviour_fnc_getNearEnemies
  *
  * Public: No
  */
 
 params ["_unit", ["_radius", -1]];
 
-private _deadBodies = (_unit nearObjects ["Man", "_radius"]) select {!alive _x};
-_deadBodies select {[_unit, _x, _radius, HUMAN_VIEW_ANGLE] call EFUNC(core,hasVisual)}
+
+private _targets = _unit nearTargets _radius;

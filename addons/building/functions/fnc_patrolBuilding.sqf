@@ -16,13 +16,12 @@
 
 params ["_unit"];
 
-private _buildingPatrol = _unit getVariable [QGVAR(inBuilding), [false]];
-
-if !(_buildingPatrol # 0) exitWith {};
-
 if (!alive _unit) exitWith {
     _unit setVariable [QGVAR(inBuilding), [false]];
 };
+
+private _buildingPatrol = _unit getVariable [QGVAR(inBuilding), [false]];
+if !(_buildingPatrol select 0) exitWith {};
 
 _buildingPatrol params ["", "_building", ["_buildingPos", []], ["_waitUntilTime", CBA_missionTime], ["_returnLeader", false]];
 
