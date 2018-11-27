@@ -59,7 +59,7 @@ for "_i" from 1 to _groupSize do {
         private _numCargo = 0;
 
         {
-            private _role = toLower (_x # 0);
+            private _role = toLower (_x select 0);
             switch (_role) do {
                 case "cargo": {
                     if (_numCargo < (_cargoSize - 1)) then {
@@ -85,10 +85,10 @@ for "_i" from 1 to _groupSize do {
                     _crewUnits pushBack (selectRandom _crewPool);
                 };
                 case "turret": {
-                    if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 1] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
+                    if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x select 1] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
                         _pilots pushBack (selectRandom _pilotPool);
                     } else {
-                        if (_x # 1 in _turrets) then {
+                        if (_x select 1 in _turrets) then {
                             _crewUnits pushBack (selectRandom _crewPool);
                         } else {
                             if (_numCargo < (_cargoSize - 1)) then {
@@ -101,7 +101,7 @@ for "_i" from 1 to _groupSize do {
             };
         } forEach _roles;
     } else {
-        _vehicle = _vehiclePool # (_i - 1);
+        _vehicle = _vehiclePool select (_i - 1);
         _crewUnits = _crewPool;
         _pilots = _pilotPool;
 
