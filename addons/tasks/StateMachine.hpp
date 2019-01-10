@@ -20,9 +20,9 @@ class MAI_Tasks_StateMachine {
             targetState = "TaskDefend";
             events[] = {QGVAR(defend)};
         };
-        class TaskGarrisson {
-            targetState = "TaskGarrisson";
-            events[] = {QGVAR(garrisson)};
+        class TaskGarrison {
+            targetState = "TaskGarrison";
+            events[] = {QGVAR(garrison)};
         };
         class TaskPatrol {
             targetState = "TaskPatrol";
@@ -44,7 +44,7 @@ class MAI_Tasks_StateMachine {
 
     class TaskAttack {
         onStateEntered = QFUNC(onAttackEntered);
-        onState = QFUNC(onAttackState);
+        onState = QFUNC(onAttack);
 
         class DoTask {
             targetState = "DoTask";
@@ -61,19 +61,20 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(retreatManeuver)};
         };
 
-        class Defend {
+        class TaskDefend {
             targetState = "TaskDefend";
             events[] = {QGVAR(defend)};
         };
 
-        class TaskGarrisson {
-            targetState = "TaskGarrisson";
-            events[] = {QGVAR(garrisson)};
+        class TaskGarrison {
+            targetState = "TaskGarrison";
+            events[] = {QGVAR(garrison)};
         };
     };
 
     class Flank {
         onStateEntered = QFUNC(onFlankEntered);
+        onState = QFUNC(onFlank);
 
         class DoTask {
             targetState = "DoTask";
@@ -81,7 +82,7 @@ class MAI_Tasks_StateMachine {
         };
 
         class TaskAttack {
-            condition = QUOTE(((leader _this) distance (_this getVariable QQGVAR(targetPos))) < DIRECT_ATTACK_DISTANCE);
+            targetState = "TaskAttack";
             events[] = {QGVAR(attack)};
         };
 
@@ -90,14 +91,14 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(retreatManeuver)};
         };
 
-        class Defend {
+        class TaskDefend {
             targetState = "TaskDefend";
             events[] = {QGVAR(defend)};
         };
 
-        class TaskGarrisson {
-            targetState = "TaskGarrisson";
-            events[] = {QGVAR(garrisson)};
+        class TaskGarrison {
+            targetState = "TaskGarrison";
+            events[] = {QGVAR(garrison)};
         };
     };
 
@@ -120,20 +121,50 @@ class MAI_Tasks_StateMachine {
             events[] = {QGVAR(flankManeuver)};
         };
 
-        class Defend {
+        class TaskDefend {
             targetState = "TaskDefend";
             events[] = {QGVAR(defend)};
         };
 
-        class TaskGarrisson {
-            targetState = "TaskGarrisson";
-            events[] = {QGVAR(garrisson)};
+        class TaskGarrison {
+            targetState = "TaskGarrison";
+            events[] = {QGVAR(garrison)};
         };
     };
 
     class TaskDefend {
         onStateEntered = QFUNC(onDefendEntered);
-        onState = QFUNC(onDefendState);
+        onState = QFUNC(onDefend);
+    };
+
+    class TaskGarrison {
+        onStateEntered = QFUNC(onGarrisonEntered);
+        onState = QFUNC(onGarrison);
+
+        class DoTask {
+            targetState = "DoTask";
+            condition = QFUNC(checkDoTask);
+        };
+
+        class Flank {
+            targetState = "Flank";
+            events[] = {QGVAR(flankManeuver)};
+        };
+
+        class Retreat {
+            targetState = "Retreat";
+            events[] = {QGVAR(retreatManeuver)};
+        };
+
+        class TaskDefend {
+            targetState = "TaskDefend";
+            events[] = {QGVAR(defend)};
+        };
+
+        class TaskAttack {
+            targetState = "TaskAttack";
+            events[] = {QGVAR(attack)};
+        };
     };
 
     class TaskPatrolRandom {

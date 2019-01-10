@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /*
  * Author: TheMagnetar
  * Handle patrol building state
@@ -9,11 +10,10 @@
  * None
  *
  * Example:
- * [nearestBuilding player] call mai_building_fnc_handlePatrolBuilding
+ * [nearestBuilding player] call mai_task_fnc_onGarrison
  *
  * Public: No
  */
-#include "script_component.hpp"
 
 params ["_group"];
 
@@ -30,21 +30,9 @@ if (!local _leader) exitWith {
     _group setVariable [QEGVAR(building,inBuilding), _group getVariable [QEGVAR(building,inBuilding), false], true];
 };
 
-private _allUnitsFinished = true;
 {
     private _inBuilding = (_x getVariable [QEGVAR(building,inBuilding), [false]]) select 0;
     if (_inBuilding) then {
-        _x call EFUNC(building,patrolBuilding);
-        _allUnitsFinished = false;
+        [_x, false] call EFUNC(building,patrolBuilding);
     };
 } forEach _units;
-
-if (_allUnitsFinished) then {
-    _units doFollow _leader;
-    _group setVariable [QGVAR(finishedBuildingPatrol), CBA_missionTime + 10];
-    _group setVariable [QGVAR(generateWaypoint), false];
-    _group lockWP false;
-
-    [QGVAR(doTask), _group] call CBA_fnc_localEvent;
-};
-

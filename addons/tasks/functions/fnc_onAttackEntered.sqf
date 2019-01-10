@@ -43,7 +43,7 @@ private _targetPos = if (_type isEqualTo "object") then {
 
 private _distance = (leader _group) distance _targetPos;
 if (_distance < DIRECT_ATTACK_DISTANCE) then {
-    private _execStatements = format ["[group this, 'defend'] call %1; deleteWaypoint [group this, currentWaypoint (group this)];", QFUNC(changeAssignedTask)];
+    private _execStatements = format ["[group this, %1] call %2; deleteWaypoint [group this, currentWaypoint (group this)];", QGVAR(taskDefend), QFUNC(changeAssignedTask)];
     private _condition = "true";
     // TODO: Make the radius and completion radios a variable that can be modified
     [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call mai_waypoint_fnc_generateWaypoint;
@@ -55,7 +55,7 @@ if (_distance < DIRECT_ATTACK_DISTANCE) then {
     if (_type isEqualTo "object") then {
         [QGVAR(flankManeuver), _group] call CBA_fnc_localEvent;
     } else {
-        private _execStatements = format ["[group this, 'defend'] call %1; deleteWaypoint [group this, currentWaypoint (group this)];", QFUNC(changeAssignedTask)];
+        private _execStatements = format ["[group this, %1] call %2; deleteWaypoint [group this, currentWaypoint (group this)];", QGVAR(taskDefend), QFUNC(changeAssignedTask)];
         private _condition = "true";
         // TODO: Make the radius and completion radios a variable that can be modified
         [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call mai_waypoint_fnc_generateWaypoint;

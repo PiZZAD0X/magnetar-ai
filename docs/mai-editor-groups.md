@@ -40,14 +40,14 @@ title: Using MAI with Editor Placed Groups
 
 ## MAI Tasks
 
-- Attack:
-- Defend:
-- Do Nothing:
-- Garrisson:
-- Patrol (patrol):
-- Random patrol (patrolRandom): _Default behaviour_
-- Ressupply:
-- Transport:
+- Attack: X
+- Defend: --
+- Do Nothing: X
+- Garrisson: --
+- Patrol (patrol): X
+- Random patrol (patrolRandom): _Default behaviour_ X
+- Ressupply: --
+- Transport: --
 
 ## MAI Types
 

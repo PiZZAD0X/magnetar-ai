@@ -14,7 +14,7 @@
  */
 #include "script_component.hpp"
 
-params ["_unit"];
+params ["_unit", ["_deleteBuildingPos", true]];
 
 if (!alive _unit) exitWith {
     _unit setVariable [QGVAR(inBuilding), [false]];
@@ -31,7 +31,7 @@ if (_buildingPos isEqualTo []) exitWith {
         // Give the unit 10 seconds to go back to the leader
         _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, CBA_missionTime + 10, true]];
     } else {
-        if (moveToCompleted _unit || {moveToFailed _unit} || {!alive _unit} || CBA_missionTime > _waitUntilTime) then {
+        if (moveToCompleted _unit || {moveToFailed _unit} || {!alive _unit} || {CBA_missionTime > _waitUntilTime}) then {
             _unit setVariable [QGVAR(inBuilding), [false]];
         };
     };
@@ -40,7 +40,7 @@ if (_buildingPos isEqualTo []) exitWith {
 if (moveToCompleted _unit || {moveToFailed _unit} || {!alive _unit} || {CBA_missionTime >= _waitUntilTime}) then {
     private _index = floor random (count _buildingPos);
     _unit doMove (_building buildingPos _index);
-    _buildingPos deleteAt _index;
+    if (_deleteBuildingPos) then {_buildingPos deleteAt _index;};
     // Give the unit 20 seconds before switching to the next building position
     _unit setVariable [QGVAR(inBuilding), [true, _building, _buildingPos, CBA_missionTime + 20, _returnLeader]];
 };
