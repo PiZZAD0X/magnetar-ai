@@ -19,6 +19,7 @@ params ["_group"];
 
 private _targetPos = _group getVariable QGVAR(targetPos);
 private _leader = leader _group;
+
 // Try to flank
 private _dir = _leader getDir _targetPos;
 _dir = if (random 1 < .5) then {_dir + 90} else {_dir - 90};

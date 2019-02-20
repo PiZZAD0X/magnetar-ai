@@ -37,16 +37,19 @@ private _targetPos = if (_type isEqualTo "object") then {
 } else {
     _targetPos = [_target] call CBA_fnc_getPos;
 };
+_group setVariable [QGVAR(targetPos), _targetPos];
 
 // Look at the designated position
 (units _group) apply {_x doWatch _targetPos};
 
+// TODO: Add evaluate target group options
+
 private _distance = (leader _group) distance _targetPos;
-if (_distance < DIRECT_ATTACK_DISTANCE) then {
+if (_distance =< DIRECT_ATTACK_DISTANCE) then {
     private _execStatements = format ["[group this, %1] call %2; deleteWaypoint [group this, currentWaypoint (group this)];", QGVAR(taskDefend), QFUNC(changeAssignedTask)];
     private _condition = "true";
     // TODO: Make the radius and completion radios a variable that can be modified
-    [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call mai_waypoint_fnc_generateWaypoint;
+    [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call EFUNC(waypoint,generateWaypoint);
 
     _group setBehaviour "COMBAT";
     _group setCombatMode "RED";
@@ -58,7 +61,7 @@ if (_distance < DIRECT_ATTACK_DISTANCE) then {
         private _execStatements = format ["[group this, %1] call %2; deleteWaypoint [group this, currentWaypoint (group this)];", QGVAR(taskDefend), QFUNC(changeAssignedTask)];
         private _condition = "true";
         // TODO: Make the radius and completion radios a variable that can be modified
-        [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call mai_waypoint_fnc_generateWaypoint;
+        [_group, _targetPos, "SAD", _execStatements, _condition, 100, 100] call EFUNC(waypoint,generateWaypoint);
     };
 
     _group setBehaviour "AWARE";

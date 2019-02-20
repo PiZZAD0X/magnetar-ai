@@ -21,11 +21,11 @@ if !(CBA_missionTime >= (_group getVariable [QGVAR(nextCheckTime), CBA_missionTi
 
 if ((units _group) findIf {alive _x} == -1) exitWith {deleteGroup _group;};
 
-private _leader = leader _group;
-if (!local _leader) exitWith {
-    _group setVariable QGVAR(targetPos), _group getVariable [QGVAR(targetPos)];
+if (!local _group) exitWith {
+    _group setVariable [QGVAR(targetPos), _group getVariable [QGVAR(targetPos)], true];
 };
 
+private _leader = leader _group;
 if (_leader distance (_group getVariable QGVAR(targetPos)) < DIRECT_ATTACK_DISTANCE) exitWith {
      [QGVAR(taskAttack), _group] call CBA_fnc_localEvent;
 };
