@@ -44,7 +44,7 @@ if (_markers isEqualType []) exitWith {
             _correct = false;
         };
 
-        if (!((_x # 0) isEqualType "") || {!((_x # 1) isEqualType 0)}) exitWith {
+        if (!((_x select 0) isEqualType "") || {!((_x select 1) isEqualType 0)}) exitWith {
             _correct = false;
         };
     } forEach _markers;

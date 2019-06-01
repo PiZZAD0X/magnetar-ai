@@ -20,13 +20,13 @@ params ["_vehicle"];
 private _emptyPositions = [];
 
 {
-    if (isNull (_x # 0)) then {
-        private _role = toLower (_x # 1);
+    if (isNull (_x select 0)) then {
+        private _role = toLower (_x select 1);
         if (_role in ["cargo", "turret"]) then {
             if (_role isEqualTo "cargo") then {
-                _emptyPositions pushBack ["cargo", _x # 2];
+                _emptyPositions pushBack ["cargo", _x select 2];
             } else {
-                _emptyPositions pushBack ["turret", _x # 3];
+                _emptyPositions pushBack ["turret", _x select 3];
             };
         } else {
             _emptyPositions pushBack _role;

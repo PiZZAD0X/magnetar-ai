@@ -22,8 +22,8 @@ private _units = [];
 
 if (_forceAll) exitWith {
     {
-        if (alive _x # 0) then {
-            _units pushBack (_x # 0);
+        if (alive _x select 0) then {
+            _units pushBack (_x select 0);
         };
     } forEach fullCrew [_vehicle, "", false];
 };
@@ -31,17 +31,17 @@ if (_forceAll) exitWith {
 if (_vehicle iskindof "TANK" || _vehicle iskindof "Wheeled_APC_F" || _vehicle isKindOf "Air" || _vehicle isKindOf "SHIP") then {
     // Only cargo units
     {
-        if (alive (_x # 0)) then {
+        if (alive (_x select 0)) then {
             if (_vehicle iskindof "TANK" || {_vehicle iskindof "Wheeled_APC_F"}) then {
-                _units pushBack (_x # 0);
+                _units pushBack (_x select 0);
             };
 
             if (_vehicle isKindOf "SHIP" && {[_x] call EFUNC(core,hasRebreather)}) then {
-                _units pushBack (_x # 0);
+                _units pushBack (_x select 0);
             };
 
             if (_vehicle isKindOf "Air" && {[_x] call EFUNC(core,hasParachute)}) then {
-                _units pushBack (_x # 0);
+                _units pushBack (_x select 0);
             };
         };
     } forEach fullCrew [_vehicle, "cargo", false];

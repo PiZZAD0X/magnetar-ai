@@ -27,8 +27,8 @@ if (isServer) then {
     params ["_group"];
 
     {
-        if ((_x # 0) isEqualTo _group) exitWith {
-            private _markerGroups = missionNamespace getVariable [format [QGVAR(%1), _x # 1], []];
+        if ((_x select 0) isEqualTo _group) exitWith {
+            private _markerGroups = missionNamespace getVariable [format [QGVAR(%1), _x select 1], []];
             _markerGroups deleteAt (_markerGroups find _group);
 
             GVAR(groupRegisters) deleteAt _forEachIndex;

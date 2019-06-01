@@ -51,8 +51,8 @@ private _skill = [];
     private _skillPilots = [];
 
     {
-        private _role = toLower (_x # 1);
-        private _unit = _x # 0;
+        private _role = toLower (_x select 1);
+        private _unit = _x select 0;
         private _unitType = typeOf _unit;
 
         switch (_role) do {
@@ -95,13 +95,13 @@ private _skill = [];
                 _skillCrew pushBack (skill _unit);
             };
             case "turret": {
-                if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x # 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
+                if (_vehicle isKindOf "Air" && {getNumber ([_vehicle, _x select 3] call CBA_fnc_getTurret >> "isCopilot") == 1}) then {
                     _pilots pushBack _unitType;
                     _loadoutPilots pushBack (getUnitLoadout _unit);
                     _rankPilots pushBack (rank _unit);
                     _skillPilots pushBack (skill _unit);
                 } else {
-                    if (_x # 3 in _turrets) then {
+                    if (_x select 3 in _turrets) then {
                         _crewUnits pushBack _unitType;
                         _loadoutCrew pushBack (getUnitLoadout _unit);
                         _rankCrew pushBack (rank _unit);

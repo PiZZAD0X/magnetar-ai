@@ -52,8 +52,8 @@ if (_units isEqualTo []) then {
     private _inMarker = "";
     private _leaderPos = position (leader _group);
     {
-        if (_leaderPos inArea (_x # 0)) exitWith {
-            _inMarker = _x # 0;
+        if (_leaderPos inArea (_x select 0)) exitWith {
+            _inMarker = _x select 0;
         };
     } forEach _spawnMarkers;
 
@@ -69,20 +69,20 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
 
     // Select a unit
     private _unit = "";
-    if ((_units # 0) isEqualTypeAny ["", []]) then {
-        if ((_units # 0) isEqualType "") then {
-            _unit = _units # 0;
+    if ((_units select 0) isEqualTypeAny ["", []]) then {
+        if ((_units select 0) isEqualType "") then {
+            _unit = _units select 0;
         } else {
-            _unit = _units # 0 # 0;
+            _unit = _units select 0 select 0;
         };
     } else {
         // These are editor placed units. Move them at the end of the function
         _moveUnits = true;
         private _unitInVehicle = _units findIf {vehicle _x != _x};
         if (_unitInVehicle != -1) then {
-            _unit = typeOf (vehicle (_units # _unitInVehicle));
+            _unit = typeOf (vehicle (_units select _unitInVehicle));
         } else {
-            _unit = typeOf (_units # 0);
+            _unit = typeOf (_units select 0);
         };
     };
 
@@ -92,8 +92,8 @@ if (_inRandomPosition || {!(_position isEqualTo [])} ) exitWith {
     } else {
         private _inMarker = "";
         {
-            if (_position inArea (_x # 0)) exitWith {
-                _inMarker = _x # 0;
+            if (_position inArea (_x select 0)) exitWith {
+                _inMarker = _x select 0;
             };
         } forEach _spawnMarkers;
 
@@ -117,7 +117,7 @@ if (_inRandomBuilding) exitWith {
 
         // Generate a random position since there are no suitable buildings
         if (_positions isEqualTo []) then {
-            private _unitType = _units # 0;
+            private _unitType = _units select 0;
             if !(_unitType isEqualTo "") then {
                 _unitType = typeOf _unitType;
             };
@@ -127,16 +127,16 @@ if (_inRandomBuilding) exitWith {
         private _requiredPositions = (count _units) - (count _positions) - 1;
         private _numPositions = count _positions;
         for "_i" from 0 to _requiredPositions do {
-            private _unitType = _units # (_numPositions + _i);
+            private _unitType = _units select (_numPositions + _i);
             if !(_unitType isEqualTo "") then {
                 _unitType = typeOf _unitType;
             };
-            _positions pushBack ((_positions # 0) findEmptyPosition [0, 60, _unitType]);
+            _positions pushBack ((_positions select 0) findEmptyPosition [0, 60, _unitType]);
         };
     };
 
     private _moveUnits = false;
-    if !((_units # 0) isEqualType "") then {
+    if !((_units select 0) isEqualType "") then {
         _moveUnits = true;
     };
 

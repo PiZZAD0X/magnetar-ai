@@ -34,14 +34,14 @@ if (_position isEqualType "") then {
     (getMarkerSize _position) params ["_radiusX", "_radiusY"];
     _radius = _radiusX max _radiusY;
 } else {
-    if ((_position # 0) isEqualType []) then {
+    if ((_position select 0) isEqualType []) then {
         private _marker = [_position] call FUNC(selectRandomMarker);
         _center = getMarkerPos _marker;
         (getMarkerSize _marker) params ["_radiusX", "_radiusY"];
         _radius = _radiusX max _radiusY;
     } else {
-        _center = _position # 0;
-        _radius = _position # 1;
+        _center = _position select 0;
+        _radius = _position select 1;
     };
 };
 
@@ -51,7 +51,7 @@ private _filteredBuildings = [_buildings, _filter] call EFUNC(building,filterBui
 
 if (_filteredBuildings isEqualTo []) exitWith {[]};
 
-private _building = ([_filteredBuildings, 5] call EFUNC(core,shuffleArray)) # 0;
+private _building = ([_filteredBuildings, 5] call EFUNC(core,shuffleArray)) select 0;
 private _freePos = _building getVariable [QGVAR(freePositions), -1];
 
 if (_freePos == -1) then {

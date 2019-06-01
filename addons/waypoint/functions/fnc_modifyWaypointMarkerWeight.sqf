@@ -30,7 +30,7 @@ private _markers = [_settings, "marker"] call CBA_fnc_hashGet;
 
 private _index = -1;
 {
-    if ((_x # 0) isEqualTo _marker) exitWith {
+    if ((_x select 0) isEqualTo _marker) exitWith {
         _x set [1, _markerWeight];
         _index = _forEachIndex;
     };

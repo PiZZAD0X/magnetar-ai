@@ -20,7 +20,7 @@ params ["_vehicle", "_units"];
 
 private _emptyPositions = [_vehicle] call FUNC(emptyPositions);
 
-private _leader = leader (_units # 0);
+private _leader = leader (_units select 0);
 
 if (((vehicle _leader) isEqualTo _leader) && {"commander" in _emptyPositions}) then {
     _leader assignAsCommander _vehicle;
@@ -58,12 +58,12 @@ if (((vehicle _leader) isEqualTo _leader) && {"commander" in _emptyPositions}) t
 
     // After filling in crew positions, try to fill in cargo ones
     {
-        if (_x # 0 isEqualTo "turret" && {!_assigned}) exitWith {
-            _unit assignAsTurret [_vehicle, _x # 1];
+        if (_x select 0 isEqualTo "turret" && {!_assigned}) exitWith {
+            _unit assignAsTurret [_vehicle, _x select 1];
         };
 
-        if (_x # 0 isEqualTo "cargo" && {!_assigned}) exitWith {
-            _unit assignAsCargoIndex [_vehicle, _x # 1];
+        if (_x select 0 isEqualTo "cargo" && {!_assigned}) exitWith {
+            _unit assignAsCargoIndex [_vehicle, _x select 1];
         };
     } forEach _emptyPositions;
 } forEach _units;

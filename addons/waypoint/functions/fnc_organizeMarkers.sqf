@@ -24,11 +24,11 @@ if (_markers isEqualType "") exitWith {
 private _totalWeight = 0;
 
 {
-    _totalWeight = _totalWeight + (_x # 1);
+    _totalWeight = _totalWeight + (_x select 1);
 } forEach _markers;
 
 {
-    _x set [1, (_x # 1)/_totalWeight*100];
+    _x set [1, (_x select 1)/_totalWeight*100];
 } forEach _markers;
 
 _markers

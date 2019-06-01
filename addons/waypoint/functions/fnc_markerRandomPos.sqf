@@ -33,12 +33,12 @@ params [
 if (_marker isEqualTo "" || {_marker isEqualTo []}) exitWith {[0, 0, 0]};
 
 private _center = getMarkerPos _marker;
-private _centerX = abs(_center # 0);
-private _centerY = abs(_center # 1);
+private _centerX = abs (_center select 0);
+private _centerY = abs (_center select 1);
 
 private _markerSize = getMarkerSize _marker;
-private _sizeX = _markerSize # 0;
-private _sizeY = _markerSize # 1;
+private _sizeX = _markerSize select 0;
+private _sizeY = _markerSize select 1;
 private _markerDir = markerDir _marker;
 
 private "_rndFunction";
