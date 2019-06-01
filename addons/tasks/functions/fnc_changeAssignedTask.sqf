@@ -27,7 +27,7 @@ if (isNull _group || {_task isEqualTo "" || {!((toLower _task) in GVAR(definedTa
 
 private _settings = _group getVariable [QEGVAR(core,settings), []];
 _options pushBack ["task", _task];
-_settings = [_group, _settings] call EFUNC(parseOptions);
+_settings = [_group, _settings] call EFUNC(core,parseOptions);
 
 _group setVariable [QEGVAR(core,settings), _settings, true];
 

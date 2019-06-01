@@ -27,7 +27,7 @@ private _targetPos = waypointPosition [_group, 0];
 if (!local _leader) exitWith {
     _group setVariable [QGVAR(waitUntil), _group getVariable [QGVAR(waitUntil), CBA_missionTime], true];
     _group setVariable [QGVAR(distance), _group getVariable [QGVAR(distance), (getPos _leader) distance2D _targetPos], true];
-    _group setVariable [QEGVAR(tasks,buildingCheckTime), _group getVariable [QEGVAR(tasks,buildingCheckTime), CBA_missionTime], true];
+    _group setVariable [QGVAR(buildingCheckTime), _group getVariable [QGVAR(buildingCheckTime), CBA_missionTime], true];
     _group setVariable [QGVAR(inBuilding), _group getVariable [QGVAR(inBuilding), false], true];
 };
 
@@ -42,7 +42,7 @@ private _reachedDistance = [_settings, "reachedDistance"] call CBA_fnc_hashGet;
 private _distance = _leader distance _targetPos;
 
 if (_distance > _reachedDistance && {vehicle _leader == _leader} && {[_settings, "allowVehicles"] call CBA_fnc_hashGet}) then {
-
+    // TODO: Check for vehicles
 };
 
 // Start patrolling buildings if units are near the waypoint

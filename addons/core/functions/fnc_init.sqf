@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /*
  * Author: TheMagnetar
  * Initialises a group.
@@ -16,7 +17,6 @@
  *
  * Public: Yes
  */
-#include "script_component.hpp"
 
 params [
     ["_unit", objNull, [objNull]],
@@ -30,6 +30,7 @@ private _group = group _unit;
 if (!local _group) exitWith {};
 
 if (!GVAR(debugEnabled)) then {
+    diag_log format ["%1", marker];
     if (_marker isEqualType "") then {
         _marker setMarkerAlpha 0;
     } else {

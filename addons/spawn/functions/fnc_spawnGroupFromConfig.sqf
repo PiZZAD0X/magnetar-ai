@@ -28,7 +28,7 @@ params [
     ["_overrideOptions", [], [[]]]
 ];
 
-if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
+if !([_marker] call EFUNC(waypoint,checkMarkerInput)) exitWith {};
 
 if (_configEntry isEqualTo "" || {!isClass (missionConfigFile >> "CfgGroupCompositions" >> _configEntry)}) exitWith {
     ERROR_1("Empty or invalid config entry %1",_configEntry);

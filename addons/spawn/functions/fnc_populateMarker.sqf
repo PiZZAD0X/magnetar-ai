@@ -30,7 +30,7 @@ params [
     ["_commonOptions", [], [[]]]
 ];
 
-if (!([_marker] call EFUNC(waypoint,checkMarkerInput))) exitWith {};
+if !([_marker] call EFUNC(waypoint,checkMarkerInput)) exitWith {};
 
 if (!GVAR(debugEnabled) && {markerAlpha _marker != 0}) then {
     _marker setMarkerAlpha 0;

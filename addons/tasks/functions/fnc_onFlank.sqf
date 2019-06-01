@@ -26,7 +26,7 @@ if (!local _group) exitWith {
 };
 
 private _leader = leader _group;
-if (_leader distance (_group getVariable QGVAR(targetPos)) < DIRECT_ATTACK_DISTANCE) exitWith {
+if (_leader distance (_group getVariable QGVAR(targetPos)) < CLOSE_ATTACK_DISTANCE) exitWith {
      [QGVAR(taskAttack), _group] call CBA_fnc_localEvent;
 };
 

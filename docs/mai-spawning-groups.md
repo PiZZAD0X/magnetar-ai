@@ -51,7 +51,7 @@ class CfgGroupCompositions {
         skillLeader[] = {{0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}, {0.2, 0.8}};
         execInit = "";
         execWaypoint = "";
-        task[] = {"patrolRandom"};  
+        task[] = {"patrolRandom"};
         random = 1; // Group composition will be made random
     };
 
@@ -147,7 +147,7 @@ This is the same as the previous example but the group will have a fixed size of
 will spawn a fixed group at the position of the unit `enemyLeader`. The `patrolBuildings` option is also overwritten and the group will not check buildings.
 
 ```cpp
-["Wheeled", [2 [3, 5], "markerPatrol"] call mai_spawn_fnc_spawnGroupFromConfig;
+["Wheeled", [2 [3, 5]], "markerPatrol"] call mai_spawn_fnc_spawnGroupFromConfig;
 ```
 
 will spawn a group with two random vehicles with its crew units selected from the `crew` array, and 3 to 5 cargo units. The cargo leaders from `cargoLeaders` while the rest of the cargo units will be selected from the `cargo` array.

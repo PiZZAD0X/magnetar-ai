@@ -26,7 +26,7 @@ if (_skill isEqualTo [] || {_skillLeader isEqualTo []}) exitWith {};
 
 private _skillCategory = [];
 
-if ((toLower (_skill # 0)) isEqualTo "general") then {
+if ((toLower (_skill select 0)) isEqualTo "general") then {
     _skillCategory = ["general"];
 } else {
     _skillCategory = ["aimingShake", "aimingSpeed", "endurance", "spotDistance", "spotTime", "courage", "reloadSpeed", "commanding"];
@@ -43,12 +43,12 @@ if ((toLower (_skill # 0)) isEqualTo "general") then {
 
         {
             private _val = 0;
-            if ((_selectedSkill # _forEachIndex) isEqualType []) then {
-                (_selectedSkill # _forEachIndex) params ["_min", "_max"];
+            if ((_selectedSkill select _forEachIndex) isEqualType []) then {
+                (_selectedSkill select _forEachIndex) params ["_min", "_max"];
 
                 _val = _min + random [_max - _min];
             } else {
-                _val = (_selectedSkill # _forEachIndex);
+                _val = (_selectedSkill select _forEachIndex);
             };
             _unit setSkill [_x, _val];
         } forEach _skillCategory;

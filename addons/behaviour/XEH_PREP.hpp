@@ -1,2 +1,3 @@
 PREP(getNearDeadBodies);
-PREP(shareEnemies);
+PREP(getNearEnemies);
+PREP(shareEnemyPositions);

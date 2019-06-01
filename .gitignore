@@ -1,2 +1,6 @@
 *.pbo
 release/
+
+@mai/
+
+*.zip

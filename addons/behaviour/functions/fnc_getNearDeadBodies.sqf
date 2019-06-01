@@ -18,5 +18,5 @@
 
 params ["_unit", ["_radius", -1]];
 
-private _deadBodies = (_unit nearObjects ["Man", "_radius"]) select {!alive _x};
+private _deadBodies = (_unit nearObjects ["Man", _radius]) select {!alive _x};
 _deadBodies select {[_unit, _x, _radius, HUMAN_VIEW_ANGLE] call EFUNC(core,hasVisual)}

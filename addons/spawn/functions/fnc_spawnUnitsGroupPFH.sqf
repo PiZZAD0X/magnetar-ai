@@ -29,14 +29,14 @@ if (_unitsToSpawn isEqualTo []) exitWith {
     private _settings = _group getVariable [QEGVAR(core,settings), []];
     [_group, _settings] call EFUNC(core,applyOptions);
 
-    _group setVariable [QEGVAR(core,settings), _settings, true];
+    _group setVariable [QEGVAR(core,settings), _settings];
 
     // Register the group
     private _marker = _group getVariable [QEGVAR(core,registerMarker), ""];
     [QEGVAR(core,registerGroup), [_group, _marker]] call CBA_fnc_serverEvent;
 
     if !([_settings, "release"] call CBA_fnc_hashGet) then {
-        _group setVariable [QEGVAR(core,enabled), true, true];
+        _group setVariable [QEGVAR(core,enabled), true];
     };
 };
 

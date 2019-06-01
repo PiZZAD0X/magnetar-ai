@@ -10,13 +10,17 @@
  * None
  *
  * Example:
- * [group player call mai_core_fnc_applyOptions
+ * [group player] call mai_core_fnc_applyOptions
  *
  * Public: No
  */
 #include "script_component.hpp"
 
-params ["_unit", "_tagetPosition", "_maxDistance", "_viewAngle",
+params [
+    "_unit",
+    "_tagetPosition",
+    "_maxDistance",
+    "_viewAngle",
     ["_ignoreObjects", [objNull, objNull], [[]]]
 ];
 
@@ -33,7 +37,7 @@ if (_unit distance _tagetPosition <= _maxDistance) then {
     _eyeDirection = (_eyeDirection select 0) atan2 (_eyeDirection select 1);
     private _eyePos = eyePos _unit;
     if ([eyePos _unit, _eyeDirection, _maxDistance, _viewAngle] call BIS_fnc_inAngleSector) then {
-        private _visibility = [_ignoreObjects select 0, "VIEW", ignoreObjects select 1] checkVisibility [_eyePos, _tagetPosition];
+        private _visibility = [_ignoreObjects select 0, "VIEW", _ignoreObjects select 1] checkVisibility [_eyePos, _tagetPosition];
 
         if (_visibility > 0.6) then {
             _hasVisual = true;

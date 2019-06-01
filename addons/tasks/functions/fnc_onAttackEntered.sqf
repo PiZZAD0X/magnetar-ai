@@ -45,7 +45,7 @@ _group setVariable [QGVAR(targetPos), _targetPos];
 // TODO: Add evaluate target group options
 
 private _distance = (leader _group) distance _targetPos;
-if (_distance =< DIRECT_ATTACK_DISTANCE) then {
+if (_distance <= CLOSE_ATTACK_DISTANCE) then {
     private _execStatements = format ["[group this, %1] call %2; deleteWaypoint [group this, currentWaypoint (group this)];", QGVAR(taskDefend), QFUNC(changeAssignedTask)];
     private _condition = "true";
     // TODO: Make the radius and completion radios a variable that can be modified

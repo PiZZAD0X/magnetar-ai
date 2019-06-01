@@ -80,7 +80,7 @@ push: commit
 release: clean version commit
 	@"$(MAKE)" $(MAKEFLAGS) signatures
 	@echo "  ZIP  $(ZIP)_$(VERSION).zip"
-	@cp authors.txt license logo_ust101_ca.paa logo_ust101_over_ca.paa logo_ust101_small_ca.paa mod.cpp readme.md $(BIN)
+	@cp authors.txt license mod.cpp readme.md $(BIN)
 	@7z a -tzip $(ZIP)_$(VERSION).zip "./$(BIN)"
 
 clean:
