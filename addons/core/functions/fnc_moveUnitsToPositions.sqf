@@ -23,5 +23,5 @@ if (count _units != count _positions) exitWith {
 };
 
 {
-    _x setPosATL (_positions # _forEachIndex);
+    _x setPosATL (_positions select _forEachIndex);
 } forEach _units;

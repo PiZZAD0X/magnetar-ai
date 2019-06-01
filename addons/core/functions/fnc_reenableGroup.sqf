@@ -23,4 +23,4 @@ if ((_group getVariable [QGVAR(settings), []]) isEqualTo []) exitWith {
     ERROR_1("Group %1 has not been initialised",_group);
 };
 
-_group setVariable [QGVAR(enable), true];
+_group setVariable [QGVAR(enabled), true];
