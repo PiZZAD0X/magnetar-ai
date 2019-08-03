@@ -2,9 +2,9 @@
 #define COMPONENT_BEAUTIFIED Main
 #include "\m\mai\addons\main\script_mod.hpp"
 
-// #define DEBUG_MODE_FULL
-// #define DISABLE_COMPILE_CACHE
-// #define ENABLE_PERFORMANCE_COUNTERS
+#define DEBUG_MODE_FULL
+#define DISABLE_COMPILE_CACHE
+#define ENABLE_PERFORMANCE_COUNTERS
 
 #ifdef DEBUG_ENABLED_MAIN
     #define DEBUG_MODE_FULL
@@ -14,4 +14,5 @@
     #define DEBUG_SETTINGS DEBUG_SETTINGS_MAIN
 #endif
 
+#include "\m\mai\addons\main\config_macros.hpp"
 #include "\m\mai\addons\main\script_macros.hpp"

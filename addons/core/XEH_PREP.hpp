@@ -20,5 +20,9 @@ PREP(reenableGroup);
 PREP(removeGroup);
 PREP(restart);
 PREP(setBasicSettings);
+PREP(setDefaults);
 PREP(setSkill);
 PREP(shuffleArray);
+
+PREPATTR(AIOnlyOnLoad);
+PREPATTR(PlayerOnlyOnLoad);

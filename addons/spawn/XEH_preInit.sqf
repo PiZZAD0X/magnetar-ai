@@ -6,6 +6,8 @@ ADDON = false;
 
 #include "initSettings.sqf"
 
+EXEC_CHECK(SERVERHC);
+
 GVAR(spawnGroupPFH) = -1;
 GVAR(spawnQueue) = [];
 

@@ -1,4 +1,3 @@
-#include "script_component.hpp"
 /*
  * Author: TheMagnetar
  * Changes the assigned task and updates the state machine.
@@ -16,6 +15,8 @@
  *
  * Public: Yes
  */
+#include "script_component.hpp"
+EXEC_CHECK(SERVERHC);
 
 params [
     ["_group", grpNull, [grpNull]],

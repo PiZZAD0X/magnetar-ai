@@ -1,4 +1,3 @@
-#include "script_component.hpp"
 /*
  * Author: TheMagnetar
  * Handle patrol building state
@@ -14,6 +13,8 @@
  *
  * Public: No
  */
+ #include "script_component.hpp"
+ EXEC_CHECK(SERVERHC);
 
 params ["_group"];
 

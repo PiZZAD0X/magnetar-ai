@@ -6,7 +6,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"mai_main"};
+        requiredAddons[] = {"mai_main","mai_core"};
         authors[] = {"TheMagnetar"};
         author = "MAI-Team";
         authorUrl = "https://gitlab.gruppe-w.de/Magnetar";

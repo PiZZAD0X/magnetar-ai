@@ -15,3 +15,6 @@ class CfgPatches {
 };
 
 #include "CfgEventHandlers.hpp"
+#include "RscTitles.hpp"
+#include "Cfg3DEN.hpp"
+

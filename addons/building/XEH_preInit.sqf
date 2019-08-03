@@ -6,4 +6,6 @@ ADDON = false;
 
 #include "initSettings.sqf"
 
+EXEC_CHECK(SERVERHC);
+
 ADDON = true;

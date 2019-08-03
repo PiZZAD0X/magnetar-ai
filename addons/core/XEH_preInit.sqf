@@ -4,11 +4,40 @@ ADDON = false;
 
 #include "XEH_PREP.hpp"
 
+if !(GETMVALUE(Enabled,false)) exitWith {
+    INFO("MAI is disabled in Mission settings... exiting");
+};
+
+INFO("Initializing MAI");
+LOG("Global Pre Init");
+SETMVAR(Initialized,false);
+[] call FUNC(setDefaults);
+
 #include "initSettings.sqf"
 
 if (isServer) then {
     DGVAR(groupRegisters) = [];
     DGVAR(groupTemplates) = [] call CBA_fnc_hashCreate;
+};
+
+private _MAIVersionCreatedStr = (GETMVALUE(Version_Created,""));
+if (_MAIVersionCreatedStr isEqualto "") then {
+    SETMVAR(Version_CreatedNum,102);
+    INFO("Mission Created with Framework Version: Legacy");
+} else {
+    private _MAIVersionCreated = parseNumber ((_MAIVersionCreatedStr splitString ".") joinString "");
+    SETMVAR(Version_CreatedNum,_MAIVersionCreated);
+    INFO_1("Mission Created with Framework Version:%1",_MAIVersionCreated);
+};
+
+private _MAIVersionStr = (GETMVALUE(Version_Updated,""));
+if (_MAIVersionStr isEqualto "") then {
+    SETMVAR(Version_UpdatedNumber,102);
+    INFO("Mission Updated with Framework Version: Legacy");
+} else {
+    private _MAIVersion = parseNumber ((_MAIVersionStr splitString ".") joinString "");
+    SETMVAR(Version_UpdatedNumber,_MAIVersion);
+    INFO_1("Mission Updated with Framework Version:%1",_MAIVersion);
 };
 
 [QGVAR(registerGroup), {

@@ -16,7 +16,8 @@
  *
  * Public: No
  */
-#include "script_component.hpp"
+ #include "script_component.hpp"
+ EXEC_CHECK(SERVERHC);
 
 params ["_vehicle", ["_unassign", true], ["_doPerimeter", true], ["_forceAll", false], ["_allowWater", false], ["_allowLand", true]];
 

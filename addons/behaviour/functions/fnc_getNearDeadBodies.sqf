@@ -1,4 +1,3 @@
-#include "script_component.hpp"
 /*
  * Author: TheMagnetar
  * Returns an array of dead bodies within the given distance visible by the unit
@@ -15,6 +14,8 @@
  *
  * Public: No
  */
+#include "script_component.hpp"
+EXEC_CHECK(SERVERHC);
 
 params ["_unit", ["_radius", -1]];
 

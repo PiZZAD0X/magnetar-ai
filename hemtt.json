@@ -1,0 +1,9 @@
+{
+  "name": "MAI",
+  "prefix": "MAI",
+  "author": "MAI Team",
+  "files": [
+    "mod.cpp"
+  ],
+  "sigversion": 3
+}

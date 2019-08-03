@@ -4,8 +4,11 @@ ADDON = false;
 
 #include "XEH_PREP.hpp"
 
-#include "initSettings.sqf"
+EXEC_CHECK(SERVERHC);
 
-GVAR(stateMachine) = (configFile >> QGVAR(StateMachine)) call CBA_statemachine_fnc_createFromConfig;
+[QEGVAR(Core,SettingsLoaded), {
+    if !(GETMVAR(Enabled,false)) exitwith {};
+    GVAR(stateMachine) = (configFile >> QGVAR(StateMachine)) call CBA_statemachine_fnc_createFromConfig;
+}] call CBA_fnc_addEventHandler;
 
 ADDON = true;

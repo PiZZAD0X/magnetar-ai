@@ -14,10 +14,11 @@
  * Public: No
  */
 #include "script_component.hpp"
+EXEC_CHECK(SERVERHC);
 
 params ["_group"];
 
 private _playerUnits = [] call CBA_fnc_players;
 private _leader = leader _group;
 
-(_playerUnits findIf {(_x distance2D _leader) < GVAR(cacheDistance)}) == -1
+(_playerUnits findIf {(_x distance2D _leader) < GVAR(cacheDistance)}) isEqualTo -1

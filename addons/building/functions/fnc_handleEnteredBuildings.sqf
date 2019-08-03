@@ -15,6 +15,7 @@
  * Public: No
  */
 #include "script_component.hpp"
+EXEC_CHECK(SERVERHC);
 
 params ["_newBuildings"];
 

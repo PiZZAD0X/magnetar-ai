@@ -1,5 +1,5 @@
 class MAI_Caching_StateMachine {
-    list = QUOTE(allGroups select {local _x && {_x getVariable [ARR_2(QQEGVAR(core,enabled), false)]} && {!(_x getVariable [ARR_2(QQEGVAR(core,enabled), false)])}});
+    list = QUOTE(allGroups select {local _x && {_x getVariable [ARR_2(QQEGVAR(core,enabled), false)]}});
     skipNull = 1;
 
     class Init {

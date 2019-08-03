@@ -6,8 +6,8 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"mai_main"};
-        authors[] = {"TheMagnetar"};
+        requiredAddons[] = {"mai_main","mai_core"};
+        authors[] = {"TheMagnetar","PiZZADOX"};
         author = "MAI-Team";
         authorUrl = "https://gitlab.gruppe-w.de/Magnetar";
         VERSION_CONFIG;
@@ -16,3 +16,4 @@ class CfgPatches {
 
 #include "CfgEventHandlers.hpp"
 #include "StateMachine.hpp"
+#include "Cfg3DEN.hpp"
